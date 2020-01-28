@@ -77,7 +77,7 @@ PyCharm|2019.3|
 * [파이썬 객체 감지](https://dlsdn73.tistory.com/1055)
 * [공 관련 메소드](https://liveupdate.tistory.com/281)
 * [open cv ROI 추출](https://yeolco.tistory.com/57)
-*[Keras 라이브러리](https://tykimos.github.io/lecture/)
+* [Keras 라이브러리](https://tykimos.github.io/lecture/)
 * [Tensorflow 라이브러리](https://blog.naver.com/beyondlegend/221485865659)
 * [Tensorflow 환경 구축](https://brunch.co.kr/@gnugeun/20)
 * > Haar-like feature 프로토타입 관련- 2011_송자혜, 장연진_강원대학_IT대학 전기전자공학부 전기전자공학 졸업논문
