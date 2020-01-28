@@ -1,26 +1,26 @@
-#증강현실 축구 연습 어플리케이션
-##Augmented-Reality-Soccer-Practice-Application
+# 증강현실 축구 연습 어플리케이션
+## Augmented-Reality-Soccer-Practice-Application
 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플입니다.
 
 It is a soccer-practice-application that helps the user to do various training personally without the help of a coach.
 
-###이찬솔 이기열 이교범 최철환
+### 이찬솔 이기열 이교범 최철환
 ## Representative email : cch01024857239@gmail.com
 
-###이 문서와 프로젝트는 한국산업기술대학교 컴퓨터공학부의 “종합설계”교과목에서 프로젝트“스마트 축구 연습 어플리케이션”을 수행하는  팀원(팀번호: S5-2)들이 작성한 것으로 사용하기 위해서는 팀원들의 허락이 필요합니다.
-###These document and project are written by team members (Team No .: S5-2) who perform the project “Augmented-Reality-Soccer-Practice-Application” in the “Graduation Thesis” course of the Korea Polytechnic University.
-##Copyright 2020. "Graduation Thesis Team No .S5-2 of the Korea Polytechnic University" All Pictures Cannot Be Copied Wihour Permission.
+### 이 문서와 프로젝트는 한국산업기술대학교 컴퓨터공학부의 “종합설계”교과목에서 프로젝트“스마트 축구 연습 어플리케이션”을 수행하는  팀원(팀번호: S5-2)들이 작성한 것으로 사용하기 위해서는 팀원들의 허락이 필요합니다.
+### These document and project are written by team members (Team No .: S5-2) who perform the project “Augmented-Reality-Soccer-Practice-Application” in the “Graduation Thesis” course of the Korea Polytechnic University.
+## Copyright 2020. "Graduation Thesis Team No .S5-2 of the Korea Polytechnic University" All Pictures Cannot Be Copied Wihour Permission.
 
-#개발환경 (Development environment)
-환경|버젼
+# 개발환경 (Development environment)
+환경|버전
 ---|---|
-Android Studio|3,4,2|
+Android Studio|3.4.2|
 Aws RDS-MY SQL|8.0.15|
 Ubuntu Server|18.0.4|
 PyCharm|2019.3|
 
 # 목차
-![Contents](./imafe/start.JPG)
+![Contents](./image/start.JPG)
 
 #서론
 ##1.1 작품선정 배경 및 필요성
@@ -37,29 +37,29 @@ PyCharm|2019.3|
 
 ##1.5 개발 일정 
  개발 일정은 다음의 표대로 진행할 수 있도록 일정을 잡았고 매주 금요일마다 만나 서로 작성한 것을 공유하고 진행 상황을 알 수 있도록 하였다.
-![calendar](./imafe/m1.JPG)
+![calendar](./image/m1.JPG)
 
 ##1.6 개발 환경
  개발 환경으로는 앱을 작성할 수 있도록 안드로이드 스튜디오를 사용하고 언어로는 자바를 사용하여 작성한다. 사용하는 스튜디오 버전은 3.4.2이다. 안드로이드 타깃은 최소 8.1(오레오)_API Level 27 으로, 최대 타깃은 10.0(안드로이드 10)_API Level 29이다. 다음으로 DB는 아마존에서 제공하는 AWS-RDS를 사용하여 MY-sql DB를 구축하고 서버와 연동할 수 있도록 하였다. 사용 언어로는 sql문을, 버전은 8.0.15를 사용한다. 서버 역시 마찬가지로 아마존에서 제공하는 AWS-EC2를 사용해 unbuntu 환경을 구축하고 사용 언어로 c++을 사용하여 버전 18.0.4에 구축한다. 마지막으로 영상처리, 인공지능 부분은 파이참 환경에서 파이썬을 가지고 작성할 것이다. 버전은 2019.3버전을 사용한다.
- ![environment](./imafe/m2.JPG)
+ ![environment](./image/m2.JPG)
 
 #본론
 ## 2.1 개발 내용
 ### UI
- ![UI](./imafe/ui1.JPG)
- ![UI](./imafe/ui2.JPG)
- ![UI](./imafe/ui3.JPG)
- ![UI](./imafe/ui4.JPG)
- ![UI](./imafe/ui5.JPG)
- ![UI](./imafe/ui6.JPG)
- ![UI](./imafe/ui7.JPG)
+ ![UI](./image/ui1.JPG)
+ ![UI](./image/ui2.JPG)
+ ![UI](./image/ui3.JPG)
+ ![UI](./image/ui4.JPG)
+ ![UI](./image/ui5.JPG)
+ ![UI](./image/ui6.JPG)
+ ![UI](./image/ui7.JPG)
 
 ###영상 처리
-  ![Image processing](./imafe/v1.JPG)
+  ![Image processing](./image/v1.JPG)
 
 ###서버 구축
-  ![Server](./imafe/s1.JPG)
-  ![Server](./imafe/s2.JPG)
+  ![Server](./image/s1.JPG)
+  ![Server](./image/s2.JPG)
  
 ##2.2 문제 및 해결방안
 * Ubuntu 서버와 Mysql DB간에 보안으로 인한 접속 문제가 발생하였다. 이를 해결한 방법으로는 Mysql DB에 접속할 특정 IP를 인바운드 규칙에서 허용하여 해당 IP주소에서 DB에 접속할 수 있도록 함으로써 해결해야 했다. 
@@ -78,9 +78,9 @@ PyCharm|2019.3|
 * [공 관련 메소드](https://liveupdate.tistory.com/281)
 * [open cv ROI 추출](https://yeolco.tistory.com/57)
 *[Keras 라이브러리](https://tykimos.github.io/lecture/)
-   * [Tensorflow 라이브러리]	(https://blog.naver.com/beyondlegend/221485865659)
-   * [Tensorflow 환경 구축](https://brunch.co.kr/@gnugeun/20)
-   * > Haar-like feature 프로토타입 관련- 2011_송자혜, 장연진_강원대학교 IT대학 전기전자공학부 전기전자공학 졸업논문
+* [Tensorflow 라이브러리](https://blog.naver.com/beyondlegend/221485865659)
+* [Tensorflow 환경 구축](https://brunch.co.kr/@gnugeun/20)
+* > Haar-like feature 프로토타입 관련- 2011_송자혜, 장연진_강원대학교 IT대학 전기전자공학부 전기전자공학 졸업논문
 
  
 
