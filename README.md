@@ -80,7 +80,7 @@ PyCharm|2019.3|
 *[Keras 라이브러리](https://tykimos.github.io/lecture/)
 * [Tensorflow 라이브러리](https://blog.naver.com/beyondlegend/221485865659)
 * [Tensorflow 환경 구축](https://brunch.co.kr/@gnugeun/20)
-* > Haar-like feature 프로토타입 관련- 2011_송자혜, 장연진_강원대학교 IT대학 전기전자공학부 전기전자공학 졸업논문
+* > Haar-like feature 프로토타입 관련- 2011_송자혜, 장연진_강원대학_IT대학 전기전자공학부 전기전자공학 졸업논문
 
  
 
