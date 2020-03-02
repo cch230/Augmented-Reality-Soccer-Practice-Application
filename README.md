@@ -91,10 +91,14 @@ Tensorflow|tensorflow_lite|
   딥러닝은 다음의 방식으로 설계하였다. 먼저 일반적인 FCNN과 CNN의 가장 큰 차이점을 알아야 한다. CNN은 이미지 인식에 있어 이미지의 모든 픽셀을 분석하지 	않고 지역적, 공간적 상관관계를 고려한 학습을 한다. 따라서ﾠ효과적으로 Data-representation을 수행하고 이를 통해 분류 작업에 있어 높은 성능을 보인다. 매트랩을 활용한 CNN으로 좋은 자세의 데이터를 획득한다. 데이터 전처리는 유튜브를 통해 얻은 슈팅 방법별 영상을 다운로드, 편집하여 데이터를 확보하였다. 모델 설계는 분석을 위해 최소한의 CNN 구조를 2conv 계층, 1fcnn 계층으로 구성하였다. 학습 과정으로는 over fitting을 방지하기 위해 early stopping을 하였다.
 ## 데이터베이스
  데이터베이스의 설계는 다음과 같다. 회원 정보 테이블은 닉네임을 기본, 외래키로 지정하고 이름 핸드폰 생년월일 이메일 sns 회원 번호를 스키마로 지정한다. 사용자 영상 테이블은 영상번호를 기본 키로 회원 번호+닉네임을 외래키로 가지며 사용자 영상 날짜 사용자 능력(수치화)-슛, 피지컬, 트래핑을 스키마로 지정한다. 슈팅 테이블은 영상 이름을 기본 키로 슛 이름 영상(URL), 추천 능력치를 스키마로 지정하고 코멘트 테이블은 코멘트 번호를 기본 키, 영상번호를 외래키, 닉네임을 스키마로 좋아요 테이블은 좋아요 번호를 기본 키, 영상번호를 외래키, 닉네임을 스키마로 지정한다.
+ 
+ 
 ![DB](./image/db1.JPG)
 ![DB](./image/db2.JPG)
 ## UI
  마지막으로 <그림 20>는 UI의 상세 설계이다.
+ 
+ 
 ![UIdesign](./image/uip1.JPG)
 ![UIdesign](./image/uip2.JPG)
 
@@ -106,7 +110,6 @@ Tensorflow|tensorflow_lite|
 * [트래킹 코드](https://diy-project.tistory.com/96)
 * [공 관련 메소드](https://liveupdate.tistory.com/281)
 * [open cv ROI 추출](https://yeolco.tistory.com/57)
-
 * [Openpose라이브러리](https://m.blog.naver.com/worb1605/221297566317)
 * [Imgproc.HoughCircles 함수](http://docs.opencv.org/2.4/doc/tutorials/imgproc/imgtrans/hough_circle/hough_circle.html)
 * [안드로이드  tensorflow_lite에 대해](https://github.com/tensorflow/examples)
