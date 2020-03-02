@@ -23,6 +23,7 @@ public class ColorBlobDelector {
     private List<MatOfPoint> mContours = new ArrayList<MatOfPoint>();
 
     // Cache
+
     Mat mPyrDownMat = new Mat();
     Mat mHsvMat = new Mat();
     Mat mMask = new Mat();
