@@ -95,7 +95,7 @@ Tensorflow|tensorflow_lite|
 ![DB](./image/db2.JPG)
 ## UI
  마지막으로 <그림 20>는 UI의 상세 설계이다.
-![UIdesign](./image/uip2.JPG)
+![UIdesign](./image/uip1.JPG)
 ![UIdesign](./image/uip2.JPG)
 
 # 참고 문헌
