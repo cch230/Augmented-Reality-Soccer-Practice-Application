@@ -20,6 +20,7 @@ Ubuntu Server|18.0.4|
 
 #라이브러리 (Library)
 라이브러리|버전
+---|---|
 Opencv|4.1.0|
 Tensorflow|tensorflow_lite|
 
