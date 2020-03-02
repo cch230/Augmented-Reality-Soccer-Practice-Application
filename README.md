@@ -113,4 +113,4 @@ Tensorflow|tensorflow_lite|
 * [최소자승법에 대해](https://m.blog.naver.com/PostView.nhn?blogId=moojigai07&logNo=120186757908&proxyReferer=https%3A%2F%2Fwww.google.com%2F)
 * [어플리케이션 와이어프레임 figma](https://www.figma.com)
 * [CNN에 대해](https://untitledtblog.tistory.com/150)
-* > Haar-like feature 프로토타입 관련- 2011_송자혜, 장연진_강원대학_IT대학 전기전자공학부 전기전자공학 졸업논문
+* > Haar-like feature 프로토타입 관련-2011_송자혜,장연진_강원대학_IT대학 전기전자공학부 전기전자공학 졸업논문
