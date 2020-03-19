@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 #opencv library
-OPENCVROOT:= C:\Users\chansol\AndroidStudioProjects\tracking_ver3\opencv
+OPENCVROOT:=C:\Users\chansol\AndroidStudioProjects\tracking_ver4\opencv
 
 OPENCV_CAMERA_MODULES:=on
 OPENCV_INSTALL_MODULES:=on
@@ -15,4 +15,3 @@ LOCAL_SRC_FILES := main.cpp
 LOCAL_LDLIBS += -llog
 
 include $(BUILD_SHARED_LIBRARY)
-

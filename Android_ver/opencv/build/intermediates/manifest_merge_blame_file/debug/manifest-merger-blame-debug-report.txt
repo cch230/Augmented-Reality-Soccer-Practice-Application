@@ -6,8 +6,8 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
-8-->C:\Users\chansol\AndroidStudioProjects\tracking_ver3\opencv\java\AndroidManifest.xml
+8-->C:\Users\chansol\AndroidStudioProjects\tracking_ver4\opencv\java\AndroidManifest.xml
 9        android:targetSdkVersion="26" />
-9-->C:\Users\chansol\AndroidStudioProjects\tracking_ver3\opencv\java\AndroidManifest.xml
+9-->C:\Users\chansol\AndroidStudioProjects\tracking_ver4\opencv\java\AndroidManifest.xml
 10
 11</manifest>
