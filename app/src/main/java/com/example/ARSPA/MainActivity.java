@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
     }
-    public void onClick(View v){
+        public void onClick(View v){
         Intent intent;
         if(v==button01)
         {

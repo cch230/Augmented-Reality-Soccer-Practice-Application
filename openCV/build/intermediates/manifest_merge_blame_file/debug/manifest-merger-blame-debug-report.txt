@@ -6,8 +6,8 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
-8-->C:\Users\cch\git\test\ARSPA\openCV\java\AndroidManifest.xml
+8-->C:\Users\cch\git\test\project\ARSPA\openCV\java\AndroidManifest.xml
 9        android:targetSdkVersion="28" />
-9-->C:\Users\cch\git\test\ARSPA\openCV\java\AndroidManifest.xml
+9-->C:\Users\cch\git\test\project\ARSPA\openCV\java\AndroidManifest.xml
 10
 11</manifest>
