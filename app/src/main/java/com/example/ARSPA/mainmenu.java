@@ -35,12 +35,12 @@ public class mainmenu extends AppCompatActivity implements CameraBridgeViewBase.
     private Size SPECTRUM_SIZE;
     private Scalar CONTOUR_COLOR;
 
-   static {
+    /*   static {
            if (!OpenCVLoader.initDebug()) {
                Log.wtf(TAG, "OpenCV failed to load!");
            }
        }
-
+   */
     private JavaCameraView cameraView;
 
     private BaseLoaderCallback loaderCallback = new BaseLoaderCallback(this) {
