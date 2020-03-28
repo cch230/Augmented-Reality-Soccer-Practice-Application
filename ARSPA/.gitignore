@@ -12,6 +12,9 @@
 /captures
 .externalNativeBuild
 .cxx
+<<<<<<< HEAD:ARSPA/.gitignore
 /.idea/*
 .git
 .idea
+=======
+>>>>>>> origin/chansol:Android_ver/.gitignore

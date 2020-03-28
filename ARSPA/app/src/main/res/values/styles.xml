@@ -3,13 +3,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+<<<<<<< HEAD:ARSPA/app/src/main/res/values/styles.xml
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+=======
+>>>>>>> origin/chansol:Android_ver/app/src/main/res/values/styles.xml
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- No Title Bar-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
-    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_background</item>
-    </style>
-    </resources>
+
+</resources>
