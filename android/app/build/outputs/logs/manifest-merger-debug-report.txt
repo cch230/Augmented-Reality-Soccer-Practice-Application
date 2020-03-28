@@ -1,0 +1,228 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:2:1-37:12
+INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:2:1-37:12
+INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:2:1-37:12
+INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:2:1-37:12
+MERGED from [:posenet] C:\Users\cch\git\test\project\ARSPA\android\posenet\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:design:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\1e1608c3b268db124f0d0e3837935e7f\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\cbc388c0f44275425c8193c52d5a106a\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\eda0a533d14dc815d80dcf98797b5ecb\AndroidManifest.xml:2:1-11:12
+MERGED from [org.tensorflow:tensorflow-lite:2.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d30a9fbc71ab9cf66a5afa7c60197ab2\AndroidManifest.xml:2:1-10:12
+MERGED from [:openCV] C:\Users\cch\git\test\project\ARSPA\android\openCV\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
+MERGED from [org.tensorflow:tensorflow-lite-gpu:2.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\af09cf91f1c9804f35a4701ddb15cf9c\AndroidManifest.xml:2:1-10:12
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\53bc1fb1aa3a05ba3752bbd181b3b4d1\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\f24608a7967ca17dd4829cde0558c721\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:recyclerview-v7:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\2be00ccda5ada397c23f67042503295c\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d488050360207a7e77c6eaa7d94a2395\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\b962781491d4850a62b4a22c643a596c\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d0d3c55e74c1e9cac761b02cb5826be0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:transition:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\f11d45e3861201f74be868ac51ea6d16\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\f44262e0bbbc36cd1269e6d94cb90332\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\ac9074b237ab65c06f5e9dbb357c9dc2\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\7bbdbf6f3fde80587c294946dd2ca42e\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\59de71b096b75be414032d67313c72fb\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\cf66566d8044801d7cb76743539ca06d\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\65014235a3d9cf41f3957d440bd3b372\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\c9f66669fe11654b175c0327c2d2fb5e\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\dee8d43d9bf46af8e4672c72065b5280\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\2371cfda574d99349bcf7b5d8a3e2715\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\89bda59a8241a2c0e26f66a7d6c608ae\AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d287d19b53f28da44cb710719ccd7241\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cardview-v7:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\c98e1b9be34fcb2d7dcfac83ac15f511\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\e24e00a4137ccd2a129c006232d4b9be\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\591db5683db51473a58f9df1d9c3d523\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\94740cc6cc781f25142d8d402060990d\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d13c61f5ce43c2617a3d9c5dc2b2da22\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\544002c9f09dd14cf668edf9b6a3e681\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\b2c588b345a0d33506675f1b8395222f\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\632aa383838aa8e92a80ac9d0ccc9642\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\07a73358884703f40ffda26766a494aa\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\22da33009e72832d8855eb21d141c581\AndroidManifest.xml:17:1-22:12
+INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:2:1-37:12
+INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:2:1-37:12
+INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:2:1-37:12
+	package
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:3:5-51
+		INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:2:1-37:12
+		INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:2:1-37:12
+		INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.CAMERA
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:5:3-63
+	android:name
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:5:20-60
+uses-feature#android.hardware.camera
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:6:3-82
+	android:required
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:6:56-80
+	android:name
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:6:17-55
+uses-feature#android.hardware.camera.autofocus
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:7:3-92
+	android:required
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:7:66-90
+	android:name
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:7:17-65
+uses-feature#android.hardware.camera.front
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:8:3-88
+	android:required
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:8:62-86
+	android:name
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:8:17-61
+uses-feature#android.hardware.camera.front.autofocus
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:9:3-99
+	android:required
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:9:73-97
+	android:name
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:9:17-71
+supports-screens
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:11:3-15:35
+	android:largeScreens
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:14:7-34
+	android:smallScreens
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:12:7-34
+	android:normalScreens
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:13:7-35
+	android:resizeable
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:11:21-46
+	android:anyDensity
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:15:7-32
+uses-sdk
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:17:3-15
+INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:17:3-15
+INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:17:3-15
+MERGED from [:posenet] C:\Users\cch\git\test\project\ARSPA\android\posenet\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [:posenet] C:\Users\cch\git\test\project\ARSPA\android\posenet\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:design:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\1e1608c3b268db124f0d0e3837935e7f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\1e1608c3b268db124f0d0e3837935e7f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\cbc388c0f44275425c8193c52d5a106a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\cbc388c0f44275425c8193c52d5a106a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\eda0a533d14dc815d80dcf98797b5ecb\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\eda0a533d14dc815d80dcf98797b5ecb\AndroidManifest.xml:5:5-7:41
+MERGED from [org.tensorflow:tensorflow-lite:2.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d30a9fbc71ab9cf66a5afa7c60197ab2\AndroidManifest.xml:5:5-6:41
+MERGED from [org.tensorflow:tensorflow-lite:2.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d30a9fbc71ab9cf66a5afa7c60197ab2\AndroidManifest.xml:5:5-6:41
+MERGED from [:openCV] C:\Users\cch\git\test\project\ARSPA\android\openCV\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [:openCV] C:\Users\cch\git\test\project\ARSPA\android\openCV\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [org.tensorflow:tensorflow-lite-gpu:2.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\af09cf91f1c9804f35a4701ddb15cf9c\AndroidManifest.xml:5:5-6:41
+MERGED from [org.tensorflow:tensorflow-lite-gpu:2.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\af09cf91f1c9804f35a4701ddb15cf9c\AndroidManifest.xml:5:5-6:41
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\53bc1fb1aa3a05ba3752bbd181b3b4d1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\53bc1fb1aa3a05ba3752bbd181b3b4d1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\f24608a7967ca17dd4829cde0558c721\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\f24608a7967ca17dd4829cde0558c721\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\2be00ccda5ada397c23f67042503295c\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\2be00ccda5ada397c23f67042503295c\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d488050360207a7e77c6eaa7d94a2395\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d488050360207a7e77c6eaa7d94a2395\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\b962781491d4850a62b4a22c643a596c\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\b962781491d4850a62b4a22c643a596c\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d0d3c55e74c1e9cac761b02cb5826be0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d0d3c55e74c1e9cac761b02cb5826be0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\f11d45e3861201f74be868ac51ea6d16\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\f11d45e3861201f74be868ac51ea6d16\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\f44262e0bbbc36cd1269e6d94cb90332\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\f44262e0bbbc36cd1269e6d94cb90332\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\ac9074b237ab65c06f5e9dbb357c9dc2\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\ac9074b237ab65c06f5e9dbb357c9dc2\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\7bbdbf6f3fde80587c294946dd2ca42e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\7bbdbf6f3fde80587c294946dd2ca42e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\59de71b096b75be414032d67313c72fb\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\59de71b096b75be414032d67313c72fb\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\cf66566d8044801d7cb76743539ca06d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\cf66566d8044801d7cb76743539ca06d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\65014235a3d9cf41f3957d440bd3b372\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\65014235a3d9cf41f3957d440bd3b372\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\c9f66669fe11654b175c0327c2d2fb5e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\c9f66669fe11654b175c0327c2d2fb5e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\dee8d43d9bf46af8e4672c72065b5280\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\dee8d43d9bf46af8e4672c72065b5280\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\2371cfda574d99349bcf7b5d8a3e2715\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\2371cfda574d99349bcf7b5d8a3e2715\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\89bda59a8241a2c0e26f66a7d6c608ae\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\89bda59a8241a2c0e26f66a7d6c608ae\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d287d19b53f28da44cb710719ccd7241\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d287d19b53f28da44cb710719ccd7241\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\c98e1b9be34fcb2d7dcfac83ac15f511\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\c98e1b9be34fcb2d7dcfac83ac15f511\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\e24e00a4137ccd2a129c006232d4b9be\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\e24e00a4137ccd2a129c006232d4b9be\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\591db5683db51473a58f9df1d9c3d523\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\591db5683db51473a58f9df1d9c3d523\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\94740cc6cc781f25142d8d402060990d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\94740cc6cc781f25142d8d402060990d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d13c61f5ce43c2617a3d9c5dc2b2da22\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d13c61f5ce43c2617a3d9c5dc2b2da22\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\544002c9f09dd14cf668edf9b6a3e681\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\544002c9f09dd14cf668edf9b6a3e681\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\b2c588b345a0d33506675f1b8395222f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\b2c588b345a0d33506675f1b8395222f\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\632aa383838aa8e92a80ac9d0ccc9642\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\632aa383838aa8e92a80ac9d0ccc9642\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\07a73358884703f40ffda26766a494aa\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\07a73358884703f40ffda26766a494aa\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\22da33009e72832d8855eb21d141c581\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\22da33009e72832d8855eb21d141c581\AndroidManifest.xml:20:5-44
+INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:17:3-15
+INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:17:3-15
+	android:targetSdkVersion
+		INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:17:3-15
+		INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:17:3-15
+		MERGED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:17:3-15
+		MERGED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:17:3-15
+		INJECTED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml
+application
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:19:3-35:17
+MERGED from [com.android.support:design:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\1e1608c3b268db124f0d0e3837935e7f\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\1e1608c3b268db124f0d0e3837935e7f\AndroidManifest.xml:22:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\eda0a533d14dc815d80dcf98797b5ecb\AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\eda0a533d14dc815d80dcf98797b5ecb\AndroidManifest.xml:9:5-20
+MERGED from [org.tensorflow:tensorflow-lite:2.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d30a9fbc71ab9cf66a5afa7c60197ab2\AndroidManifest.xml:8:5-20
+MERGED from [org.tensorflow:tensorflow-lite:2.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\d30a9fbc71ab9cf66a5afa7c60197ab2\AndroidManifest.xml:8:5-20
+MERGED from [org.tensorflow:tensorflow-lite-gpu:2.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\af09cf91f1c9804f35a4701ddb15cf9c\AndroidManifest.xml:8:5-20
+MERGED from [org.tensorflow:tensorflow-lite-gpu:2.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\af09cf91f1c9804f35a4701ddb15cf9c\AndroidManifest.xml:8:5-20
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\2371cfda574d99349bcf7b5d8a3e2715\AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\2371cfda574d99349bcf7b5d8a3e2715\AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\89bda59a8241a2c0e26f66a7d6c608ae\AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\89bda59a8241a2c0e26f66a7d6c608ae\AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] C:\Users\cch\.gradle\caches\transforms-2\files-2.1\2371cfda574d99349bcf7b5d8a3e2715\AndroidManifest.xml:22:18-91
+	android:supportsRtl
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:24:7-33
+	android:label
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:22:7-46
+	android:roundIcon
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:23:7-52
+	android:icon
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:21:7-41
+	android:allowBackup
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:20:7-33
+	android:theme
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:25:7-38
+activity#org.tensorflow.lite.examples.posenet.CameraActvity
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:28:5-33:16
+	android:exported
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:28:45-68
+	android:name
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:28:15-44
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:29:7-32:23
+action#android.intent.action.MAIN
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:30:9-60
+	android:name
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:30:17-58
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:31:9-68
+	android:name
+		ADDED from C:\Users\cch\git\test\project\ARSPA\android\app\src\main\AndroidManifest.xml:31:19-66
