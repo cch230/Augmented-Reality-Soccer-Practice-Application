@@ -52,7 +52,7 @@ import kotlin.math.abs
 
 class PosenetActivity :
   Fragment(),
-  ActivityCompat.OnRequestPermissionsResultCallback, CameraBridgeViewBase.CvCameraViewListener2 {
+  ActivityCompat.OnRequestPermissionsResultCallback {
 
   /** List of body joints that should be connected.    */
   private val bodyJoints = listOf(
@@ -137,7 +137,7 @@ class PosenetActivity :
   /** Abstract interface to someone holding a display surface.    */
   private var surfaceHolder: SurfaceHolder? = null
 
-
+   var tracking=org.tensorflow.lite.examples.posenet.tracking()
 
 
   /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
@@ -428,11 +428,11 @@ class PosenetActivity :
         rotateMatrix, true
       )
       image.close()
-
+      val TrackingBitmap=tracking.trackingBall(rotatedBitmap)
       // Process an image for analysis in every 3 frames.
       frameCounter = (frameCounter + 1) % 3
       if (frameCounter == 0) {
-        processImage(rotatedBitmap)
+        processImage(TrackingBitmap)
       }
     }
   }
@@ -675,45 +675,5 @@ class PosenetActivity :
     private const val TAG = "PosenetActivity"
   }
 
-  override fun onCameraViewStarted(width: Int, height: Int) {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
-  override fun onCameraViewStopped() {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
-  override fun onCameraFrame(inputFrame: CameraBridgeViewBase.CvCameraViewFrame): Mat {
-    val input = inputFrame.gray()
-    val circles = Mat()
-    Imgproc.blur(input, input, org.opencv.core.Size(7.0, 7.0), Point(2.0, 2.0))
-    Imgproc.HoughCircles(
-      input,
-      circles,
-      Imgproc.CV_HOUGH_GRADIENT,
-      2.0,
-      100.0,
-      100.0,
-      90.0,
-      0,
-      1000
-    )
-    Log.i(TAG, "매소드")
-
-    if (circles.cols() > 0) {
-      for (x in 0 until circles.cols().coerceAtMost(5)) {
-        val circleVec = circles[0, x] ?: break
-        val center =
-          Point(circleVec[0].toInt().toDouble(), circleVec[1].toInt().toDouble())
-        val radius = circleVec[2].toInt()
-        Imgproc.circle(input, center, 3, Scalar(255.0, 255.0, 255.0), 5)
-        Imgproc.circle(input, center, radius, Scalar(255.0, 255.0, 255.0), 2)
-        Log.i(TAG, "원")
-      }
-    }
-    circles.release()
-    input.release()
-    return inputFrame.rgba()
-  }
 }
 

@@ -18,7 +18,11 @@ public class CameraActvity extends AppCompatActivity  {
     public static final String TAG = "src";
     private JavaCameraView cameraView;
 
-
+    static {
+        if (!OpenCVLoader.initDebug()) {
+            Log.wtf(TAG, "OpenCV failed to load!");
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
