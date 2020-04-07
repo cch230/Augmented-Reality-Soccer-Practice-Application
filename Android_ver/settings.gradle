@@ -1,2 +1,0 @@
-include ':app', ':opencv'
-rootProject.name='tracking_ver4'
