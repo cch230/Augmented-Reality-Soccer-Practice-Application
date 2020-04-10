@@ -20,7 +20,6 @@ public class tracking {
     Scalar yellowLower = new Scalar(0,164,114);
     Scalar yellowUpper = new Scalar(94,255,255);
     ArrayList <Point> line_list=new ArrayList<>();
-
     public Bitmap trackingBall(Bitmap bitmap){
         Mat matInput=new Mat();
         Utils.bitmapToMat(bitmap, matInput);
@@ -43,7 +42,7 @@ public class tracking {
 
         Mat circle = new Mat();
 
-        Imgproc.HoughCircles(matGaussian,circle,Imgproc.HOUGH_GRADIENT,1.0,20,70,30,30,300);
+        Imgproc.HoughCircles(matGaussian,circle,Imgproc.HOUGH_GRADIENT,2.0,20,70,30,30,300);
         if (circle.cols() > 0) {
             for (int x = 0; x < Math.min(circle.cols(), 1); x++) {
                 double circleVec[] = circle.get(0, x);
