@@ -82,12 +82,15 @@ class Posenet(
   /** An Interpreter for the TFLite model.   */
   private var interpreter: Interpreter? = null
   private var gpuDelegate: GpuDelegate? = null
+  private val NUM_LITE_THREADS = 4
 
   private fun getInterpreter(): Interpreter {
     if (interpreter != null) {
       return interpreter!!
     }
     val options = Interpreter.Options()
+    options.setNumThreads(NUM_LITE_THREADS)
+
     when (device) {
       Device.CPU -> { }
       Device.GPU -> {
@@ -194,25 +197,21 @@ class Posenet(
    *      person: a Person object containing data about keypoint locations and confidence scores
    */
   fun estimateSinglePose(bitmap: Bitmap): Person {
-    val estimationStartTimeNanos = SystemClock.elapsedRealtimeNanos()
+    var t1: Long = SystemClock.elapsedRealtimeNanos()
     val inputArray = arrayOf(initInputArray(bitmap))
-    Log.i(
-      "posenet",
-      String.format(
-        "Scaling to [-1,1] took %.2f ms",
-        1.0f * (SystemClock.elapsedRealtimeNanos() - estimationStartTimeNanos) / 1_000_000
-      )
-    )
+    var t2: Long = SystemClock.elapsedRealtimeNanos()
+
+    Log.i("posenet", String.format("Scaling to [-1,1] took %.2f ms", 1.0f * (t2 - t1) / 1_000_000))
+
 
     val outputMap = initOutputMap(getInterpreter())
 
+    t1 = SystemClock.elapsedRealtimeNanos()
     val inferenceStartTimeNanos = SystemClock.elapsedRealtimeNanos()
     getInterpreter().runForMultipleInputsOutputs(inputArray, outputMap)
     lastInferenceTimeNanos = SystemClock.elapsedRealtimeNanos() - inferenceStartTimeNanos
-    Log.i(
-      "posenet",
-      String.format("Interpreter took %.2f ms", 1.0f * lastInferenceTimeNanos / 1_000_000)
-    )
+    t2 = SystemClock.elapsedRealtimeNanos()
+    Log.i("posenet", String.format("Interpreter took %.2f ms", 1.0f * (t2 - t1) / 1_000_000))
 
     val heatmaps = outputMap[0] as Array<Array<Array<FloatArray>>>
     val offsets = outputMap[1] as Array<Array<Array<FloatArray>>>
@@ -229,7 +228,6 @@ class Posenet(
       var maxCol = 0
       for (row in 0 until height) {
         for (col in 0 until width) {
-          heatmaps[0][row][col][keypoint] = heatmaps[0][row][col][keypoint]
           if (heatmaps[0][row][col][keypoint] > maxVal) {
             maxVal = heatmaps[0][row][col][keypoint]
             maxRow = row
