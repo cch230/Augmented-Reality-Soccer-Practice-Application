@@ -360,6 +360,7 @@ class PosenetActivity :
   private fun startBackgroundThread() {
     backgroundThread = HandlerThread("imageAvailableListener").also { it.start() }
     backgroundHandler = Handler(backgroundThread!!.looper)
+    Log.e(TAG, "threading strart")
   }
 
   /**
@@ -430,7 +431,7 @@ class PosenetActivity :
       image.close()
       val TrackingBitmap=tracking.trackingBall(rotatedBitmap)
       // Process an image for analysis in every 3 frames.
-      frameCounter = (frameCounter + 1) % 3
+      frameCounter = (frameCounter + 1) %1
       if (frameCounter == 0) {
         processImage(TrackingBitmap)
       }
@@ -540,7 +541,24 @@ class PosenetActivity :
         )
       }
     }
-
+    canvas.drawText(
+      "Score: %.2f".format(person.score),
+      (15.0f * widthRatio),
+      (30.0f * heightRatio + bottom),
+      paint
+    )
+    canvas.drawText(
+      "Device: %s".format(posenet.device),
+      (15.0f * widthRatio),
+      (50.0f * heightRatio + bottom),
+      paint
+    )
+    canvas.drawText(
+      "Time: %.2f ms".format(posenet.lastInferenceTimeNanos * 1.0f / 1_000_000),
+      (15.0f * widthRatio),
+      (70.0f * heightRatio + bottom),
+      paint
+    )
 
 
     // Draw!
