@@ -19,13 +19,13 @@ public class tracking {
     private Mat matMask=new Mat();
     Scalar yellowLower = new Scalar(0,164,114);
     Scalar yellowUpper = new Scalar(94,255,255);
+    public Double[] circleVec_save=new Double[2];
     ArrayList <Point> line_list=new ArrayList<>();
     public Bitmap trackingBall(Bitmap bitmap){
         Mat matInput=new Mat();
         Utils.bitmapToMat(bitmap, matInput);
         Mat input =new Mat();
         Utils.bitmapToMat(bitmap, input);
-       Imgproc.cvtColor(input,input,Imgproc.COLOR_RGB2GRAY);
 
 
         Imgproc.blur(input,input,new Size(7,7),new Point(2,2));
@@ -50,6 +50,9 @@ public class tracking {
                     break;
                 }
                 Point center = new Point((int) circleVec[0], (int) circleVec[1]);
+                circleVec_save[0]=circleVec[0];
+                circleVec_save[1]=circleVec[1];
+
                 int radius = (int) circleVec[2];
                 Imgproc.circle(matInput, center, 3, new Scalar(0, 0, 0), 2);
                 Imgproc.circle(matInput, center, radius, new Scalar(0, 0, 0), 2);
