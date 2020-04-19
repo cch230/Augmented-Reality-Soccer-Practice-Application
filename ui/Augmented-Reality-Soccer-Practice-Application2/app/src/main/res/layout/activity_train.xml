@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="7dp"
+        android:text="훈련"
+        android:textSize="36sp" />
+
+    <TextView
+        android:layout_width="177dp"
+        android:layout_height="36dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="75dp"
+        android:text="훈련을 해보세요 기록은 수치화 되어 기록되요"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="318dp"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="145dp"
+        android:background="@drawable/bar"
+        android:layout_centerInParent="true"
+        />
+
+</RelativeLayout>

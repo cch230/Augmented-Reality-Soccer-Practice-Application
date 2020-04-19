@@ -1,0 +1,2 @@
+include ':app', ':openCV'
+rootProject.name='ARSPA'

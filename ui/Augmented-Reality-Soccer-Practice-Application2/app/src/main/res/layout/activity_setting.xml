@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+   >
+
+    <TextView
+        android:layout_width="111dp"
+        android:layout_height="47dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="7dp"
+        android:text="설정"
+        android:textSize="40sp"
+        />
+    <TextView
+        android:layout_width="318dp"
+        android:layout_height="18dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="23dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="84dp"
+        android:text="게시물과 개인정보를 관리할 수 있어요"
+        android:textSize="15sp"
+
+        />
+
+    <View
+        android:layout_width="318dp"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="145dp"
+        android:background="@drawable/bar"
+        android:layout_centerInParent="true"
+        />
+
+    <ImageButton
+        android:layout_width="103dp"
+        android:layout_height="105dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="181dp"
+        android:background="@drawable/empty_picture"
+        />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="124dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="205dp"
+        android:layout_marginLeft="144dp"
+
+        />
+
+    <EditText
+        android:id="@+id/nickname"
+        android:layout_width="137dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="258dp"
+        android:layout_marginLeft="145dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="님"
+        android:layout_marginTop="204dp"
+        android:layout_marginLeft="282dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/login_in_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그인"
+        android:layout_marginTop="371dp"
+        android:layout_marginLeft="53dp"
+        android:textStyle="bold"
+        android:onClick="ClickInSetting"
+        />
+
+    <TextView
+        android:id="@+id/manage_in_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="게시물 관리"
+        android:layout_marginTop="420dp"
+        android:layout_marginLeft="53dp"
+        android:textStyle="bold"
+        android:onClick="ClickInSetting"
+        />
+
+    <TextView
+        android:id="@+id/privacy_in_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="나의정보 관리"
+        android:layout_marginTop="473dp"
+        android:layout_marginLeft="53dp"
+        android:textStyle="bold"
+        android:onClick="ClickInSetting"
+        />
+
+    <TextView
+        android:id="@+id/notice_in_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="공지사항"
+        android:layout_marginTop="369dp"
+        android:layout_marginLeft="213dp"
+        android:textStyle="bold"
+        android:onClick="ClickInSetting"
+        />
+
+    <TextView
+        android:id="@+id/rate_in_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="평가하기"
+        android:layout_marginTop="420dp"
+        android:layout_marginLeft="213dp"
+        android:textStyle="bold"
+        android:onClick="ClickInSetting"
+        />
+
+    <TextView
+        android:id="@+id/info_in_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="프로그램 정보"
+        android:layout_marginTop="473dp"
+        android:layout_marginLeft="213dp"
+        android:textStyle="bold"
+        android:onClick="ClickInSetting"
+        />
+
+</RelativeLayout>

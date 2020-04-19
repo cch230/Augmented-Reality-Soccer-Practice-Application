@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="111dp"
+        android:layout_height="47dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="21dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="39dp"
+        android:text="프로필"
+        android:textSize="40sp"
+        />
+
+    <View
+        android:layout_width="371dp"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="126dp"
+        android:background="@drawable/bar"
+        android:layout_centerInParent="true"
+        />
+    <ImageButton
+        android:id="@+id/setting_icon"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="323dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="39dp"
+        android:background="@drawable/setting_btn"
+        android:onClick = "ClickSetting"
+/>
+
+
+
+
+
+    <ImageButton
+        android:layout_width="103dp"
+        android:layout_height="105dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="39dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="202dp"
+        android:background="@drawable/empty_picture"
+        />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="124dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="205dp"
+        android:layout_marginLeft="170dp"
+
+        />
+
+    <EditText
+        android:id="@+id/nickname"
+        android:layout_width="137dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="258dp"
+        android:layout_marginLeft="171dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="님"
+        android:layout_marginTop="204dp"
+        android:layout_marginLeft="308dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="피지컬 숙련도 : "
+        android:layout_marginTop="364dp"
+        android:layout_marginLeft="157dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+    <EditText
+        android:id="@+id/point_phy"
+        android:layout_width="30dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="374dp"
+        android:layout_marginLeft="290dp"
+
+/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="슈팅 정확도 : "
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="157dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/point_shoot"
+        android:layout_width="30dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="410dp"
+        android:layout_marginLeft="279dp"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="트래핑 신속도 : "
+        android:layout_marginTop="432dp"
+        android:layout_marginLeft="157dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/point_trp"
+        android:layout_width="30dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="442dp"
+        android:layout_marginLeft="290dp"
+
+        />
+
+    <View
+        android:layout_width="411dp"
+        android:layout_height="12dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="515dp"
+        android:background="@drawable/bar_2" />
+
+    <ImageButton
+        android:id="@+id/frame1_btn"
+        android:layout_width="120dp"
+        android:layout_height="173dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="629dp"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/frame_1"
+        android:onClick="ClickSetting"
+        />
+
+    <ImageButton
+        android:id="@+id/frame2_btn"
+        android:layout_width="120dp"
+        android:layout_height="173dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="241dp"
+        android:layout_marginTop="627dp"
+        android:background="@drawable/frame_2"
+        android:onClick="ClickSetting"/>
+
+    <TextView
+        android:layout_width="119dp"
+        android:layout_height="49dp"
+        android:layout_marginLeft="58dp"
+        android:layout_marginTop="822dp"
+        android:text="자신의 부족한 부분의 영상"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:text="나의 훈련도 그래프 보기"
+        android:layout_marginTop="822dp"
+        android:layout_marginLeft="261dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+
+
+</RelativeLayout>
+
+</ScrollView>

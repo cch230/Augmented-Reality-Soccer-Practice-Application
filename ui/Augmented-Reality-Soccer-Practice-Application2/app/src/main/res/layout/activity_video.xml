@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+    >
+    <TextView
+        android:layout_width="74dp"
+        android:layout_height="47dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="39dp"
+        android:layout_marginTop="21dp"
+        android:text="영상"
+        android:textSize="40sp"
+        />
+
+    <View
+        android:layout_width="371dp"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="126dp"
+        android:background="@drawable/bar"
+        android:layout_centerInParent="true"
+        />
+    <VideoView
+    android:id="@+id/video_1"
+    android:layout_alignParentLeft="true"
+    android:layout_marginLeft="23dp"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="180dp"
+    android:layout_width="365dp"
+    android:layout_height="193dp"
+    />
+    <ImageView
+        android:id="@+id/after_heart"
+        android:layout_width="19dp"
+        android:layout_height="17dp"
+        android:background="@drawable/after_heart"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="23dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="383dp"
+        android:onClick="OnClick"
+        />
+    <ImageView
+        android:id="@+id/before_heart"
+        android:layout_width="19dp"
+        android:layout_height="17dp"
+        android:background="@drawable/before_heart"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="23dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="383dp"
+        android:onClick="OnClick"
+        />
+
+    <TextView
+        android:layout_width="55dp"
+        android:layout_height="14dp"
+/>
+
+    <ImageView
+        android:id="@+id/bookmark"
+        android:layout_width="28dp"
+        android:layout_height="25dp"
+        android:background="@drawable/bookmark"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="312dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="405dp"
+        android:onClick="OnClick"
+        />
+
+
+
+
+
+
+</RelativeLayout>
