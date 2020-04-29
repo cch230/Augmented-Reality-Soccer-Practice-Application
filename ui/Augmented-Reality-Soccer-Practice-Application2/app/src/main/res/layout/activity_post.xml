@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context =".post">
+    android:layout_width="fill_parent"
+    android:layout_height="800dp"
+    android:orientation="vertical"
+    >
+<RelativeLayout
+    tools:context=".post"
+    android:layout_width="fill_parent"
+    android:layout_height="170mm"
+    >
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="21dp"
-        android:layout_marginTop="39dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="7dp"
         android:text="포스트"
+        android:textColor="#000000"
         android:textSize="36sp" />
 
-    <View
-        android:layout_width="371dp"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="126dp"
-        android:background="@drawable/bar"
-        android:layout_centerInParent="true"
-        />
 
     <TextView
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -35,35 +36,65 @@
         android:layout_marginTop="151dp"
         android:text="자신의 영상을 확인해 보세요"
         android:textSize="17sp" />
-    <VideoView
-        android:id="@+id/post_video1"
-        android:layout_width="198dp"
-        android:layout_height="218dp"
-        android:layout_marginLeft="21dp"
-        android:layout_marginTop="190dp"
-        />
-    <ImageButton
-        android:layout_width="25dp"
-        android:layout_height="34dp"
-        android:layout_marginLeft="146dp"
-        android:layout_marginTop="416dp"
-        android:background="@drawable/download_btn"
-/>
 
-    <ImageButton
-        android:layout_width="24dp"
-        android:layout_height="33dp"
-        android:layout_marginLeft="171dp"
-        android:layout_marginTop="416dp"
-        android:background="@drawable/delete_btn"
-        />
-    <ImageButton
+
+    <HorizontalScrollView
         android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_marginLeft="198dp"
-        android:layout_marginTop="416dp"
-        android:background="@drawable/bookmark"
-        />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <VideoView
+                android:id="@+id/self_video1"
+                android:layout_width="198dp"
+                android:layout_height="218dp"
+                android:layout_marginLeft="21dp"
+                android:layout_marginTop="190dp" />
+
+            <!--  <ImageButton
+                android:layout_width="25dp"
+                android:layout_height="34dp"
+                android:layout_marginLeft="146dp"
+                android:layout_marginTop="395dp"
+                android:background="@drawable/download_btn" />
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="171dp"
+                android:layout_marginTop="416dp"
+                android:background="@drawable/delete_btn" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:layout_marginLeft="198dp"
+                android:layout_marginTop="416dp"
+                android:background="@drawable/bookmark" />
+
+
+-->
+
+            <VideoView
+                android:id="@+id/self_video2"
+                android:layout_width="198dp"
+                android:layout_height="218dp"
+                android:layout_marginLeft="21dp"
+                android:layout_marginTop="190dp" />
+
+            <VideoView
+                android:id="@+id/self_video3"
+                android:layout_width="198dp"
+                android:layout_height="218dp"
+                android:layout_marginLeft="21dp"
+                android:layout_marginTop="190dp" />
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <TextView
         android:layout_width="185dp"
@@ -73,24 +104,20 @@
         android:text="나와 비슷한 자세의 선수를 확인해 보세요"
         android:textSize="17sp" />
 
+
+
+
+
     <VideoView
-        android:id="@+id/post_video2"
+        android:id="@+id/pro_video1"
         android:layout_width="198dp"
         android:layout_height="218dp"
         android:layout_marginLeft="21dp"
-        android:layout_marginTop="555dp"
-        />
+        android:layout_marginTop="555dp" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navi_menu"
-        app:itemTextColor="@drawable/selector"
-        app:itemIconTint="@drawable/selector"
-        />
+
 
 
 </RelativeLayout>
+</ScrollView>

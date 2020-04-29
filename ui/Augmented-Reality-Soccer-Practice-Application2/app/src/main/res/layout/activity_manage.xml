@@ -13,15 +13,8 @@
         android:layout_marginLeft="21dp"
         android:layout_marginTop="39dp"
         android:text="게시물 관리"
+        android:textColor="#000000"
         android:textSize="36sp" />
 
-    <View
-        android:layout_width="371dp"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="126dp"
-        android:background="@drawable/bar"
-        android:layout_centerInParent="true"
-        />
 
 </RelativeLayout>

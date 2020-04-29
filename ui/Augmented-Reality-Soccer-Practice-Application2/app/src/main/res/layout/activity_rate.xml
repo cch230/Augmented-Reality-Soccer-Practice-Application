@@ -14,32 +14,27 @@
         android:layout_marginLeft="39dp"
         android:layout_marginTop="21dp"
         android:text="평가하기"
+        android:textColor="#000000"
         android:textSize="36sp" />
 
-    <View
-        android:layout_width="371dp"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="126dp"
-        android:background="@drawable/bar"
-        android:layout_centerInParent="true"
-        />
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="230dp"
+        android:layout_marginTop="200dp"
         android:layout_centerInParent="true"
         android:numStars="5"
 
         />
     <ImageButton
+        android:id="@+id/submit_btn"
         android:layout_width="221dp"
         android:layout_height="55dp"
         android:background="@drawable/submit_btn"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="310dp"
         android:layout_centerInParent="true"
+        android:onClick="OnClickHandler"
         />
 
 

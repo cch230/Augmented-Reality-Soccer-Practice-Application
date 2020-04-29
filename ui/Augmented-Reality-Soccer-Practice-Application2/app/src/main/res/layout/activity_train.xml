@@ -11,28 +11,42 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="39dp"
         android:text="훈련"
+        android:textColor="#000000"
         android:textSize="36sp" />
 
-    <TextView
-        android:layout_width="177dp"
-        android:layout_height="36dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="75dp"
-        android:text="훈련을 해보세요 기록은 수치화 되어 기록되요"
-        android:textSize="15sp" />
-
-    <View
-        android:layout_width="318dp"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="145dp"
-        android:background="@drawable/bar"
-        android:layout_centerInParent="true"
+    <ImageButton
+        android:id="@+id/physical_btn"
+        android:layout_width="269dp"
+        android:layout_height="66dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="178dp"
+        android:background="@drawable/physical_btn"
+        android:onClick="onClick"
         />
+
+    <ImageButton
+        android:id="@+id/shoot_btn"
+        android:layout_width="269dp"
+        android:layout_height="66dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="287dp"
+        android:background="@drawable/shoot_btn"
+        android:onClick="onClick"
+        />
+
+    <ImageButton
+        android:id="@+id/trapping_btn"
+        android:layout_width="269dp"
+        android:layout_height="66dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="396dp"
+        android:background="@drawable/trapping_btn"
+        android:onClick="onClick"
+        />
+
+
 
 </RelativeLayout>

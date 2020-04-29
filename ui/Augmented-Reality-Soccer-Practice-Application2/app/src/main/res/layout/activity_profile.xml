@@ -1,191 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160mm"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="111dp"
-        android:layout_height="47dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="21dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="39dp"
-        android:text="프로필"
-        android:textSize="40sp"
-        />
-
-    <View
-        android:layout_width="371dp"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="126dp"
-        android:background="@drawable/bar"
-        android:layout_centerInParent="true"
-        />
-    <ImageButton
-        android:id="@+id/setting_icon"
-        android:layout_width="47dp"
-        android:layout_height="47dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="323dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="39dp"
-        android:background="@drawable/setting_btn"
-        android:onClick = "ClickSetting"
-/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="7dp"
+            android:text="프로필"
+            android:textColor="#000000"
+            android:textSize="40sp" />
 
 
+        <ImageButton
+            android:id="@+id/setting_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="308dp"
+            android:layout_marginTop="11dp"
+            android:background="@drawable/setting_btn"
+            android:onClick="ClickSetting" />
+
+        <ImageView
+            android:id="@+id/empty_picture"
+            android:layout_width="103dp"
+            android:layout_height="105dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="117dp"
+           android:src="@drawable/ic_person_black_24dp"
+            />
 
 
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="165dp"
+            android:layout_marginTop="129dp"
+            android:text="최철환"
+            android:textSize="20sp"
 
-    <ImageButton
-        android:layout_width="103dp"
-        android:layout_height="105dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="39dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="202dp"
-        android:background="@drawable/empty_picture"
-        />
+            />
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="124dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="205dp"
-        android:layout_marginLeft="170dp"
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="165dp"
+            android:layout_marginTop="183dp"
+            android:text="철환찡"
+            android:textSize="20sp"/>
 
-        />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/fire"
+            android:layout_marginLeft="29dp"
+            android:layout_marginTop="318dp"
+            />
 
-    <EditText
-        android:id="@+id/nickname"
-        android:layout_width="137dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="258dp"
-        android:layout_marginLeft="171dp"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3주차"
+            android:textSize="20sp"
+            android:layout_marginTop="388dp"
+            android:layout_marginLeft="54dp"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="님"
-        android:layout_marginTop="204dp"
-        android:layout_marginLeft="308dp"
-        android:textSize="20sp"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="255dp"
+            android:layout_marginTop="129dp"
+            android:text="님"
+            android:textSize="20sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="피지컬 숙련도 : "
-        android:layout_marginTop="364dp"
-        android:layout_marginLeft="157dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        />
-    <EditText
-        android:id="@+id/point_phy"
-        android:layout_width="30dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="374dp"
-        android:layout_marginLeft="290dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="143dp"
+            android:layout_marginTop="321dp"
+            android:text="피지컬 숙련도 : "
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-/>
+        <TextView
+            android:id="@+id/point_phy"
+            android:layout_width="30dp"
+            android:layout_height="23dp"
+            android:layout_marginLeft="290dp"
+            android:layout_marginTop="321dp"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="슈팅 정확도 : "
-        android:layout_marginTop="400dp"
-        android:layout_marginLeft="157dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        />
+            />
 
-    <EditText
-        android:id="@+id/point_shoot"
-        android:layout_width="30dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="410dp"
-        android:layout_marginLeft="279dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="143dp"
+            android:layout_marginTop="349dp"
+            android:text="슈팅 정확도 : "
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        />
+        <TextView
+            android:id="@+id/point_shoot"
+            android:layout_width="30dp"
+            android:layout_height="23dp"
+            android:layout_marginLeft="269dp"
+            android:layout_marginTop="349dp"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="트래핑 신속도 : "
-        android:layout_marginTop="432dp"
-        android:layout_marginLeft="157dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        />
+            />
 
-    <EditText
-        android:id="@+id/point_trp"
-        android:layout_width="30dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="442dp"
-        android:layout_marginLeft="290dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="143dp"
+            android:layout_marginTop="379dp"
+            android:text="트래핑 신속도 : "
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        />
+        <TextView
+            android:id="@+id/point_trp"
+            android:layout_width="30dp"
+            android:layout_height="23dp"
+            android:layout_marginLeft="290dp"
+            android:layout_marginTop="379dp"
 
-    <View
-        android:layout_width="411dp"
-        android:layout_height="12dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="515dp"
-        android:background="@drawable/bar_2" />
+            />
 
-    <ImageButton
-        android:id="@+id/frame1_btn"
-        android:layout_width="120dp"
-        android:layout_height="173dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="629dp"
-        android:layout_marginLeft="50dp"
-        android:background="@drawable/frame_1"
-        android:onClick="ClickSetting"
-        />
+        <View
+            android:layout_width="411dp"
+            android:layout_height="12dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="509dp"
+            android:background="@drawable/bar_2" />
 
-    <ImageButton
-        android:id="@+id/frame2_btn"
-        android:layout_width="120dp"
-        android:layout_height="173dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="241dp"
-        android:layout_marginTop="627dp"
-        android:background="@drawable/frame_2"
-        android:onClick="ClickSetting"/>
+        <ImageButton
+            android:id="@+id/frame1_btn"
+            android:layout_width="120dp"
+            android:layout_height="173dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="597dp"
+            android:background="@drawable/frame_1"
+            android:onClick="ClickSetting" />
 
-    <TextView
-        android:layout_width="119dp"
-        android:layout_height="49dp"
-        android:layout_marginLeft="58dp"
-        android:layout_marginTop="822dp"
-        android:text="자신의 부족한 부분의 영상"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <ImageButton
+            android:id="@+id/frame2_btn"
+            android:layout_width="120dp"
+            android:layout_height="173dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="198dp"
+            android:layout_marginTop="597dp"
+            android:background="@drawable/frame_2"
+            android:onClick="ClickSetting" />
 
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="48dp"
-        android:text="나의 훈련도 그래프 보기"
-        android:layout_marginTop="822dp"
-        android:layout_marginLeft="261dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        />
+        <TextView
+            android:layout_width="119dp"
+            android:layout_height="49dp"
+            android:layout_marginLeft="39dp"
+            android:layout_marginTop="790dp"
+            android:text="자신의 부족한 부분의 영상"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="207dp"
+            android:layout_marginTop="785dp"
+            android:text="나의 훈련도 그래프 보기"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
 
-
-</RelativeLayout>
+    </RelativeLayout>
 
 </ScrollView>

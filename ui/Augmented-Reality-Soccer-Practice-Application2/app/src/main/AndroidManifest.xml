@@ -1,17 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.ARSPA">
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="false"/>
-    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
-    <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
-    <uses-feature android:name="android.hardware.camera.front.autofocus"  android:required="false"/>
 
-    <supports-screens android:resizeable="true"
-        android:smallScreens="true"
-        android:normalScreens="true"
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> <!--사진 읽기-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!--사진 쓰기-->
+
+<!-- 구글 로그인 관련 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front.autofocus"
+        android:required="false" />
+
+    <supports-screens
+        android:anyDensity="true"
         android:largeScreens="true"
-        android:anyDensity="true" />
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
 
     <application
         android:allowBackup="true"
@@ -20,9 +42,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mainmenu"
+        <activity android:name=".bottombar" />
+
+        <activity
+            android:name=".trapping2"
             android:screenOrientation="landscape"
-            android:configChanges="keyboardHidden|orientation"/>
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".physical2"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".mainmenu"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="fullSensor" />
+        <activity android:name=".login" />
+        <activity android:name=".findaccount" />
+        <activity android:name=".info" />
+        <activity android:name=".manage" />
+        <activity android:name=".notice" />
+        <activity android:name=".post" />
+        <activity android:name=".privacy" />
+        <activity android:name=".profile" />
+        <activity android:name=".rate" />
+        <activity android:name=".setting" />
+        <activity
+            android:name=".shoot2"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".sineup" />
+        <activity android:name=".statistic" />
+        <activity android:name=".train" />
+        <activity android:name=".video" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">

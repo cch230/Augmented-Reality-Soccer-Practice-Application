@@ -10,27 +10,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="21dp"
-        android:layout_marginTop="39dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="18dp"
         android:text="프로그램 정보"
+        android:textColor="#000000"
         android:textSize="36sp" />
 
-    <View
-        android:layout_width="371dp"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="126dp"
-        android:background="@drawable/bar"
-        android:layout_centerInParent="true"
-        />
 
     <View
         android:layout_width="320dp"
         android:layout_height="440dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="64dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="101dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="58dp"
         android:background="@drawable/logo_info"
         />
 
@@ -39,18 +30,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="587dp"
+        android:layout_marginLeft="75dp"
+        android:layout_marginTop="500dp"
         android:text="최신버전을 사용중 입니다"
         android:textSize="20sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="158dp"
-        android:layout_marginTop="637dp"
+        android:layout_marginLeft="133dp"
+        android:layout_marginTop="531dp"
         android:text="현재버전 8.7"
         android:textSize="20sp" />
 </RelativeLayout>

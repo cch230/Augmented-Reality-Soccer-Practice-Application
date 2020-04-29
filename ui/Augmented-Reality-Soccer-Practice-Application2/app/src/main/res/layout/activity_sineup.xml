@@ -12,6 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="18dp"
         android:text="회원가입"
+        android:textColor="#000000"
         android:textSize="36sp"
         />
 

@@ -1,80 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
 
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="130mm"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     >
+
+
     <TextView
-        android:layout_width="74dp"
-        android:layout_height="47dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="39dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="7dp"
         android:text="영상"
+        android:textColor="#000000"
         android:textSize="40sp"
         />
 
-    <View
-        android:layout_width="371dp"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="126dp"
-        android:background="@drawable/bar"
-        android:layout_centerInParent="true"
-        />
     <VideoView
-    android:id="@+id/video_1"
-    android:layout_alignParentLeft="true"
-    android:layout_marginLeft="23dp"
-    android:layout_alignParentTop="true"
-    android:layout_marginTop="180dp"
-    android:layout_width="365dp"
-    android:layout_height="193dp"
-    />
-    <ImageView
-        android:id="@+id/after_heart"
-        android:layout_width="19dp"
-        android:layout_height="17dp"
-        android:background="@drawable/after_heart"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="23dp"
+        android:id="@+id/video_1"
+        android:layout_width="318dp"
+        android:layout_height="193dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="383dp"
-        android:onClick="OnClick"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="151dp"
+
         />
-    <ImageView
-        android:id="@+id/before_heart"
+
+    <CheckBox
+        android:id="@+id/after_heart_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/chk_like"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="349dp"
+        />
+   <!-- <CheckBox
+        android:id="@+id/before_heart_1"
         android:layout_width="19dp"
         android:layout_height="17dp"
         android:background="@drawable/before_heart"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="23dp"
+        android:layout_marginLeft="20dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="383dp"
+        android:layout_marginTop="349dp"
         android:onClick="OnClick"
+        />
+-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="43dp"
+        android:layout_marginTop="348dp"
+
+/>
+
+    <ImageButton
+        android:id="@+id/bookmark_1"
+        android:layout_width="28dp"
+        android:layout_height="25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="312dp"
+        android:layout_marginTop="346dp"
+        android:background="@drawable/bookmark"
+        android:onClick="OnClick" />
+
+
+
+
+
+
+
+    <VideoView
+        android:id="@+id/video_2"
+        android:layout_width="318dp"
+        android:layout_height="193dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="420dp"
+
+        />
+
+    <CheckBox
+        android:id="@+id/after_heart_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/chk_like"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="620dp"
         />
 
     <TextView
-        android:layout_width="55dp"
-        android:layout_height="14dp"
-/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="43dp"
+        android:layout_marginTop="620dp"
 
-    <ImageView
-        android:id="@+id/bookmark"
-        android:layout_width="28dp"
-        android:layout_height="25dp"
-        android:background="@drawable/bookmark"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="312dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="405dp"
-        android:onClick="OnClick"
         />
 
-
-
-
+    <ImageButton
+        android:id="@+id/bookmark_2"
+        android:layout_width="28dp"
+        android:layout_height="25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="312dp"
+        android:layout_marginTop="615dp"
+        android:background="@drawable/bookmark"
+        android:onClick="OnClick" />
 
 
 </RelativeLayout>
+</ScrollView>

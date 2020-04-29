@@ -1,10 +1,13 @@
 package com.example.ARSPA;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -18,14 +21,30 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.Api;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String PREFS_NAME = "MyPrefs";
-    private Button button01,button02;
-    private TextView test,to_main;
+    private Button button01,signup_g,signup_f;
 
     //private int checked;
 
@@ -45,9 +64,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         button01 = findViewById(R.id.login);
-        button02 = findViewById(R.id.signup_g);
-        test = findViewById(R.id.test);
-        to_main=findViewById(R.id.to_main);
+        signup_f = findViewById(R.id.signup_f);
+        signup_g = findViewById(R.id.signup_g);
+
+        /*if (mAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(getApplication(), bottombar.class);
+            startActivity(intent);
+            finish();
+        }*/
+
+
+
+
+
+
         //button03 =  findViewById(R.id.signup_f);
 
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -91,36 +121,35 @@ public class MainActivity extends AppCompatActivity {
 
     */
     }
+
+
+
+
+
+
+
+
+
     public void onClick(View v){
         Intent intent;
-        // 임시로 구글버튼 누르면 카메라로 가도록 해놨음 ㅋㅋ button02임
-        if(v==button02)
-        {
-            intent = new Intent(MainActivity.this, mainmenu.class);
-            startActivity(intent);
-        }
-        else if (v == button01)
+        // 임시로 구글버튼 누르면 카메라로 가도록 해놨음 button02임
+        if (v == button01)
         {
             intent = new Intent( MainActivity.this, login.class);
             startActivity(intent);
         }
-
-
-    }
-
-    public void TestClick(View v) {
-        Intent intent;
-
-        if (v == test) {
-            intent = new Intent(MainActivity.this, shoot2.class);
-            startActivity(intent);
+        else if (v==signup_f){
+            intent = new Intent( MainActivity.this, bottombar.class);
+        startActivity(intent);
         }
-        else if (v == to_main) {
 
-            intent = new Intent(MainActivity.this, profile.class);
+        else if(v==signup_g){
+            intent = new Intent( MainActivity.this, bottombar.class);
             startActivity(intent);
         }
     }
+
+
     static final int PERMISSIONS_REQUEST_CODE = 1000;
     String[] PERMISSIONS  = {"android.permission.CAMERA"};
 
@@ -184,4 +213,6 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.create().show();
     }
+
+
 }

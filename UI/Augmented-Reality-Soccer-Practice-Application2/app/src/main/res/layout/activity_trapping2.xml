@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="21dp"
+        android:text="트래핑 훈련을 시작합니다"
+        android:textColor="#000000"
+        android:textSize="28sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="108dp"
+        android:text="슈팅 횟수 지정"
+        android:textSize="22sp" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="110dp"
+        android:layout_height="40dp"
+        android:spinnerMode="dropdown"
+        android:visibility="visible"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="100dp"
+        android:textSize="26sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회"
+        android:textSize="24sp"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="105dp"
+        />
+    <TextView
+        android:id="@+id/spinner11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <ImageButton
+        android:id="@+id/trapping2_btn"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:layout_marginLeft="270dp"
+        android:layout_marginTop="216dp"
+        android:background="@drawable/start_btn2"
+        android:onClick="onClick"
+        />
+    <View
+        android:layout_width="36dp"
+        android:layout_height="31dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="294dp"
+
+        android:background="@drawable/warning"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="주의"
+        android:textSize="26sp"
+        android:textColor="#FF0000"
+        android:layout_marginLeft="87dp"
+        android:layout_marginTop="297dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="시작 버튼을 누르기 전 카메라를 설치 해주세요!"
+        android:textSize="18sp"
+        android:textColor="#FF0000"
+        android:layout_marginLeft="149dp"
+        android:layout_marginTop="305dp"/>
+
+
+
+</RelativeLayout>

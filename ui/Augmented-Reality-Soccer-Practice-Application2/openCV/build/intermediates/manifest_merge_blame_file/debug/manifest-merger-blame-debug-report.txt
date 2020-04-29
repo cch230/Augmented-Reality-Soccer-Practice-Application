@@ -6,8 +6,8 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
-8-->C:\Users\82102\StudioProjects\Augmented-Reality-Soccer-Practice-Application2\openCV\java\AndroidManifest.xml
+8-->D:\git\dlqmfkglahqlcl\Augmented-Reality-Soccer-Practice-Application\ui\Augmented-Reality-Soccer-Practice-Application2\openCV\java\AndroidManifest.xml
 9        android:targetSdkVersion="28" />
-9-->C:\Users\82102\StudioProjects\Augmented-Reality-Soccer-Practice-Application2\openCV\java\AndroidManifest.xml
+9-->D:\git\dlqmfkglahqlcl\Augmented-Reality-Soccer-Practice-Application\ui\Augmented-Reality-Soccer-Practice-Application2\openCV\java\AndroidManifest.xml
 10
 11</manifest>

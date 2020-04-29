@@ -2,39 +2,42 @@ package com.example.ARSPA;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.pm.ActivityInfo;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class shoot2 extends AppCompatActivity {
 
     private Spinner spinner1;
-    private TextView spinner11;
+    ImageButton shoot2_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 
         setContentView(R.layout.activity_shoot2);
+        Spinner spinner1 = findViewById(R.id.spinner1);
+        shoot2_btn = findViewById(R.id.shoot2_btn);
 
-        spinner1 = (Spinner)findViewById(R.id.spinner1);
-        spinner11=(TextView)findViewById(R.id.spinner11);
+        final String[] data = getResources().getStringArray(R.array.shoot_array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,data);
+        spinner1.setAdapter(adapter);
 
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinner11.setText(parent.getItemAtPosition(position).toString());
-            }
+    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+    public void onClick(View v) {
+        Intent intent;
+        if(v==shoot2_btn) {
+            intent = new Intent(shoot2.this, mainmenu.class);
+            startActivity(intent);
+        }
     }
 }
+
+

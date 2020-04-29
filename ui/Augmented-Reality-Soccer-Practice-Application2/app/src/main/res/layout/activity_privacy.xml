@@ -14,7 +14,8 @@
         android:layout_marginLeft="21dp"
         android:layout_marginTop="39dp"
         android:text="나의 정보"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        android:textColor="#000000"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -193,20 +194,22 @@
         android:layout_centerInParent="true"
         />
     <ImageButton
-        android:id="@+id/change_btn1"
+        android:id="@+id/change1"
         android:layout_width="84dp"
         android:layout_height="48dp"
-        android:background="@drawable/change_btn"
+        android:background="@drawable/change_btn2"
         android:layout_marginTop="373dp"
         android:layout_marginLeft="246dp"
+        android:onClick="OnClickHandler"
         />
     <ImageButton
-        android:id="@+id/change_btn2"
+        android:id="@+id/change2"
         android:layout_width="84dp"
         android:layout_height="48dp"
-        android:background="@drawable/change_btn"
+        android:background="@drawable/change_btn2"
         android:layout_marginTop="438dp"
         android:layout_marginLeft="246dp"
+        android:onClick="OnClickHandler"
         />
     <TextView
         android:id="@+id/leave_btn"
@@ -217,15 +220,15 @@
         android:textColor="#FF0000"
         android:layout_marginTop="521dp"
         android:layout_marginLeft="29dp"
-        android:onClick="nClick"
+        android:onClick="OnClickHandler"
         />
     <ImageButton
         android:id="@+id/save_btn"
         android:layout_width="156dp"
         android:layout_height="48dp"
         android:background="@drawable/save_btn"
-        android:layout_marginTop="583dp"
+        android:layout_marginTop="563dp"
         android:layout_marginLeft="194dp"
-        android:onClick="onClick"
+        android:onClick="OnClickHandler"
         />
 </RelativeLayout>

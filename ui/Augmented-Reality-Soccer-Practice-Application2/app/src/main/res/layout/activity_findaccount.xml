@@ -13,6 +13,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="18dp"
         android:text="계정 찾기"
+        android:textColor="#000000"
         android:textSize="36sp" />
 
     <TextView
