@@ -17,8 +17,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-  <org.opencv.android.JavaCameraView
+  <org.opencv.android.JavaCamera2View
       android:id="@+id/surfaceView"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -26,7 +25,8 @@
       android:layout_alignParentTop="true"
       android:layout_alignParentBottom="true"
       android:layout_marginBottom="0dp"
-      android:scrollbarThumbVertical="@color/tfe_color_primary_dark" />
+      android:scrollbarThumbVertical="@color/tfe_color_primary_dark"/>
+
 
 
 
