@@ -20,13 +20,19 @@ import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.hardware.camera2.*
+import android.hardware.camera2.CameraDevice.*
+import android.media.CamcorderProfile
 import android.media.Image
 import android.media.ImageReader
 import android.media.ImageReader.OnImageAvailableListener
+import android.media.MediaRecorder
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.HandlerThread
 import android.support.v4.app.ActivityCompat
@@ -38,14 +44,11 @@ import android.util.Size
 import android.util.SparseIntArray
 import android.view.*
 import android.widget.Toast
-import org.opencv.android.CameraBridgeViewBase
-import org.opencv.core.Mat
-import org.opencv.core.Point
-import org.opencv.core.Scalar
-import org.opencv.imgproc.Imgproc
 import org.tensorflow.lite.examples.posenet.lib.BodyPart
 import org.tensorflow.lite.examples.posenet.lib.Person
 import org.tensorflow.lite.examples.posenet.lib.Posenet
+import java.io.File
+import java.io.IOException
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
@@ -54,433 +57,456 @@ class PosenetActivity :
   Fragment(),
   ActivityCompat.OnRequestPermissionsResultCallback {
 
-  /** List of body joints that should be connected.    */
-  private val bodyJoints = listOf(
+    /** List of body joints that should be connected.    */
+    private val bodyJoints = listOf(
 
-    Pair(BodyPart.LEFT_HIP, BodyPart.RIGHT_HIP),
-    Pair(BodyPart.LEFT_HIP, BodyPart.LEFT_KNEE),
-    Pair(BodyPart.LEFT_KNEE, BodyPart.LEFT_ANKLE),
-    Pair(BodyPart.RIGHT_HIP, BodyPart.RIGHT_KNEE),
-    Pair(BodyPart.RIGHT_KNEE, BodyPart.RIGHT_ANKLE)
-  )
+        Pair(BodyPart.LEFT_HIP, BodyPart.RIGHT_HIP),
+        Pair(BodyPart.LEFT_HIP, BodyPart.LEFT_KNEE),
+        Pair(BodyPart.LEFT_KNEE, BodyPart.LEFT_ANKLE),
+        Pair(BodyPart.RIGHT_HIP, BodyPart.RIGHT_KNEE),
+        Pair(BodyPart.RIGHT_KNEE, BodyPart.RIGHT_ANKLE)
+    )
 
-  /** Threshold for confidence score. */
-  private val minConfidence = 0.5
+    private var mNextVideoAbsolutePath: String? = null
+    private val DETAIL_PATH = "DCIM/test1/"
+    private var mediaRecorder: MediaRecorder? = null
+    private var previewBuilder: CaptureRequest.Builder? = null
 
-  /** Radius of circle used to draw keypoints.  */
-  private val circleRadius = 8.0f
+    /** Threshold for confidence score. */
+    private val minConfidence = 0.5
 
-  /** Paint class holds the style and color information to draw geometries,text and bitmaps. */
-  private var paint = Paint()
+    /** Radius of circle used to draw keypoints.  */
+    private val circleRadius = 8.0f
 
-  /** A shape for extracting frame data.   */
-  private val PREVIEW_WIDTH = 640
-  private val PREVIEW_HEIGHT = 480
+    /** Paint class holds the style and color information to draw geometries,text and bitmaps. */
+    private var paint = Paint()
 
-  /** An object for the Posenet library.    */
-  private lateinit var posenet: Posenet
+    /** A shape for extracting frame data.   */
+    private val PREVIEW_WIDTH = 640
+    private val PREVIEW_HEIGHT = 480
 
-  /** ID of the current [CameraDevice].   */
-  private var cameraId: String? = null
+    /** An object for the Posenet library.    */
+    private lateinit var posenet: Posenet
 
-  /** A [SurfaceView] for camera preview.   */
-  private var surfaceView: SurfaceView? = null
+    /** ID of the current [CameraDevice].   */
+    private var cameraId: String? = null
 
-  /** A [CameraCaptureSession] for camera preview.   */
-  private var captureSession: CameraCaptureSession? = null
+    /** A [SurfaceView] for camera preview.   */
+    private var surfaceView: SurfaceView? = null
 
-  /** A reference to the opened [CameraDevice].    */
-  private var cameraDevice: CameraDevice? = null
+    /** A [CameraCaptureSession] for camera preview.   */
+    private var captureSession: CameraCaptureSession? = null
 
-  /** The [android.util.Size] of camera preview.  */
-  private var previewSize: Size? = null
+    /** A [CameraCaptureSession] for camera preview.   */
+    private var previewSession: CameraCaptureSession? = null
 
-  /** The [android.util.Size.getWidth] of camera preview. */
-  private var previewWidth = 0
+    /** A reference to the opened [CameraDevice].    */
+    private var cameraDevice: CameraDevice? = null
 
-  /** The [android.util.Size.getHeight] of camera preview.  */
-  private var previewHeight = 0
+    /** The [android.util.Size] of camera preview.  */
+    private var previewSize: Size? = null
 
-  /** A counter to keep count of total frames.  */
-  private var frameCounter = 0
+    /** The [android.util.Size.getWidth] of camera preview. */
+    private var previewWidth = 0
 
-  /** An IntArray to save image data in ARGB8888 format  */
-  private lateinit var rgbBytes: IntArray
+    /** The [android.util.Size.getHeight] of camera preview.  */
+    private var previewHeight = 0
 
-  /** A ByteArray to save image data in YUV format  */
-  private var yuvBytes = arrayOfNulls<ByteArray>(3)
+    /** A counter to keep count of total frames.  */
+    private var frameCounter = 0
 
-  /** An additional thread for running tasks that shouldn't block the UI.   */
-  private var backgroundThread: HandlerThread? = null
+    /** An IntArray to save image data in ARGB8888 format  */
+    private lateinit var rgbBytes: IntArray
 
-  /** A [Handler] for running tasks in the background.    */
-  private var backgroundHandler: Handler? = null
+    /** A ByteArray to save image data in YUV format  */
+    private var yuvBytes = arrayOfNulls<ByteArray>(3)
 
-  /** An [ImageReader] that handles preview frame capture.   */
-  private var imageReader: ImageReader? = null
+    /** An additional thread for running tasks that shouldn't block the UI.   */
+    private var backgroundThread: HandlerThread? = null
 
-  /** [CaptureRequest.Builder] for the camera preview   */
-  private var previewRequestBuilder: CaptureRequest.Builder? = null
+    /** A [Handler] for running tasks in the background.    */
+    private var backgroundHandler: Handler? = null
 
-  /** [CaptureRequest] generated by [.previewRequestBuilder   */
-  private var previewRequest: CaptureRequest? = null
+    /** An [ImageReader] that handles preview frame capture.   */
+    private var imageReader: ImageReader? = null
 
-  /** A [Semaphore] to prevent the app from exiting before closing the camera.    */
-  private val cameraOpenCloseLock = Semaphore(1)
+    /** [CaptureRequest.Builder] for the camera preview   */
+    private var previewRequestBuilder: CaptureRequest.Builder? = null
 
-  /** Whether the current camera device supports Flash or not.    */
-  private var flashSupported = false
+    /** [CaptureRequest] generated by [.previewRequestBuilder   */
+    private var previewRequest: CaptureRequest? = null
 
-  /** Orientation of the camera sensor.   */
-  private var sensorOrientation: Int? = null
+    /** A [Semaphore] to prevent the app from exiting before closing the camera.    */
+    private val cameraOpenCloseLock = Semaphore(1)
 
-  /** Abstract interface to someone holding a display surface.    */
-  private var surfaceHolder: SurfaceHolder? = null
+    /** Whether the current camera device supports Flash or not.    */
+    private var flashSupported = false
 
-   var tracking=org.tensorflow.lite.examples.posenet.tracking()
+    /** Orientation of the camera sensor.   */
+    private var sensorOrientation: Int? = null
 
+    /** Abstract interface to someone holding a display surface.    */
+    private var surfaceHolder: SurfaceHolder? = null
 
-  /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
-  private val stateCallback = object : CameraDevice.StateCallback() {
+    private var recordingSurface: Surface?=null
 
-    override fun onOpened(cameraDevice: CameraDevice) {
-      cameraOpenCloseLock.release()
-      this@PosenetActivity.cameraDevice = cameraDevice
-      createCameraPreviewSession()
-    }
+    var tracking = org.tensorflow.lite.examples.posenet.tracking()
 
-    override fun onDisconnected(cameraDevice: CameraDevice) {
-      cameraOpenCloseLock.release()
-      cameraDevice.close()
-      this@PosenetActivity.cameraDevice = null
-    }
+    private var flag1: Int = 0
+    private var flag2: Int = 0
 
-    override fun onError(cameraDevice: CameraDevice, error: Int) {
-      onDisconnected(cameraDevice)
-      this@PosenetActivity.activity?.finish()
-    }
-  }
+    /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
+    private val stateCallback = object : StateCallback() {
 
-
-
-  /**
-   * A [CameraCaptureSession.CaptureCallback] that handles events related to JPEG capture.
-   */
-  private val captureCallback = object : CameraCaptureSession.CaptureCallback() {
-    override fun onCaptureProgressed(
-      session: CameraCaptureSession,
-      request: CaptureRequest,
-      partialResult: CaptureResult
-    ) {
-    }
-
-    override fun onCaptureCompleted(
-      session: CameraCaptureSession,
-      request: CaptureRequest,
-      result: TotalCaptureResult
-    ) {
-    }
-  }
-
-  /**
-   * Shows a [Toast] on the UI thread.
-   *
-   * @param text The message to show
-   */
-  private fun showToast(text: String) {
-    val activity = activity
-    activity?.runOnUiThread { Toast.makeText(activity, text, Toast.LENGTH_SHORT).show() }
-  }
-
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? = inflater.inflate(R.layout.tfe_pn_activity_posenet, container, false)
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    surfaceView = view.findViewById(R.id.surfaceView)
-    surfaceHolder = surfaceView!!.holder
-  }
-
-  override fun onResume() {
-    super.onResume()
-
-
-    startBackgroundThread()
-  }
-
-  override fun onStart() {
-    super.onStart()
-    openCamera()
-    posenet = Posenet(this.context!!)
-  }
-
-  override fun onPause() {
-    closeCamera()
-    stopBackgroundThread()
-    super.onPause()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    posenet.close()
-  }
-
-  private fun requestCameraPermission() {
-    if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-      ConfirmationDialog().show(childFragmentManager, FRAGMENT_DIALOG)
-    } else {
-      requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
-    }
-  }
-
-  override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<String>,
-    grantResults: IntArray
-  ) {
-    if (requestCode == REQUEST_CAMERA_PERMISSION) {
-      if (allPermissionsGranted(grantResults)) {
-        ErrorDialog.newInstance(getString(R.string.tfe_pn_request_permission))
-          .show(childFragmentManager, FRAGMENT_DIALOG)
-      }
-    } else {
-      super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-  }
-
-  private fun allPermissionsGranted(grantResults: IntArray) = grantResults.all {
-    it == PackageManager.PERMISSION_GRANTED
-  }
-
-  /**
-   * Sets up member variables related to camera.
-   */
-  private fun setUpCameraOutputs() {
-
-    val activity = activity
-    val manager = activity!!.getSystemService(Context.CAMERA_SERVICE) as CameraManager
-    try {
-      for (cameraId in manager.cameraIdList) {
-        val characteristics = manager.getCameraCharacteristics(cameraId)
-
-        // We don't use a front facing camera in this sample.
-        val cameraDirection = characteristics.get(CameraCharacteristics.LENS_FACING)
-        if (cameraDirection != null &&
-          cameraDirection == CameraCharacteristics.LENS_FACING_FRONT
-        ) {
-          continue
+        override fun onOpened(cameraDevice: CameraDevice) {
+            cameraOpenCloseLock.release()
+            this@PosenetActivity.cameraDevice = cameraDevice
+            createCameraPreviewSession()
         }
 
-        previewSize = Size(PREVIEW_WIDTH, PREVIEW_HEIGHT)
+        override fun onDisconnected(cameraDevice: CameraDevice) {
+            cameraOpenCloseLock.release()
+            cameraDevice.close()
+            this@PosenetActivity.cameraDevice = null
+        }
 
-        imageReader = ImageReader.newInstance(
-          PREVIEW_WIDTH, PREVIEW_HEIGHT,
-          ImageFormat.YUV_420_888, /*maxImages*/ 2
-        )
-
-        sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION)!!
-
-        previewHeight = previewSize!!.height
-        previewWidth = previewSize!!.width
-
-        // Initialize the storage bitmaps once when the resolution is known.
-        rgbBytes = IntArray(previewWidth * previewHeight)
-
-        // Check if the flash is supported.
-        flashSupported =
-          characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
-
-        this.cameraId = cameraId
-
-        // We've found a viable camera and finished setting up member variables,
-        // so we don't need to iterate through other available cameras.
-        return
-      }
-    } catch (e: CameraAccessException) {
-      Log.e(TAG, e.toString())
-    } catch (e: NullPointerException) {
-      // Currently an NPE is thrown when the Camera2API is used but not supported on the
-      // device this code runs.
-      ErrorDialog.newInstance(getString(R.string.tfe_pn_camera_error))
-        .show(childFragmentManager, FRAGMENT_DIALOG)
-    }
-  }
-
-  /**
-   * Opens the camera specified by [PosenetActivity.cameraId].
-   */
-  private fun openCamera() {
-    val permissionCamera = ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA)
-    if (permissionCamera != PackageManager.PERMISSION_GRANTED) {
-      requestCameraPermission()
-    }
-    setUpCameraOutputs()
-    val manager = activity!!.getSystemService(Context.CAMERA_SERVICE) as CameraManager
-    try {
-      // Wait for camera to open - 2.5 seconds is sufficient
-      if (!cameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
-        throw RuntimeException("Time out waiting to lock camera opening.")
-      }
-      manager.openCamera(cameraId!!, stateCallback, backgroundHandler)
-    } catch (e: CameraAccessException) {
-      Log.e(TAG, e.toString())
-    } catch (e: InterruptedException) {
-      throw RuntimeException("Interrupted while trying to lock camera opening.", e)
-    }
-  }
-
-  /**
-   * Closes the current [CameraDevice].
-   */
-  private fun closeCamera() {
-    if (captureSession == null) {
-      return
+        override fun onError(cameraDevice: CameraDevice, error: Int) {
+            onDisconnected(cameraDevice)
+            this@PosenetActivity.activity?.finish()
+        }
     }
 
-    try {
-      cameraOpenCloseLock.acquire()
-      captureSession!!.close()
-      captureSession = null
-      cameraDevice!!.close()
-      cameraDevice = null
-      imageReader!!.close()
-      imageReader = null
-    } catch (e: InterruptedException) {
-      throw RuntimeException("Interrupted while trying to lock camera closing.", e)
-    } finally {
-      cameraOpenCloseLock.release()
+    /**
+     * A [CameraCaptureSession.CaptureCallback] that handles events related to JPEG capture.
+     */
+    private val captureCallback = object : CameraCaptureSession.CaptureCallback() {
+        override fun onCaptureProgressed(
+            session: CameraCaptureSession,
+            request: CaptureRequest,
+            partialResult: CaptureResult
+        ) {
+        }
+
+        override fun onCaptureCompleted(
+            session: CameraCaptureSession,
+            request: CaptureRequest,
+            result: TotalCaptureResult
+        ) {
+        }
     }
-  }
 
-  /**
-   * Starts a background thread and its [Handler].
-   */
-  private fun startBackgroundThread() {
-    backgroundThread = HandlerThread("imageAvailableListener").also { it.start() }
-    backgroundHandler = Handler(backgroundThread!!.looper)
-    Log.e(TAG, "threading strart")
-  }
-
-  /**
-   * Stops the background thread and its [Handler].
-   */
-  private fun stopBackgroundThread() {
-    backgroundThread?.quitSafely()
-    try {
-      backgroundThread?.join()
-      backgroundThread = null
-      backgroundHandler = null
-    } catch (e: InterruptedException) {
-      Log.e(TAG, e.toString())
+    /**
+     * Shows a [Toast] on the UI thread.
+     *
+     * @param text The message to show
+     */
+    private fun showToast(text: String) {
+        val activity = activity
+        activity?.runOnUiThread { Toast.makeText(activity, text, Toast.LENGTH_SHORT).show() }
     }
-  }
 
-  /** Fill the yuvBytes with data from image planes.   */
-  private fun fillBytes(planes: Array<Image.Plane>, yuvBytes: Array<ByteArray?>) {
-    // Row stride is the total number of bytes occupied in memory by a row of an image.
-    // Because of the variable row stride it's not possible to know in
-    // advance the actual necessary dimensions of the yuv planes.
-    for (i in planes.indices) {
-      val buffer = planes[i].buffer
-      if (yuvBytes[i] == null) {
-        yuvBytes[i] = ByteArray(buffer.capacity())
-      }
-      buffer.get(yuvBytes[i]!!)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.tfe_pn_activity_posenet, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        surfaceView = view.findViewById(R.id.surfaceView)
+        surfaceHolder = surfaceView!!.holder
     }
-  }
 
-  /** A [OnImageAvailableListener] to receive frames as they are available.  */
-  private var imageAvailableListener = object : OnImageAvailableListener {
-    override fun onImageAvailable(imageReader: ImageReader) {
-      // We need wait until we have some size from onPreviewSizeChosen
-      if (previewWidth == 0 || previewHeight == 0) {
-        return
-      }
-
-      val image = imageReader.acquireLatestImage() ?: return
-      fillBytes(image.planes, yuvBytes)
-
-      ImageUtils.convertYUV420ToARGB8888(
-        yuvBytes[0]!!,
-        yuvBytes[1]!!,
-        yuvBytes[2]!!,
-        previewWidth,
-        previewHeight,
-        /*yRowStride=*/ image.planes[0].rowStride,
-        /*uvRowStride=*/ image.planes[1].rowStride,
-        /*uvPixelStride=*/ image.planes[1].pixelStride,
-        rgbBytes
-      )
-
-      // Create bitmap from int array
-      val imageBitmap = Bitmap.createBitmap(
-        rgbBytes, previewWidth, previewHeight,
-        Bitmap.Config.ARGB_8888
-      )
-
-      // Create rotated version for portrait display
-      val rotateMatrix = Matrix()
-      rotateMatrix.postRotate(90.0f)
-
-      val rotatedBitmap = Bitmap.createBitmap(
-        imageBitmap, 0, 0, previewWidth, previewHeight,
-        rotateMatrix, true
-      )
-      image.close()
-      val TrackingBitmap=tracking.trackingBall(rotatedBitmap)
-      // Process an image for analysis in every 3 frames.
-      frameCounter = (frameCounter + 1) %1
-      if (frameCounter == 0) {
-        processImage(TrackingBitmap)
-      }
+    override fun onResume() {
+        super.onResume()
+        startBackgroundThread()
     }
-  }
 
-  /** Crop Bitmap to maintain aspect ratio of model input.   */
-  private fun cropBitmap(bitmap: Bitmap): Bitmap {
-    val bitmapRatio = bitmap.height.toFloat() / bitmap.width
-    val modelInputRatio = MODEL_HEIGHT.toFloat() / MODEL_WIDTH
-    var croppedBitmap = bitmap
-
-    // Acceptable difference between the modelInputRatio and bitmapRatio to skip cropping.
-    val maxDifference = 1e-5
-
-    // Checks if the bitmap has similar aspect ratio as the required model input.
-    when {
-      abs(modelInputRatio - bitmapRatio) < maxDifference -> return croppedBitmap
-      modelInputRatio < bitmapRatio -> {
-        // New image is taller so we are height constrained.
-        val cropHeight = bitmap.height - (bitmap.width.toFloat() / modelInputRatio)
-        croppedBitmap = Bitmap.createBitmap(
-          bitmap,
-          0,
-          (cropHeight / 2).toInt(),
-          bitmap.width,
-          (bitmap.height - cropHeight).toInt()
-        )
-      }
-      else -> {
-        val cropWidth = bitmap.width - (bitmap.height.toFloat() * modelInputRatio)
-        croppedBitmap = Bitmap.createBitmap(
-          bitmap,
-          (cropWidth / 2).toInt(),
-          0,
-          (bitmap.width - cropWidth).toInt(),
-          bitmap.height
-        )
-      }
+    override fun onStart() {
+        super.onStart()
+        openCamera()
+        posenet = Posenet(this.context!!)
     }
-    return croppedBitmap
-  }
 
-  /** Set the paint color and size.    */
-  private fun setPaint() {
-    paint.color = Color.RED
-    paint.textSize = 80.0f
-    paint.strokeWidth = 8.0f
-  }
+    override fun onPause() {
+        stopRecording(true)
+        closeCamera()
+        stopBackgroundThread()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        posenet.close()
+    }
+
+    private fun requestCameraPermission() {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+            ConfirmationDialog().show(childFragmentManager, FRAGMENT_DIALOG)
+        } else {
+            requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (allPermissionsGranted(grantResults)) {
+                ErrorDialog.newInstance(getString(R.string.tfe_pn_request_permission))
+                    .show(childFragmentManager, FRAGMENT_DIALOG)
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    private fun allPermissionsGranted(grantResults: IntArray) = grantResults.all {
+        it == PackageManager.PERMISSION_GRANTED
+    }
+
+    /**
+     * Sets up member variables related to camera.
+     */
+    private fun setUpCameraOutputs() {
+
+        val activity = activity
+        val manager = activity!!.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+        try {
+            for (cameraId in manager.cameraIdList) {
+                val characteristics = manager.getCameraCharacteristics(cameraId)
+
+                // We don't use a front facing camera in this sample.
+                val cameraDirection = characteristics.get(CameraCharacteristics.LENS_FACING)
+                if (cameraDirection != null &&
+                    cameraDirection == CameraCharacteristics.LENS_FACING_FRONT
+                ) {
+                    continue
+                }
+
+                previewSize = Size(PREVIEW_WIDTH, PREVIEW_HEIGHT)
+
+                imageReader = ImageReader.newInstance(
+                    PREVIEW_WIDTH, PREVIEW_HEIGHT,
+                    ImageFormat.YUV_420_888, /*maxImages*/ 2
+                )
+
+                sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION)!!
+
+                previewHeight = previewSize!!.height
+                previewWidth = previewSize!!.width
+
+                // Initialize the storage bitmaps once when the resolution is known.
+                rgbBytes = IntArray(previewWidth * previewHeight)
+
+                // Check if the flash is supported.
+                flashSupported =
+                    characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+
+                this.cameraId = cameraId
+
+                // We've found a viable camera and finished setting up member variables,
+                // so we don't need to iterate through other available cameras.
+                return
+            }
+        } catch (e: CameraAccessException) {
+            Log.e(TAG, e.toString())
+        } catch (e: NullPointerException) {
+            // Currently an NPE is thrown when the Camera2API is used but not supported on the
+            // device this code runs.
+            ErrorDialog.newInstance(getString(R.string.tfe_pn_camera_error))
+                .show(childFragmentManager, FRAGMENT_DIALOG)
+        }
+    }
+
+    /**
+     * Opens the camera specified by [PosenetActivity.cameraId].
+     */
+    private fun openCamera() {
+        val permissionCamera =
+            ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA)
+        if (permissionCamera != PackageManager.PERMISSION_GRANTED) {
+            requestCameraPermission()
+        }
+        setUpCameraOutputs()
+        val manager = activity!!.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+        try {
+            // Wait for camera to open - 2.5 seconds is sufficient
+            if (!cameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
+                throw RuntimeException("Time out waiting to lock camera opening.")
+            }
+            manager.openCamera(cameraId!!, stateCallback, backgroundHandler)
+        } catch (e: CameraAccessException) {
+            Log.e(TAG, e.toString())
+        } catch (e: InterruptedException) {
+            throw RuntimeException("Interrupted while trying to lock camera opening.", e)
+        }
+    }
+
+    /**
+     * Closes the current [CameraDevice].
+     */
+    private fun closeCamera() {
+        if (captureSession == null) {
+            return
+        }
+
+        try {
+            cameraOpenCloseLock.acquire()
+            captureSession!!.close()
+            captureSession = null
+            cameraDevice!!.close()
+            cameraDevice = null
+            imageReader!!.close()
+            imageReader = null
+        } catch (e: InterruptedException) {
+            throw RuntimeException("Interrupted while trying to lock camera closing.", e)
+        } finally {
+            cameraOpenCloseLock.release()
+        }
+    }
+
+    /**
+     * Starts a background thread and its [Handler].
+     */
+    private fun startBackgroundThread() {
+        backgroundThread = HandlerThread("imageAvailableListener").also { it.start() }
+        backgroundHandler = Handler(backgroundThread!!.looper)
+        Log.i(TAG, "threading start")
+    }
+
+    /**
+     * Stops the background thread and its [Handler].
+     */
+    private fun stopBackgroundThread() {
+        backgroundThread?.quitSafely()
+        try {
+            backgroundThread?.join()
+            backgroundThread = null
+            backgroundHandler = null
+        } catch (e: InterruptedException) {
+            Log.e(TAG, e.toString())
+        }
+    }
+
+    /** Fill the yuvBytes with data from image planes.   */
+    private fun fillBytes(planes: Array<Image.Plane>, yuvBytes: Array<ByteArray?>) {
+        // Row stride is the total number of bytes occupied in memory by a row of an image.
+        // Because of the variable row stride it's not possible to know in
+        // advance the actual necessary dimensions of the yuv planes.
+        for (i in planes.indices) {
+            val buffer = planes[i].buffer
+            if (yuvBytes[i] == null) {
+                yuvBytes[i] = ByteArray(buffer.capacity())
+            }
+            buffer.get(yuvBytes[i]!!)
+        }
+    }
+
+    /** A [OnImageAvailableListener] to receive frames as they are available.  */
+    private var imageAvailableListener = object : OnImageAvailableListener {
+        override fun onImageAvailable(imageReader: ImageReader) {
+            // We need wait until we have some size from onPreviewSizeChosen
+            if (previewWidth == 0 || previewHeight == 0) {
+                return
+            }
+
+            val image = imageReader.acquireLatestImage() ?: return
+            fillBytes(image.planes, yuvBytes)
+
+            ImageUtils.convertYUV420ToARGB8888(
+                yuvBytes[0]!!,
+                yuvBytes[1]!!,
+                yuvBytes[2]!!,
+                previewWidth,
+                previewHeight,
+                /*yRowStride=*/ image.planes[0].rowStride,
+                /*uvRowStride=*/ image.planes[1].rowStride,
+                /*uvPixelStride=*/ image.planes[1].pixelStride,
+                rgbBytes
+            )
+
+            // Create bitmap from int array
+            val imageBitmap = Bitmap.createBitmap(
+                rgbBytes, previewWidth, previewHeight,
+                Bitmap.Config.ARGB_8888
+            )
+
+            // Create rotated version for portrait display
+            val rotateMatrix = Matrix()
+            rotateMatrix.postRotate(90.0f)
+
+            val rotatedBitmap = Bitmap.createBitmap(
+                imageBitmap, 0, 0, previewWidth, previewHeight,
+                rotateMatrix, true
+            )
+            image.close()
+            val TrackingBitmap = tracking.trackingBall(rotatedBitmap)
+            // Process an image for analysis in every 3 frames.
+            frameCounter = (frameCounter + 1) % 1
+            if (frameCounter == 0) {
+                processImage(TrackingBitmap)
+            }
+        }
+    }
+
+    /** Crop Bitmap to maintain aspect ratio of model input.   */
+    private fun cropBitmap(bitmap: Bitmap): Bitmap {
+        val bitmapRatio = bitmap.height.toFloat() / bitmap.width
+        val modelInputRatio = MODEL_HEIGHT.toFloat() / MODEL_WIDTH
+        var croppedBitmap = bitmap
+
+        // Acceptable difference between the modelInputRatio and bitmapRatio to skip cropping.
+        val maxDifference = 1e-5
+
+        // Checks if the bitmap has similar aspect ratio as the required model input.
+        when {
+            abs(modelInputRatio - bitmapRatio) < maxDifference -> return croppedBitmap
+            modelInputRatio < bitmapRatio -> {
+                // New image is taller so we are height constrained.
+                val cropHeight = bitmap.height - (bitmap.width.toFloat() / modelInputRatio)
+                croppedBitmap = Bitmap.createBitmap(
+                    bitmap,
+                    0,
+                    (cropHeight / 2).toInt(),
+                    bitmap.width,
+                    (bitmap.height - cropHeight).toInt()
+                )
+            }
+            else -> {
+                val cropWidth = bitmap.width - (bitmap.height.toFloat() * modelInputRatio)
+                croppedBitmap = Bitmap.createBitmap(
+                    bitmap,
+                    (cropWidth / 2).toInt(),
+                    0,
+                    (bitmap.width - cropWidth).toInt(),
+                    bitmap.height
+                )
+            }
+        }
+        return croppedBitmap
+    }
+
+    /** Set the paint color and size.    */
+    private fun setPaint() {
+        paint.color = Color.RED
+        paint.textSize = 80.0f
+        paint.strokeWidth = 8.0f
+    }
+
+    private fun setPaint2() {
+        paint.color = Color.BLUE
+        paint.textSize = 80.0f
+        paint.strokeWidth = 8.0f
+    }
+    private fun setPaint3() {
+        paint.color = Color.WHITE
+        paint.textSize = 80.0f
+        paint.strokeWidth = 8.0f
+    }
+
 
   /** Draw bitmap on Canvas.   */
   private fun draw(canvas: Canvas, person: Person, bitmap: Bitmap) {
@@ -516,9 +542,13 @@ class PosenetActivity :
 
     val widthRatio = screenWidth.toFloat() / MODEL_WIDTH
     val heightRatio = screenHeight.toFloat() / MODEL_HEIGHT
-
+    var footkey=0
     // Draw key points over the image.
     for (keyPoint in person.keyPoints) {
+        footkey++
+        if(footkey==15) {
+            setPaint2()
+        }
       if (keyPoint.score > minConfidence) {
         val position = keyPoint.position
         val adjustedX: Float = position.x.toFloat() * widthRatio + left
@@ -526,7 +556,7 @@ class PosenetActivity :
         canvas.drawCircle(adjustedX, adjustedY, circleRadius, paint)
       }
     }
-
+    setPaint()
     for (line in bodyJoints) {
       if (
         (person.keyPoints[line.first.ordinal].score > minConfidence) and
@@ -540,6 +570,17 @@ class PosenetActivity :
           paint
         )
       }
+      /*if(person.score>0.5&&flag2==0){
+        flag1=1
+        flag2=1
+        Log.i(TAG,person.score.toString())
+        startRecording()
+      }
+      if(person.score>0.85&&flag1==1){
+        flag1=2
+        Log.i(TAG,person.score.toString())
+        stopRecording(true)
+      }*/
     }
     canvas.drawText(
       "Score: %.2f".format(person.score),
@@ -592,11 +633,11 @@ class PosenetActivity :
       imageReader!!.setOnImageAvailableListener(imageAvailableListener, backgroundHandler)
 
       // This is the surface we need to record images for processing.
-      val recordingSurface = imageReader!!.surface
+      recordingSurface = imageReader!!.surface
 
       // We set up a CaptureRequest.Builder with the output Surface.
       previewRequestBuilder = cameraDevice!!.createCaptureRequest(
-        CameraDevice.TEMPLATE_PREVIEW
+        TEMPLATE_PREVIEW
       )
       previewRequestBuilder!!.addTarget(recordingSurface)
 
@@ -650,6 +691,171 @@ class PosenetActivity :
     }
   }
 
+
+
+
+
+  private fun startRecording() {
+    Log.i(TAG,"헬로1")
+    if (mediaRecorder == null) {
+      mediaRecorder = MediaRecorder()
+    }
+
+    mediaRecorder!!.setVideoEncodingBitRate(100000000)
+    mediaRecorder!!.setMaxDuration(6000000) // 60 seconds
+
+    mediaRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
+    mediaRecorder!!.setVideoSource(MediaRecorder.VideoSource.SURFACE)
+
+    mediaRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+    mediaRecorder!!.setVideoFrameRate(30)
+
+    val camcorderProfile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH)
+
+    if (camcorderProfile.videoFrameWidth > previewSize!!.width
+      || camcorderProfile.videoFrameHeight > previewSize!!.height
+    ) {
+      camcorderProfile.videoFrameWidth = previewSize!!.width
+      camcorderProfile.videoFrameHeight = previewSize!!.height
+    }
+
+    mediaRecorder!!.setVideoSize(
+      camcorderProfile.videoFrameWidth,
+      camcorderProfile.videoFrameHeight
+    )
+
+    mediaRecorder!!.setVideoEncoder(MediaRecorder.VideoEncoder.H264)
+    mediaRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+
+    mediaRecorder!!.setOrientationHint(90)
+    if (mNextVideoAbsolutePath == null || mNextVideoAbsolutePath!!.isEmpty()) {
+      mNextVideoAbsolutePath = getVideoFilePath()
+    }
+    mediaRecorder!!.setOutputFile(mNextVideoAbsolutePath)
+
+    try {
+      mediaRecorder!!.prepare()
+    } catch (e: IOException) {
+      e.printStackTrace()
+      return
+    }
+      val surfaces: MutableList<Surface> = ArrayList()
+
+
+      val mediaRecorderSurface = mediaRecorder!!.surface
+      surfaces.add(mediaRecorderSurface)
+
+      try {
+          //previewBuilder = cameraDevice!!.createCaptureRequest(TEMPLATE_RECORD)
+          //previewBuilder!!.addTarget(mediaRecorderSurface)
+          cameraDevice!!.createCaptureSession(
+              listOf(recordingSurface),
+              object : CameraCaptureSession.StateCallback() {
+                  override fun onConfigured(cameraCaptureSession: CameraCaptureSession) {
+                      // The camera is already closed
+                      if (cameraDevice == null) return
+
+                      // When the session is ready, we start displaying the preview.
+                      captureSession = cameraCaptureSession
+                      try {
+                          // Auto focus should be continuous for camera preview.
+                          previewRequestBuilder!!.set(
+                              CaptureRequest.CONTROL_AF_MODE,
+                              CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
+                          )
+                          // Flash is automatically enabled when necessary.
+                          setAutoFlash(previewRequestBuilder!!)
+
+                          // Finally, we start displaying the camera preview.
+                          previewRequest = previewRequestBuilder!!.build()
+                          captureSession!!.setRepeatingRequest(
+                              previewRequest!!,
+                              captureCallback, backgroundHandler
+                          )
+                      } catch (e: CameraAccessException) {
+                          Log.e(TAG, e.toString())
+                      }
+                  }
+
+                  override fun onConfigureFailed(cameraCaptureSession: CameraCaptureSession) {
+                      showToast("Failed")
+                  }
+              },
+              null
+          )
+          mediaRecorder!!.start()
+
+      } catch (e: CameraAccessException) {
+          e.printStackTrace()
+      }
+
+  }
+
+
+
+  private fun getVideoFilePath(): String? {
+    val dir = Environment.getExternalStorageDirectory().absoluteFile
+    val path =
+      dir.path + "/" + DETAIL_PATH
+    val dst = File(path)
+    if (!dst.exists()) dst.mkdirs()
+    return path + System.currentTimeMillis() + ".mp4"
+  }
+
+  private fun stopRecording(showPreview: Boolean) {
+      Log.i(TAG,"헬로2")
+      if(showPreview){
+          if (mediaRecorder != null){
+              return
+          }
+          mediaRecorder!!.stop()
+          mediaRecorder!!.reset()
+          mediaRecorder!!.release()
+          mediaRecorder = null
+
+          val file = File(mNextVideoAbsolutePath)
+          // 아래 코드가 없으면 갤러리 저장 적용이 안됨.
+
+          if(!file.exists()){
+            try {
+              Log.i("file 없음", "파일 상위 디렉토리 생성")
+              file.mkdirs()
+            } catch (e:Exception){
+              Log.e("path.mkdirs", e.toString())
+            }
+          }
+          context!!.sendBroadcast(
+            Intent(
+              Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+              Uri.fromFile(file)
+            )
+          )
+      }
+  }
+    private val captureStateCallback: CameraCaptureSession.StateCallback =
+        object : CameraCaptureSession.StateCallback() {
+            override fun onConfigured(session: CameraCaptureSession) {
+                previewSession = session
+
+            }
+            override fun onConfigureFailed(session: CameraCaptureSession) {
+                showToast("Failed")
+            }
+
+        }
+
+    private fun updatePreview() {
+        try {
+            previewSession!!.setRepeatingRequest(previewBuilder!!.build(), null, null)
+        } catch (e: CameraAccessException) {
+            e.printStackTrace()
+        }
+    }
+
+
+
+
+
   /**
    * Shows an error message dialog.
    */
@@ -694,4 +900,3 @@ class PosenetActivity :
   }
 
 }
-
