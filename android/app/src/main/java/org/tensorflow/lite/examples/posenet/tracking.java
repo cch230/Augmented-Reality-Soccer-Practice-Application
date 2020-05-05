@@ -39,8 +39,8 @@ public class tracking {
         Utils.bitmapToMat(bitmap, matInput);
         Mat input =new Mat();
         Utils.bitmapToMat(bitmap, input);
-        Mat kernel1=Mat.ones(2,2,0);
-        //Mat kernel2=Mat.ones(9,5,0);
+        //Mat kernel1=Mat.ones(2,2,0);
+        Mat kernel2=Mat.ones(9,5,0);
         Point goalpost=null;
         Point center=null;
         String myText;
@@ -66,11 +66,11 @@ public class tracking {
 
         Imgproc.Canny(matGray, matCny, 10, 100, 3, true); // Canny Edge 검출
         Imgproc.adaptiveThreshold(matCny, matGray, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY_INV, 3, 12);  //block size 3
-        Imgproc.morphologyEx(matGray,matGray,Imgproc.MORPH_GRADIENT,kernel1);
-        //Imgproc.morphologyEx(matGray,matGray,Imgproc.MORPH_CLOSE,kernel2);
+        //Imgproc.morphologyEx(matGray,matGray,Imgproc.MORPH_GRADIENT,kernel1);
+        Imgproc.morphologyEx(matGray,matGray,Imgproc.MORPH_CLOSE,kernel2);
         Imgproc.findContours(matGray, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE, new Point(0, 0));
 
-        if(contours.size()>0&&rect==null) {
+        if(contours.size()>0) {
            // for(int idx = 0; idx < contours.size(); idx++) {
             rect = Imgproc.boundingRect(contours.get(contours.size()-1));
                 if (/*rect.width /rect.height>2 && rect.width /rect.height<4 &&*/ rect.width > rect.height && rect.height > 10 && rect.width > 40 && !(rect.width >= 512 - 5 && rect.height >= 512 - 5)){
@@ -80,13 +80,13 @@ public class tracking {
                 }
            // }
         }
-        if(rect!=null){
+       /* if(rect!=null){
             Imgproc.rectangle(matInput, new Point(rect.br().x - rect.width, rect.br().y - rect.height)
                     , rect.br()
                     , new Scalar(0, 0, 0), 3);
             Imgproc.circle(matInput,new Point(rect.br().x - rect.width/2,rect.br().y),4,new Scalar(255, 0, 0));
         }
-
+*/
 
         Mat circle = new Mat();
 
@@ -133,7 +133,7 @@ public class tracking {
         myFontFace = 2;
         /// Font Scale
         myFontScale = 1.2;
-        Imgproc.putText( matInput, "DISTANCE: "+ 0.542+"M", myPoint, myFontFace, myFontScale, new Scalar(0,255,0));
+        Imgproc.putText( matInput, "DISTANCE: "+distance+"M", myPoint, myFontFace, myFontScale, new Scalar(0,255,0));
         Utils.matToBitmap(matInput, bitmap);
         return bitmap;
     }
