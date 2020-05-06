@@ -24,7 +24,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.hardware.camera2.*
-import android.hardware.camera2.CameraDevice.*
+import android.hardware.camera2.CameraDevice.StateCallback
+import android.hardware.camera2.CameraDevice.TEMPLATE_PREVIEW
 import android.media.CamcorderProfile
 import android.media.Image
 import android.media.ImageReader
@@ -56,6 +57,7 @@ import kotlin.math.abs
 class PosenetActivity :
   Fragment(),
   ActivityCompat.OnRequestPermissionsResultCallback {
+
 
     /** List of body joints that should be connected.    */
     private val bodyJoints = listOf(
@@ -155,6 +157,11 @@ class PosenetActivity :
     private var flag1: Int = 0
     private var flag2: Int = 0
 
+
+    var save_Vec1:Float?=null
+    var save_Vec2:Float?=null
+    var Foot_Ball_distance=0.0
+    var tracking_sig:Boolean=false
     /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
     private val stateCallback = object : StateCallback() {
 
@@ -443,11 +450,10 @@ class PosenetActivity :
                 rotateMatrix, true
             )
             image.close()
-            val TrackingBitmap = tracking.trackingBall(rotatedBitmap)
             // Process an image for analysis in every 3 frames.
             frameCounter = (frameCounter + 1) % 1
             if (frameCounter == 0) {
-                processImage(TrackingBitmap)
+                processImage(rotatedBitmap)
             }
         }
     }
@@ -504,7 +510,7 @@ class PosenetActivity :
     private fun setPaint3() {
         paint.color = Color.WHITE
         paint.textSize = 80.0f
-        paint.strokeWidth = 8.0f
+        paint.strokeWidth = 15.0f
     }
 
 
@@ -518,6 +524,7 @@ class PosenetActivity :
     val right: Int
     val top: Int
     val bottom: Int
+    var count:Int=0
     if (canvas.height > canvas.width) {
       screenWidth = canvas.width
       screenHeight = canvas.width
@@ -551,6 +558,11 @@ class PosenetActivity :
         }
       if (keyPoint.score > minConfidence) {
         val position = keyPoint.position
+          if(footkey==15) {
+              setPaint2()
+              save_Vec1 = position.x.toFloat() * widthRatio + left
+              save_Vec2 = position.y.toFloat() * heightRatio + top
+          }
         val adjustedX: Float = position.x.toFloat() * widthRatio + left
         val adjustedY: Float = position.y.toFloat() * heightRatio + top
         canvas.drawCircle(adjustedX, adjustedY, circleRadius, paint)
@@ -600,16 +612,44 @@ class PosenetActivity :
       (70.0f * heightRatio + bottom),
       paint
     )
-
+      setPaint3()
+      if(tracking.circleVec_save[0]!=null && save_Vec1!=null && save_Vec2!=null){
+          var circlerat1 : Float=tracking.circleVec_save[0].toFloat()
+          var circlerat2 : Float=tracking.circleVec_save[1].toFloat()
+          Log.i("center: ",circlerat1.toString()+" , "+ circlerat2.toString())
+          Foot_Ball_distance=FootAndBall(save_Vec1,save_Vec2,circlerat1,circlerat2)
+      }
+      if(Foot_Ball_distance!! >0.2&&count<=2000){
+          count++
+          tracking_sig=true
+      }
+      if(count>2000){
+          tracking_sig=false
+      }
 
     // Draw!
     surfaceHolder!!.unlockCanvasAndPost(canvas)
   }
 
+    fun FootAndBall(
+        save_Vec1:Float?,
+        save_Vec2:Float?,
+        circlerat1:Float?,
+        circlerat2:Float?
+    ): Double {
+        var dist: Double
+        val vecX = save_Vec1!! - circlerat1!!
+        val vecY = save_Vec2!!- circlerat2!!
+        dist = Math.sqrt(Math.pow(vecX.toDouble(), 2.0) + Math.pow(vecY.toDouble(), 2.0))
+        dist *= 8.0
+        return dist
+    }
+
   /** Process image using Posenet library.   */
   private fun processImage(bitmap: Bitmap) {
     // Crop bitmap.
-    val croppedBitmap = cropBitmap(bitmap)
+    val TrackingBitmap = tracking.trackingBall(bitmap, tracking_sig)
+    val croppedBitmap = cropBitmap(TrackingBitmap)
 
     // Created scaled version of bitmap for model input.
     val scaledBitmap = Bitmap.createScaledBitmap(croppedBitmap, MODEL_WIDTH, MODEL_HEIGHT, true)

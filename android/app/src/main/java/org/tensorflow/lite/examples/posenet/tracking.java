@@ -20,14 +20,15 @@ public class tracking {
     private Mat matResult;
     private Scalar yellowLower = new Scalar(0,164,114);
     private Scalar yellowUpper = new Scalar(94,255,255);
-    private Double[] circleVec_save=new Double[2];
+    public Double[] circleVec_save=new Double[2];
     private ArrayList <Point> line_list=new ArrayList<>();
     private List<MatOfPoint> contours = new ArrayList<>();
     private Rect rect;
     private Double distance=0.0;
-    private Boolean sig=false;
+    private Boolean dist_sig=false;
+    private Boolean orbit_sig=false;
 
-    public Bitmap trackingBall(Bitmap bitmap){
+    public Bitmap trackingBall(Bitmap bitmap,Boolean signal){
         Mat matGaussian=new Mat();
         Mat matHsv=new Mat();
         Mat matDilatedMask =new Mat();
@@ -47,7 +48,6 @@ public class tracking {
         Point myPoint;
         int myFontFace;
         Double myFontScale;
-
 
 
 
@@ -87,10 +87,12 @@ public class tracking {
             Imgproc.circle(matInput,new Point(rect.br().x - rect.width/2,rect.br().y),4,new Scalar(255, 0, 0));
         }
 */
-
         Mat circle = new Mat();
+        circleVec_save[0]=null;
+        circleVec_save[1]=null;
 
         Imgproc.HoughCircles(matGaussian,circle,Imgproc.HOUGH_GRADIENT,2.0,20,70,30,20,1000);
+
         if (circle.cols() > 0) {
             for (int x = 0; x < Math.min(circle.cols(), 1); x++) {
                 double circleVec[] = circle.get(0, x);
@@ -98,33 +100,33 @@ public class tracking {
                     break;
                 }
                 center = new Point((int) circleVec[0], (int) circleVec[1]);
-                Log.i("center",center.toString());
+                Log.i("center_r",center.toString());
                 circleVec_save[0]=circleVec[0];
                 circleVec_save[1]=circleVec[1];
 
                 int radius = (int) circleVec[2];
                 //Imgproc.circle(matInput, center, 3, new Scalar(0, 0, 0), 2);
                 Imgproc.circle(matInput, center, radius, new Scalar(0, 0, 0), 2);
+                if(signal){
+                    line_list.add(0,center);
+                    while (line_list.size()>6){
+                        line_list.remove(line_list.size()-1);
+                    }
+                    for(int j=1;j<line_list.size();j++){
 
-                line_list.add(0,center);
-                while (line_list.size()>6){
-                    line_list.remove(line_list.size()-1);
-                }
-                for(int j=1;j<line_list.size();j++){
-                    System.out.println("center"+line_list.get(j));
-                    int thickness = (int)(Math.sqrt(40/((float)(j+1)))*5);
-                    Imgproc.line(matInput, line_list.get(j-1),line_list.get(j),new Scalar(0,0,255),thickness);
+                        System.out.println("center_r"+line_list.get(j));
+                        int thickness = (int)(Math.sqrt(40/((float)(j+1)))*5);
+                        Imgproc.line(matInput, line_list.get(j-1),line_list.get(j),new Scalar(0,0,255),thickness);
+                    }
                 }
             }
         }
-       if(goalpost!=null&&center!=null&&sig==false){
-            sig=true;
-            distance=ballspeed(goalpost,center)*40;
+       if(goalpost!=null&&center!=null&&dist_sig==false){
+           dist_sig=true;
+            distance=balldistance(goalpost,center)*40;
             Log.i("distance",distance.toString());
        }
-        if(distance!=0.0){
-            myText = "거리: "+ distance.toString();
-        }
+
         /// Text Location
         myPoint=new Point();
         myPoint.x = 10;
@@ -138,16 +140,16 @@ public class tracking {
         return bitmap;
     }
 
-    Double ballspeed(@NotNull Point goalpost, @NotNull Point center){
+    Double balldistance(@NotNull Point goalpost, @NotNull Point center){
         Double dist;
         Double vecX= goalpost.x- center.x;
         Double vecY= goalpost.y- center.y;
         dist= Math.sqrt(Math.pow(vecX,2)+Math.pow(vecY,2));
-        Double result=speedFunc(dist);
+        Double result=distanceFunc(dist);
         return result;
     }
 
-    Double speedFunc(Double dist){
+    Double distanceFunc(Double dist){
         Double speed=12.925*Math.pow(dist,-1);
         return  speed;
     }
