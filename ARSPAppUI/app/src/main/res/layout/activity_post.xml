@@ -13,7 +13,6 @@
         android:layout_height="170mm"
         >
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,9 +24,7 @@
             android:textColor="#000000"
             android:textSize="36sp" />
 
-
         <TextView
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -37,6 +34,16 @@
             android:text="자신의 영상을 확인해 보세요"
             android:textSize="17sp" />
 
+        <Button
+            android:id="@+id/upload_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="270dp"
+            android:layout_marginTop="20dp"
+            android:text="업로드"
+            android:textSize="10sp"/>
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
@@ -74,8 +81,6 @@
                     android:layout_marginLeft="198dp"
                     android:layout_marginTop="416dp"
                     android:background="@drawable/bookmark" />
-
-
     -->
 
                 <VideoView
@@ -92,7 +97,6 @@
                     android:layout_marginLeft="21dp"
                     android:layout_marginTop="190dp" />
 
-
             </LinearLayout>
         </HorizontalScrollView>
 
@@ -104,20 +108,12 @@
             android:text="나와 비슷한 자세의 선수를 확인해 보세요"
             android:textSize="17sp" />
 
-
-
-
-
         <VideoView
             android:id="@+id/pro_video1"
             android:layout_width="198dp"
             android:layout_height="218dp"
             android:layout_marginLeft="21dp"
             android:layout_marginTop="555dp" />
-
-
-
-
 
     </RelativeLayout>
 </ScrollView>

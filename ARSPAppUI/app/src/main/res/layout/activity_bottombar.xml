@@ -27,7 +27,6 @@
         app:menu="@menu/bottom_navi_menu"
         tools:layout_editor_absoluteX="8dp"
         android:background="@color/colorPrimary"
-
         >
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>

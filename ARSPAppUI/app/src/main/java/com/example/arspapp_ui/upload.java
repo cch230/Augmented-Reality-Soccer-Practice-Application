@@ -50,18 +50,18 @@ public class upload extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_upload);
 
         initUI();
         createTransferUtility();
     }
 
     private void initUI() {
-        editTextUpload = (EditText) findViewById(R.id.edit_upload);
+        editTextUpload = findViewById(R.id.edit_upload);
 
-        videoViewUpload = (VideoView) findViewById(R.id.video_upload);
+        videoViewUpload = findViewById(R.id.video_upload);
 
-        buttonPickVideo = (Button) findViewById(R.id.btn_pick);
+        buttonPickVideo = findViewById(R.id.btn_pick);
         buttonPickVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +71,7 @@ public class upload extends AppCompatActivity {
             }
         });
 
-        buttonUpload = (Button) findViewById(R.id.btn_upload);
+        buttonUpload = findViewById(R.id.btn_upload);
         buttonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
