@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+    >
+    <TextView
+        android:layout_width="148dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="18dp"
+        android:text="회원가입"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/input_sineup_name"
+        android:layout_width="343dp"
+        android:layout_height="52dp"
+        android:layout_marginLeft="9dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="90dp"
+        android:gravity="center_vertical"
+        android:hint="    이름"
+
+        android:background="@drawable/rectangle_1"
+
+        />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/input_sineup_id"
+        android:layout_width="343dp"
+        android:layout_height="52dp"
+        android:layout_marginLeft="9dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="155dp"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:hint="    아이디"
+
+        android:background="@drawable/rectangle_1"
+
+        />
+
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/input_sineup_email"
+    android:layout_width="343dp"
+    android:layout_height="52dp"
+    android:layout_marginLeft="9dp"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="220dp"
+    android:layout_centerInParent="true"
+    android:gravity="center_vertical"
+    android:hint="    이메일"
+
+    android:background="@drawable/rectangle_1"
+
+    />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/input_sineup_pw"
+        android:layout_width="343dp"
+        android:layout_height="52dp"
+        android:layout_marginLeft="9dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="288dp"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:hint="    비밀번호"
+
+        android:background="@drawable/rectangle_1"
+
+        />
+
+    <!--<com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/input_sineup_check"
+        android:layout_width="343dp"
+        android:layout_height="52dp"
+        android:layout_marginLeft="9dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="355dp"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:hint="    비밀번호 확인"
+
+        android:background="@drawable/rectangle_1"
+
+        />-->
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/input_sineup_phone"
+        android:layout_width="343dp"
+        android:layout_height="52dp"
+        android:layout_marginLeft="9dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="355dp"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:hint="    전화번호"
+
+        android:background="@drawable/rectangle_1"
+
+        />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/input_sineup_birth"
+        android:layout_width="343dp"
+        android:layout_height="52dp"
+        android:layout_marginLeft="9dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="424dp"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:hint="    생년월일(8자리)"
+
+        android:background="@drawable/rectangle_1"/>
+
+
+    <Button
+        android:id="@+id/sinup_button"
+        android:layout_width="343dp"
+        android:layout_height="52dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="513dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/sineup_button"
+
+        />
+
+</RelativeLayout>

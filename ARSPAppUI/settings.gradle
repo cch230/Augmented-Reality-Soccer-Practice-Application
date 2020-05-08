@@ -1,0 +1,3 @@
+include ':app', ':opencv', ':opencv430'
+rootProject.name='ARSPApp-UI'
+include ':opencv'
