@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="39dp"
+        android:text="나의 정보"
+        android:textSize="36sp"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이름"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="130dp"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginTop="128dp"
+        android:background="@null"
+        android:hint="이름"
+        />
+
+
+    <View
+        android:layout_width="360dp"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="171dp"
+        android:background="@drawable/bar"
+        android:layout_centerInParent="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이메일"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="195dp"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginTop="195dp"
+        android:background="@null"
+        android:hint="이메일"
+        />
+
+
+    <View
+    android:layout_width="360dp"
+    android:layout_height="1dp"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="234dp"
+    android:background="@drawable/bar"
+    android:layout_centerInParent="true"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="259dp"
+        android:text="생일"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginTop="255dp"
+        android:background="@null"
+        android:hint="생일"
+        />
+
+
+
+    <View
+        android:layout_width="360dp"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="299dp"
+        android:background="@drawable/bar"
+        android:layout_centerInParent="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="성별"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="324dp"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginTop="320dp"
+        android:background="@null"
+        android:hint="성별"
+        />
+
+
+    <View
+        android:layout_width="360dp"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="364dp"
+        android:background="@drawable/bar"
+        android:layout_centerInParent="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="전화"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="389dp"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginTop="385dp"
+        android:background="@null"
+        android:hint="전화"
+        />
+
+
+    <View
+        android:layout_width="360dp"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="429dp"
+        android:background="@drawable/bar"
+        android:layout_centerInParent="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닉네임"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="453dp"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginTop="452dp"
+        android:background="@null"
+        android:hint="닉네임"
+        />
+
+
+    <View
+        android:layout_width="360dp"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="492dp"
+        android:background="@drawable/bar"
+        android:layout_centerInParent="true"
+        />
+    <ImageButton
+        android:id="@+id/change1"
+        android:layout_width="84dp"
+        android:layout_height="48dp"
+        android:background="@drawable/change_btn2"
+        android:layout_marginTop="373dp"
+        android:layout_marginLeft="246dp"
+        android:onClick="OnClickHandler"
+        />
+    <ImageButton
+        android:id="@+id/change2"
+        android:layout_width="84dp"
+        android:layout_height="48dp"
+        android:background="@drawable/change_btn2"
+        android:layout_marginTop="438dp"
+        android:layout_marginLeft="246dp"
+        android:onClick="OnClickHandler"
+        />
+    <TextView
+        android:id="@+id/leave_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="탈퇴하기"
+        android:textSize="20sp"
+        android:textColor="#FF0000"
+        android:layout_marginTop="521dp"
+        android:layout_marginLeft="29dp"
+        android:onClick="OnClickHandler"
+        />
+    <ImageButton
+        android:id="@+id/save_btn"
+        android:layout_width="156dp"
+        android:layout_height="48dp"
+        android:background="@drawable/save_btn"
+        android:layout_marginTop="563dp"
+        android:layout_marginLeft="194dp"
+        android:onClick="OnClickHandler"
+        />
+</RelativeLayout>

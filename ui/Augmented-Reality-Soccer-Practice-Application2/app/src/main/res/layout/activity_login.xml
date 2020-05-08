@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="39dp"
+        android:text="로그인"
+        android:textSize="36sp"
+        android:textColor="#000000"/>
+
+    <EditText
+        android:id="@+id/input_id"
+        android:layout_width="343dp"
+        android:layout_height="52dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="151dp"
+        android:gravity="center_vertical"
+        android:hint="    아이디(이메일)"
+        android:background="@drawable/rectangle_1"
+
+        />
+    <EditText
+        android:id="@+id/input_pw"
+        android:layout_width="343dp"
+        android:layout_height="52dp"
+        android:layout_marginLeft="9dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="219dp"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:hint="    비밀번호"
+        android:background="@drawable/rectangle_1"
+
+        />
+
+    <Button
+        android:id="@+id/login_in_login"
+        android:layout_width="343dp"
+        android:layout_height="52dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="308dp"
+        android:background="@drawable/logo_button"
+        android:gravity="center_vertical"
+        android:onClick="ClickInLogin"/>
+
+
+    <TextView
+        android:id="@+id/sign_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="455dp"
+        android:onClick="ClickInLogin"
+        android:text="가입하기"
+        android:textSize="13sp" />
+
+
+    <TextView
+        android:id="@+id/find_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="498dp"
+        android:layout_centerInParent="true"
+        android:text="ID/PW로 찾기"
+        android:onClick = "ClickInLogin"
+        android:textSize="13sp" />
+
+
+
+</RelativeLayout>
