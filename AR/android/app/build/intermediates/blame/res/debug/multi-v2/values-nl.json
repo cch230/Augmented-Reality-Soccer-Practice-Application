@@ -1,0 +1,60 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-nl\\values-nl.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\values-nl\\values-nl.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,223,328,435,521,629,749,826,903,995,1089,1190,1284,1385,1479,1575,1670,1762,1854,1936,2047,2151,2250,2365,2478,2581,2736,2839",
+                        "endColumns": "117,104,106,85,107,119,76,76,91,93,100,93,100,93,95,94,91,91,81,110,103,98,114,112,102,154,102,81",
+                        "endOffsets": "218,323,430,516,624,744,821,898,990,1084,1185,1279,1380,1474,1570,1665,1757,1849,1931,2042,2146,2245,2360,2473,2576,2731,2834,2916"
+                    },
+                    "to": {
+                        "startLines": "7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "570,688,793,900,986,1094,1214,1291,1368,1460,1554,1655,1749,1850,1944,2040,2135,2227,2319,2401,2512,2616,2715,2830,2943,3046,3201,3304",
+                        "endColumns": "117,104,106,85,107,119,76,76,91,93,100,93,100,93,95,94,91,91,81,110,103,98,114,112,102,154,102,81",
+                        "endOffsets": "683,788,895,981,1089,1209,1286,1363,1455,1549,1650,1744,1845,1939,2035,2130,2222,2314,2396,2507,2611,2710,2825,2938,3041,3196,3299,3381"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\d7cc93dfb926818404c96acbe41c6bd6\\res\\values-nl\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8",
+                        "startColumns": "0,0,0,0,0",
+                        "startOffsets": "190,240,291,416,549",
+                        "endColumns": "49,50,124,132,85",
+                        "endOffsets": "239,290,415,548,634"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "105,159,214,343,480",
+                        "endColumns": "53,54,128,136,89",
+                        "endOffsets": "154,209,338,475,565"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\cebf2e9ec0946c6abf2181feb924a30b\\res\\values-nl\\values-nl.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "35",
+                        "startColumns": "4",
+                        "startOffsets": "3386",
+                        "endColumns": "100",
+                        "endOffsets": "3482"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,659 @@
+uttonStyle
+-MaterialComponentsTheme_materialCardViewStyle
++MaterialComponentsTheme_navigationViewStyle
+'MaterialComponentsTheme_scrimBackground
++MaterialComponentsTheme_snackbarButtonStyle
+ MaterialComponentsTheme_tabStyle
++MaterialComponentsTheme_textAppearanceBody1
++MaterialComponentsTheme_textAppearanceBody2
+,MaterialComponentsTheme_textAppearanceButton
+-MaterialComponentsTheme_textAppearanceCaption
+/MaterialComponentsTheme_textAppearanceHeadline1
+/MaterialComponentsTheme_textAppearanceHeadline2
+/MaterialComponentsTheme_textAppearanceHeadline3
+/MaterialComponentsTheme_textAppearanceHeadline4
+/MaterialComponentsTheme_textAppearanceHeadline5
+/MaterialComponentsTheme_textAppearanceHeadline6
+.MaterialComponentsTheme_textAppearanceOverline
+/MaterialComponentsTheme_textAppearanceSubtitle1
+/MaterialComponentsTheme_textAppearanceSubtitle2
+&MaterialComponentsTheme_textInputStyle
+	MenuGroup
+#MenuGroup_android_checkableBehavior
+MenuGroup_android_enabled
+MenuGroup_android_id
+MenuGroup_android_menuCategory
+!MenuGroup_android_orderInCategory
+MenuGroup_android_visible
+MenuItem
+MenuItem_actionLayout
+MenuItem_actionProviderClass
+MenuItem_actionViewClass
+MenuItem_alphabeticModifiers
+#MenuItem_android_alphabeticShortcut
+MenuItem_android_checkable
+MenuItem_android_checked
+MenuItem_android_enabled
+MenuItem_android_icon
+MenuItem_android_id
+MenuItem_android_menuCategory
+ MenuItem_android_numericShortcut
+MenuItem_android_onClick
+ MenuItem_android_orderInCategory
+MenuItem_android_title
+MenuItem_android_titleCondensed
+MenuItem_android_visible
+MenuItem_contentDescription
+MenuItem_iconTint
+MenuItem_iconTintMode
+MenuItem_numericModifiers
+MenuItem_showAsAction
+MenuItem_tooltipText
+MenuView
+!MenuView_android_headerBackground
+"MenuView_android_horizontalDivider
+MenuView_android_itemBackground
+&MenuView_android_itemIconDisabledAlpha
+#MenuView_android_itemTextAppearance
+ MenuView_android_verticalDivider
+%MenuView_android_windowAnimationStyle
+MenuView_preserveIconSpacing
+MenuView_subMenuArrow
+NavigationView
+!NavigationView_android_background
+(NavigationView_android_fitsSystemWindows
+NavigationView_android_maxWidth
+NavigationView_elevation
+NavigationView_headerLayout
+NavigationView_itemBackground
+$NavigationView_itemHorizontalPadding
+NavigationView_itemIconPadding
+NavigationView_itemIconTint
+!NavigationView_itemTextAppearance
+NavigationView_itemTextColor
+NavigationView_menu
+PopupWindow
+PopupWindowBackgroundState
+-PopupWindowBackgroundState_state_above_anchor
+'PopupWindow_android_popupAnimationStyle
+#PopupWindow_android_popupBackground
+PopupWindow_overlapAnchor
+RecycleListView
+&RecycleListView_paddingBottomNoButtons
+!RecycleListView_paddingTopNoTitle
+RecyclerView
++RecyclerView_android_descendantFocusability
+ RecyclerView_android_orientation
+RecyclerView_fastScrollEnabled
+.RecyclerView_fastScrollHorizontalThumbDrawable
+.RecyclerView_fastScrollHorizontalTrackDrawable
+,RecyclerView_fastScrollVerticalThumbDrawable
+,RecyclerView_fastScrollVerticalTrackDrawable
+RecyclerView_layoutManager
+RecyclerView_reverseLayout
+RecyclerView_spanCount
+RecyclerView_stackFromEnd
+ScrimInsetsFrameLayout
+&ScrimInsetsFrameLayout_insetForeground
+ScrollingViewBehavior_Layout
+0ScrollingViewBehavior_Layout_behavior_overlapTop
+
+SearchView
+SearchView_android_focusable
+SearchView_android_imeOptions
+SearchView_android_inputType
+SearchView_android_maxWidth
+SearchView_closeIcon
+SearchView_commitIcon
+SearchView_defaultQueryHint
+SearchView_goIcon
+SearchView_iconifiedByDefault
+SearchView_layout
+SearchView_queryBackground
+SearchView_queryHint
+SearchView_searchHintIcon
+SearchView_searchIcon
+SearchView_submitBackground
+SearchView_suggestionRowLayout
+SearchView_voiceIcon
+Snackbar
+SnackbarLayout
+SnackbarLayout_android_maxWidth
+SnackbarLayout_elevation
+#SnackbarLayout_maxActionInlineWidth
+Snackbar_snackbarButtonStyle
+Snackbar_snackbarStyle
+Spinner
+Spinner_android_dropDownWidth
+Spinner_android_entries
+Spinner_android_popupBackground
+Spinner_android_prompt
+Spinner_popupTheme
+StateListDrawable
+StateListDrawableItem
+&StateListDrawableItem_android_drawable
+&StateListDrawable_android_constantSize
+ StateListDrawable_android_dither
++StateListDrawable_android_enterFadeDuration
+*StateListDrawable_android_exitFadeDuration
+)StateListDrawable_android_variablePadding
+!StateListDrawable_android_visible
+SwitchCompat
+SwitchCompat_android_textOff
+SwitchCompat_android_textOn
+SwitchCompat_android_thumb
+SwitchCompat_showText
+SwitchCompat_splitTrack
+SwitchCompat_switchMinWidth
+SwitchCompat_switchPadding
+!SwitchCompat_switchTextAppearance
+SwitchCompat_thumbTextPadding
+SwitchCompat_thumbTint
+SwitchCompat_thumbTintMode
+SwitchCompat_track
+SwitchCompat_trackTint
+SwitchCompat_trackTintMode
+TabItem
+TabItem_android_icon
+TabItem_android_layout
+TabItem_android_text
+	TabLayout
+TabLayout_tabBackground
+TabLayout_tabContentStart
+TabLayout_tabGravity
+TabLayout_tabIconTint
+TabLayout_tabIconTintMode
+TabLayout_tabIndicator
+'TabLayout_tabIndicatorAnimationDuration
+TabLayout_tabIndicatorColor
+TabLayout_tabIndicatorFullWidth
+TabLayout_tabIndicatorGravity
+TabLayout_tabIndicatorHeight
+TabLayout_tabInlineLabel
+TabLayout_tabMaxWidth
+TabLayout_tabMinWidth
+TabLayout_tabMode
+TabLayout_tabPadding
+TabLayout_tabPaddingBottom
+TabLayout_tabPaddingEnd
+TabLayout_tabPaddingStart
+TabLayout_tabPaddingTop
+TabLayout_tabRippleColor
+TabLayout_tabSelectedTextColor
+TabLayout_tabTextAppearance
+TabLayout_tabTextColor
+TabLayout_tabUnboundedRipple
+TextAppearance
+!TextAppearance_android_fontFamily
+"TextAppearance_android_shadowColor
+TextAppearance_android_shadowDx
+TextAppearance_android_shadowDy
+#TextAppearance_android_shadowRadius
+ TextAppearance_android_textColor
+$TextAppearance_android_textColorHint
+$TextAppearance_android_textColorLink
+TextAppearance_android_textSize
+ TextAppearance_android_textStyle
+TextAppearance_android_typeface
+TextAppearance_fontFamily
+TextAppearance_textAllCaps
+TextInputLayout
+TextInputLayout_android_hint
+%TextInputLayout_android_textColorHint
+"TextInputLayout_boxBackgroundColor
+!TextInputLayout_boxBackgroundMode
+&TextInputLayout_boxCollapsedPaddingTop
+(TextInputLayout_boxCornerRadiusBottomEnd
+*TextInputLayout_boxCornerRadiusBottomStart
+%TextInputLayout_boxCornerRadiusTopEnd
+'TextInputLayout_boxCornerRadiusTopStart
+TextInputLayout_boxStrokeColor
+TextInputLayout_boxStrokeWidth
+TextInputLayout_counterEnabled
+ TextInputLayout_counterMaxLength
+-TextInputLayout_counterOverflowTextAppearance
+%TextInputLayout_counterTextAppearance
+TextInputLayout_errorEnabled
+#TextInputLayout_errorTextAppearance
+TextInputLayout_helperText
+!TextInputLayout_helperTextEnabled
+(TextInputLayout_helperTextTextAppearance
+$TextInputLayout_hintAnimationEnabled
+TextInputLayout_hintEnabled
+"TextInputLayout_hintTextAppearance
+0TextInputLayout_passwordToggleContentDescription
+&TextInputLayout_passwordToggleDrawable
+%TextInputLayout_passwordToggleEnabled
+"TextInputLayout_passwordToggleTint
+&TextInputLayout_passwordToggleTintMode
+ThemeEnforcement
+'ThemeEnforcement_android_textAppearance
+%ThemeEnforcement_enforceMaterialTheme
+&ThemeEnforcement_enforceTextAppearance
+Toolbar
+Toolbar_android_gravity
+Toolbar_android_minHeight
+Toolbar_buttonGravity
+"Toolbar_collapseContentDescription
+Toolbar_collapseIcon
+Toolbar_contentInsetEnd
+"Toolbar_contentInsetEndWithActions
+Toolbar_contentInsetLeft
+Toolbar_contentInsetRight
+Toolbar_contentInsetStart
+'Toolbar_contentInsetStartWithNavigation
+Toolbar_logo
+Toolbar_logoDescription
+Toolbar_maxButtonHeight
+$Toolbar_navigationContentDescription
+Toolbar_navigationIcon
+Toolbar_popupTheme
+Toolbar_subtitle
+Toolbar_subtitleTextAppearance
+Toolbar_subtitleTextColor
+Toolbar_title
+Toolbar_titleMargin
+Toolbar_titleMarginBottom
+Toolbar_titleMarginEnd
+Toolbar_titleMarginStart
+Toolbar_titleMarginTop
+Toolbar_titleMargins
+Toolbar_titleTextAppearance
+Toolbar_titleTextColor
+View
+ViewBackgroundHelper
+'ViewBackgroundHelper_android_background
+#ViewBackgroundHelper_backgroundTint
+'ViewBackgroundHelper_backgroundTintMode
+ViewStubCompat
+ViewStubCompat_android_id
+!ViewStubCompat_android_inflatedId
+ViewStubCompat_android_layout
+View_android_focusable
+View_android_theme
+View_paddingEnd
+View_paddingStart
+
+View_theme   N
+ 
+ 
+
+
+
+
+ 
+ 
+
+	 
+ 
+ Ð
+    Ò20BR0X†Pº	ª„øðÀ>R	0X†Pº	¬„øðÀ>R
+0X†Pº	®„øðÀ>R0X†Pº	°„øðÀ>R0X†Pº	²„øðÀ>R0X†Pº	þ†øðÀ>R0X†Pº	€‡øðÀ>R0X†Pº	Þ‡øðÀ>  ~
+android
+support
+coordinatorlayout
+R
+style
+kotlin
+Any
+"TextAppearance_Compat_Notification
+Int
+'TextAppearance_Compat_Notification_Info
+(TextAppearance_Compat_Notification_Line2
+'TextAppearance_Compat_Notification_Time
+(TextAppearance_Compat_Notification_Title
+)Widget_Compat_NotificationActionContainer
+$Widget_Compat_NotificationActionText
+ Widget_Support_CoordinatorLayout   4
+ 
+ 
+
+ 
+ 
+
+ 
+ Ï   620BR0X†Pº	â¸ðÀ>R
+0X†Pº	ä¸ðÀ>R0X†Pº	æ¸ðÀ>R0X†Pº	è¸ðÀ>R0X†Pº	ê¸ðÀ>R0X†Pº	ì¸ðÀ>R0X†Pº	î¸ðÀ>R0X†Pº	ð¸ðÀ>R0X†Pº	ò¸ðÀ>R0X†Pº	ô¸ðÀ>R0X†Pº	ö¸ðÀ>R0X†Pº	ø¸ðÀ>  “
+android
+support
+v7
+recyclerview
+R
+drawable
+kotlin
+Any
+notification_action_background
+Int
+notification_bg
+notification_bg_low
+notification_bg_low_normal
+notification_bg_low_pressed
+notification_bg_normal
+notification_bg_normal_pressed
+notification_icon_background
+notification_template_icon_bg
+!notification_template_icon_low_bg
+notification_tile_bg
+!notify_panel_notification_icon_bg   :
+ 
+ 
+
+
+ 
+ 
+
+ 
+	 ÷    U20BR	0	X†Pº	€€ ðÀ>R0	X†Pº	‚€ ðÀ>R0	X†Pº	„€ ðÀ>   –
+com
+google
+ar
+	sceneform
+ux
+R
+bool
+kotlin
+Any
+abc_action_bar_embed_tabs
+Int
+abc_allow_stacked_button_bar
+ abc_config_actionMenuItemAllCaps   @
+ 
+ 
+
+
+
+ 
+ 
+
+ 
+
+ Ê   620BR0X†Pº	â¸ðÀ>R	0X†Pº	ä¸ðÀ>R
+0X†Pº	æ¸ðÀ>R0X†Pº	è¸ðÀ>R0X†Pº	ê¸ðÀ>R0X†Pº	ì¸ðÀ>R0X†Pº	î¸ðÀ>R0X†Pº	ð¸ðÀ>R0X†Pº	ò¸ðÀ>R0X†Pº	ô¸ðÀ>R0X†Pº	ö¸ðÀ>R0X†Pº	ø¸ðÀ>  ”
+android
+support
+slidingpanelayout
+R
+drawable
+kotlin
+Any
+notification_action_background
+Int
+notification_bg
+notification_bg_low
+notification_bg_low_normal
+notification_bg_low_pressed
+notification_bg_normal
+notification_bg_normal_pressed
+notification_icon_background
+notification_template_icon_bg
+!notification_template_icon_low_bg
+notification_tile_bg
+!notify_panel_notification_icon_bg   4
+ 
+ 
+
+ 
+ 
+
+ 
+ Ó0   P20	BR
+0
+X†Pº	‚€ØðÀ>R0
+X†Pº	„€ØðÀ>R0
+X†Pº	†€ØðÀ>R0
+X†Pº	ˆ€ØðÀ>R0
+X†Pº	Š€ØðÀ>R0
+X†Pº	Œ€ØðÀ>R0
+X†Pº	Ž€ØðÀ>R0
+X†Pº	€ØðÀ>R0
+X†Pº	’€ØðÀ>R0
+X†Pº	”€ØðÀ>R0
+X†Pº	–€ØðÀ>R0
+X†Pº	˜€ØðÀ>R0
+X†Pº	š€ØðÀ>R0
+X†Pº	œ€ØðÀ>R0
+X†Pº	ž€ØðÀ>R0
+X†Pº	 €ØðÀ>R0
+X†Pº	¢€ØðÀ>R0
+X†Pº	¤€ØðÀ>R0
+X†Pº	¦€ØðÀ>R0
+X†Pº	¨€ØðÀ>R0
+X†Pº	ª€ØðÀ>R 0
+X†Pº	¬€ØðÀ>R!0
+X†Pº	®€ØðÀ>R"0
+X†Pº	°€ØðÀ>R#0
+X†Pº	²€ØðÀ>R$0
+X†Pº	´€ØðÀ>R%0
+X†Pº	¶€ØðÀ>R&0
+X†Pº	¸€ØðÀ>R'0
+X†Pº	º€ØðÀ>R(0
+X†Pº	¼€ØðÀ>R)0
+X†Pº	¾€ØðÀ>R*0
+X†Pº	À€ØðÀ>R+0
+X†Pº	Â€ØðÀ>R,0
+X†Pº	Ä€ØðÀ>R-0
+X†Pº	Æ€ØðÀ>R.0
+X†Pº	È€ØðÀ>R/0
+X†Pº	Ê€ØðÀ>R00
+X†Pº	Ì€ØðÀ>R10
+X†Pº	Î€ØðÀ>R20
+X†Pº	Ð€ØðÀ>R30
+X†Pº	Ò€ØðÀ>R40
+X†Pº	Ô€ØðÀ>R50
+X†Pº	Ö€ØðÀ>R60
+X†Pº	Ø€ØðÀ>R70
+X†Pº	Ú€ØðÀ>R80
+X†Pº	Ü€ØðÀ>R90
+X†Pº	Þ€ØðÀ>R:0
+X†Pº	à€ØðÀ>R;0
+X†Pº	â€ØðÀ>R<0
+X†Pº	ä€ØðÀ>R=0
+X†Pº	ê€ØðÀ>R>0
+X†Pº	ì€ØðÀ>R?0
+X†Pº	î€ØðÀ>R@0
+X†Pº	ð€ØðÀ>  q
+org
+
+tensorflow
+lite
+examples
+posenet
+lib
+R
+layout
+kotlin
+Any
+abc_action_bar_title_item
+Int
+abc_action_bar_up_container
+abc_action_menu_item_layout
+abc_action_menu_layout
+abc_action_mode_bar
+#abc_action_mode_close_item_material
+abc_activity_chooser_view
+#abc_activity_chooser_view_list_item
+$abc_alert_dialog_button_bar_material
+abc_alert_dialog_material
+abc_alert_dialog_title_material
+abc_cascading_menu_item_layout
+abc_dialog_title_material
+abc_expanded_menu_layout
+abc_list_menu_item_checkbox
+abc_list_menu_item_icon
+abc_list_menu_item_layout
+abc_list_menu_item_radio
+!abc_popup_menu_header_item_layout
+abc_popup_menu_item_layout
+abc_screen_content_include
+abc_screen_simple
+%abc_screen_simple_overlay_action_mode
+abc_screen_toolbar
+$abc_search_dropdown_item_icons_2line
+abc_search_view
+abc_select_dialog_material
+abc_tooltip
+design_bottom_navigation_item
+design_bottom_sheet_dialog
+design_layout_snackbar
+design_layout_snackbar_include
+design_layout_tab_icon
+design_layout_tab_text
+design_menu_item_action_area
+design_navigation_item
+design_navigation_item_header
+ design_navigation_item_separator
+ design_navigation_item_subheader
+design_navigation_menu
+design_navigation_menu_item
+design_text_input_password_icon
+mtrl_layout_snackbar
+mtrl_layout_snackbar_include
+notification_action
+notification_action_tombstone
+ notification_template_custom_big
+ notification_template_icon_group
+&notification_template_part_chronometer
+notification_template_part_time
+select_dialog_item_material
+"select_dialog_multichoice_material
+#select_dialog_singlechoice_material
+$support_simple_spinner_dropdown_item   F
+ 
+ 
+
+
+
+
+ 
+ 
+
+	 
+ Ú   620BR	0	X†Pº	‚€èðÀ>R0	X†Pº	„€èðÀ>R0	X†Pº	ˆ€èðÀ>R0	X†Pº	Š€èðÀ>R0	X†Pº	Œ€èðÀ>R0	X†Pº	Ž€èðÀ>R0	X†Pº	€èðÀ>R0	X†Pº	’€èðÀ>R0	X†Pº	”€èðÀ>R0	X†Pº	–€èðÀ>R0	X†Pº	˜€èðÀ>R0	X†Pº	š€èðÀ>  ˜
+com
+google
+ar
+	sceneform
+ux
+R
+raw
+kotlin
+Any
+keep_arcore
+Int
+sceneform_camera_material
+sceneform_face_mesh
+sceneform_face_mesh_occluder
+sceneform_footprint
+!sceneform_opaque_colored_material
+"sceneform_opaque_textured_material
+sceneform_plane_material
+sceneform_plane_shadow_material
+&sceneform_transparent_colored_material
+'sceneform_transparent_textured_material
+sceneform_view_renderable   @
+ 
+ 
+
+
+
+ 
+ 
+
+ 
+
+ Ú   20	BR
+0
+X†Pº	€€ÈðÀ>R0
+X†Pº	‚€ÈðÀ>R0
+X†Pº	„€ÈðÀ>R0
+X†Pº	†€ÈðÀ>R0
+X†Pº	ˆ€ÈðÀ>R0
+X†Pº	Š€ÈðÀ>R0
+X†Pº	Œ€ÈðÀ>R0
+X†Pº	Ž€ÈðÀ>R0
+X†Pº	€ÈðÀ>R0
+X†Pº	’€ÈðÀ>R0
+X†Pº	”€ÈðÀ>R0
+X†Pº	–€ÈðÀ>R0
+X†Pº	˜€ÈðÀ>R0
+X†Pº	š€ÈðÀ>R0
+X†Pº	œ€ÈðÀ>  
+org
+
+tensorflow
+lite
+examples
+posenet
+lib
+R
+integer
+kotlin
+Any
+abc_config_activityDefaultDur
+Int
+abc_config_activityShortDur
+app_bar_elevation_anim_duration
+bottom_sheet_slide_duration
+cancel_button_image_alpha
+config_tooltipAnimTime
+design_snackbar_text_max_lines
+%design_tab_indicator_anim_duration_ms
+hide_password_duration
+mtrl_btn_anim_delay_ms
+mtrl_btn_anim_duration_ms
+mtrl_chip_anim_duration
+#mtrl_tab_indicator_anim_duration_ms
+show_password_duration
+#status_bar_notification_info_maxnum   F
+ 
+ 
+
+
+
+
+ 
+ 
+
+	 
+ Ñ   20BR0X†Pº	Î€˜ðÀ>R
+0X†Pº	È‚˜ðÀ>R0X†Pº	®ƒ˜ðÀ>R0X†Pº	²ƒ˜ðÀ>R0X†Pº	´ƒ˜ðÀ>R0X†Pº	¶ƒ˜ðÀ>R0X†Pº	¸ƒ˜ðÀ>R0X†Pº	ºƒ˜ðÀ>R0X†Pº	¼ƒ˜ðÀ>R0X†Pº	¾ƒ˜ðÀ>R0X†Pº	Àƒ˜ðÀ>R0X†Pº	Âƒ˜ðÀ>R0X†Pº	š„˜ðÀ>R0X†Pº	¤„˜ðÀ>R0X†Pº	¦„˜ðÀ>R0X†Pº	¨„˜ðÀ>R0X†Pº	€…˜ðÀ>R0X†Pº	’…˜ðÀ>R0X†Pº	”…˜ðÀ>R0X†Pº	Ì†˜ðÀ>R0X†Pº	ˆ˜ðÀ>  ´
+android
+support
+graphics
+drawable
+R
+attr
+kotlin
+Any
+alpha
+Int
+coordinatorLayoutStyle
+font
+fontProviderAuthority
+fontProviderCerts
+fontProviderFetchStrategy
+fontProviderFetchTimeout
+fontProviderPackage
+fontProviderQuery
+	fontStyle
+fontVariationSettings
+
+fontWeight
+keylines
+layout_anchor
+layout_anchorGravity
+layout_behavior
+layout_dodgeInsetEdges
+layout_insetEdge
+layout_keyline
+statusBarBackground
+ttcIndex   :
+ 
+ 
+
+
+ 
+ 
+
+ 
+	 

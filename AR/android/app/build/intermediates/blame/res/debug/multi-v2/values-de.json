@@ -1,0 +1,60 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-de\\values-de.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\cebf2e9ec0946c6abf2181feb924a30b\\res\\values-de\\values-de.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "35",
+                        "startColumns": "4",
+                        "startOffsets": "3406",
+                        "endColumns": "100",
+                        "endOffsets": "3502"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\d7cc93dfb926818404c96acbe41c6bd6\\res\\values-de\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8",
+                        "startColumns": "0,0,0,0,0",
+                        "startOffsets": "190,240,289,423,560",
+                        "endColumns": "49,48,133,136,90",
+                        "endOffsets": "239,288,422,559,650"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "105,159,212,350,491",
+                        "endColumns": "53,52,137,140,94",
+                        "endOffsets": "154,207,345,486,581"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\values-de\\values-de.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,210,308,420,506,611,726,803,879,971,1065,1162,1263,1371,1471,1575,1675,1773,1870,1952,2063,2166,2265,2376,2478,2585,2741,2843",
+                        "endColumns": "104,97,111,85,104,114,76,75,91,93,96,100,107,99,103,99,97,96,81,110,102,98,110,101,106,155,101,81",
+                        "endOffsets": "205,303,415,501,606,721,798,874,966,1060,1157,1258,1366,1466,1570,1670,1768,1865,1947,2058,2161,2260,2371,2473,2580,2736,2838,2920"
+                    },
+                    "to": {
+                        "startLines": "7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "586,691,789,901,987,1092,1207,1284,1360,1452,1546,1643,1744,1852,1952,2056,2156,2254,2351,2433,2544,2647,2746,2857,2959,3066,3222,3324",
+                        "endColumns": "104,97,111,85,104,114,76,75,91,93,96,100,107,99,103,99,97,96,81,110,102,98,110,101,106,155,101,81",
+                        "endOffsets": "686,784,896,982,1087,1202,1279,1355,1447,1541,1638,1739,1847,1947,2051,2151,2249,2346,2428,2539,2642,2741,2852,2954,3061,3217,3319,3401"
+                    }
+                }
+            ]
+        }
+    ]
+}
