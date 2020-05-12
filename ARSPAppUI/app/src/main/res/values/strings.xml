@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ARSPApp-UI</string>
+    <string name="app_name">HomeSoccer</string>
     <string name="title_activity_navi">navi</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -7,4 +7,7 @@
     <string name="title_activity_navigation">navigation</string>
     <string name="title_activity_navigation_bar">navigation_bar</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="tfe_pn_request_permission" translation_description="Request camera permission [CHAR_LIMIT=40]">This app needs camera permission.</string>
+    <string name="tfe_pn_camera_error" translation_description="Error regarding camera support[CHAR_LIMIT=40]">This device doesn\'t support Camera2 API.</string>
+
 </resources>
