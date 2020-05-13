@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.arspapp_ui">
@@ -38,7 +38,7 @@
         <activity android:name=".bottombar" />
         <activity android:name=".CameraActvity"
             android:screenOrientation="landscape"
-            tools:ignore="LockedOrientationActivity" />/>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".trapping2"
             android:screenOrientation="landscape"

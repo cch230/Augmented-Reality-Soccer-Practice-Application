@@ -216,8 +216,8 @@ class PosenetActivity :
 
         surfaceView = view.findViewById(R.id.surfaceView)
         mSensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        mAccelerometer = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        mMagnetometer = mSensorManager!!.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
         initSensor()
         deviceOrientation = DeviceOrientation()

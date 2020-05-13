@@ -23,11 +23,19 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class upload extends AppCompatActivity {
 
@@ -35,16 +43,14 @@ public class upload extends AppCompatActivity {
     private static final String BUCKET_NAME = "asa-senier-project";
 
     private static final int PICK_VIDEO_REQUEST_CODE = 1;
-    private static final String TAG = MainActivity.class.getCanonicalName();
+    private static final String TAG = upload.class.getCanonicalName();
 
-    EditText editTextUpload;
-    EditText editTextDownload;
+    EditText editTextUpload, editTextUploadId;
     VideoView videoViewUpload;
     Button buttonPickVideo;
     Button buttonUpload;
     Uri videoUri;
     ProgressDialog progressDialogUpload;
-
     TransferUtility transferUtility;
 
     @Override
@@ -58,15 +64,18 @@ public class upload extends AppCompatActivity {
 
     private void initUI() {
         editTextUpload = findViewById(R.id.edit_upload);
-
+        editTextUploadId = findViewById((R.id.upload_id));
         videoViewUpload = findViewById(R.id.video_upload);
-
         buttonPickVideo = findViewById(R.id.btn_pick);
+
         buttonPickVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("video/*");
+
+
                 startActivityForResult(intent, PICK_VIDEO_REQUEST_CODE);
             }
         });
@@ -75,13 +84,20 @@ public class upload extends AppCompatActivity {
         buttonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                /*Intent intent2 = getIntent();
+                String upload_id = intent2.getStringExtra("upload_id");*/
+
                 if (videoUri != null) {
                     if (!TextUtils.isEmpty(editTextUpload.getText().toString())){
                         String objectKey = editTextUpload.getText().toString();
+                        String uploadId = editTextUploadId.getText().toString();
                         File file = null;
+
                         try {
                             file = createFileFromUri(videoUri, objectKey);
                             upload(file, objectKey);
+                            uploadNewVideo(uploadId, objectKey);
 
                             progressDialogUpload = new ProgressDialog(upload.this);
                             progressDialogUpload.setMessage("Uploading file " + file.getName());
@@ -123,6 +139,7 @@ public class upload extends AppCompatActivity {
                     Uri uri = data.getData();
                     videoUri = uri;
                     videoViewUpload.setVideoURI(uri);
+                    videoViewUpload.seekTo(0);
                     editTextUpload.setText(getFileNameFromUri(uri));
                     buttonUpload.setEnabled(true);
                 }
@@ -158,7 +175,7 @@ public class upload extends AppCompatActivity {
         return file;
     }
 
-    void upload(File file, final String objectKey) {
+    private void upload(File file, final String objectKey) {
         TransferObserver transferObserver = transferUtility.upload(
                 BUCKET_NAME,
                 objectKey,
@@ -170,9 +187,9 @@ public class upload extends AppCompatActivity {
             public void onStateChanged(int id, TransferState state) {
                 Log.d(TAG, "onStateChanged: " + state);
                 if (TransferState.COMPLETED.equals(state)) {
-                    editTextDownload.setText(objectKey);
+                    editTextUpload.setText(objectKey);
                     progressDialogUpload.dismiss();
-                    Toast.makeText(upload.this, "video uploaded", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(upload.this, "영상이 업로드 되었습니다", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -187,5 +204,51 @@ public class upload extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void uploadNewVideo(final String upload_id, final String upload_video) {
+
+        final ProgressDialog progressDialog = new ProgressDialog(upload.this);
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setTitle("동영상 업로드");
+        progressDialog.show();
+
+        String uRl = "http://13.124.25.195//loginregister/videoupload.php";
+        StringRequest request = new StringRequest(Request.Method.POST, uRl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response)
+            {
+                if (response.equals("성공적으로 업로드했습니다")) {
+                    progressDialog.dismiss();
+                    Toast.makeText(upload.this, response, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(upload.this, post.class));
+                    finish();
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(upload.this, response, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                progressDialog.dismiss();
+                Toast.makeText(upload.this, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError
+            {
+                HashMap<String, String> param = new HashMap<>();
+                param.put("upload_id", upload_id);
+                param.put("upload_video", upload_video);
+
+                return param;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getmInstance(upload.this).addToRequestQueue(request);
     }
 }
