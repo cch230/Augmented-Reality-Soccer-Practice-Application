@@ -21,12 +21,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:itemIconTint="#000000"
-        app:itemTextColor="#000000"
+        app:itemIconTint="#ffffff"
+        app:itemTextColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navi_menu"
         tools:layout_editor_absoluteX="8dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/Black"
         >
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
