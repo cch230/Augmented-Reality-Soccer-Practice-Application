@@ -27,7 +27,7 @@ public class CameraActvity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i("idontknow","What");
-        setContentView(R.layout.tfe_pn_activity_camera);
+        setContentView(R.layout.activity_camera);
         loaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()

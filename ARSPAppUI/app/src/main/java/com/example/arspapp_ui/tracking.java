@@ -23,7 +23,7 @@ public class tracking {
     private ArrayList <Point> line_list=new ArrayList<>();
     private List<MatOfPoint> contours = new ArrayList<>();
     private Rect rect;
-    private Double distance=0.0;
+    public Double distance=0.0;
     private Boolean dist_sig=false;
     private Boolean orbit_sig=false;
 
@@ -126,15 +126,6 @@ public class tracking {
             Log.i("distance",distance.toString());
         }
 
-        /// Text Location
-        myPoint=new Point();
-        myPoint.x = 10;
-        myPoint.y = 550;
-        /// Font Face
-        myFontFace = 2;
-        /// Font Scale
-        myFontScale = 1.2;
-        Imgproc.putText( matInput, "DISTANCE: "+distance+"M", myPoint, myFontFace, myFontScale, new Scalar(0,255,0));
         Utils.matToBitmap(matInput, bitmap);
         return bitmap;
     }

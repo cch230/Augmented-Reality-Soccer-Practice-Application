@@ -7,6 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.hardware.camera2.*
 import android.hardware.camera2.CameraDevice.StateCallback
 import android.hardware.camera2.CameraDevice.TEMPLATE_PREVIEW
@@ -137,6 +139,13 @@ class PosenetActivity :
 
     private var recordingSurface: Surface?=null
 
+    private var deviceOrientation: DeviceOrientation? = null
+
+    private lateinit var mSensorManager: SensorManager
+
+    private lateinit var mAccelerometer: Sensor
+    private lateinit var mMagnetometer: Sensor
+
     var tracking = com.example.arspapp_ui.tracking()
 
     private var flag1: Int = 0
@@ -201,16 +210,29 @@ class PosenetActivity :
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.tfe_pn_activity_posenet, container, false)
+    ): View? = inflater.inflate(R.layout.activity_posenet, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         surfaceView = view.findViewById(R.id.surfaceView)
+        mSensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        mAccelerometer = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        mMagnetometer = mSensorManager!!.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+
+        initSensor()
+        deviceOrientation = DeviceOrientation()
         surfaceHolder = surfaceView!!.holder
     }
 
     override fun onResume() {
         super.onResume()
         startBackgroundThread()
+        mSensorManager.registerListener(
+                deviceOrientation!!.eventListener, mAccelerometer, SensorManager.SENSOR_DELAY_UI
+        )
+        mSensorManager.registerListener(
+                deviceOrientation!!.eventListener, mMagnetometer, SensorManager.SENSOR_DELAY_UI
+        )
     }
 
     override fun onStart() {
@@ -223,6 +245,7 @@ class PosenetActivity :
         stopRecording(true)
         closeCamera()
         stopBackgroundThread()
+        mSensorManager.unregisterListener(deviceOrientation!!.eventListener)
         super.onPause()
     }
 
@@ -257,6 +280,12 @@ class PosenetActivity :
 
     private fun allPermissionsGranted(grantResults: IntArray) = grantResults.all {
         it == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun initSensor() {
+        mSensorManager = this.requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
     }
 
     /**
@@ -438,7 +467,7 @@ class PosenetActivity :
             // Process an image for analysis in every 3 frames.
             frameCounter = (frameCounter + 1) % 1
             if (frameCounter == 0) {
-                processImage(rotatedBitmap)
+                processImage(imageBitmap)
             }
         }
     }
@@ -497,7 +526,11 @@ class PosenetActivity :
         paint.textSize = 80.0f
         paint.strokeWidth = 15.0f
     }
-
+    private fun setPaint4() {
+        paint.color = Color.BLACK
+        paint.textSize = 80.0f
+        paint.strokeWidth = 15.0f
+    }
 
     /** Draw bitmap on Canvas.   */
     private fun draw(canvas: Canvas, person: Person, bitmap: Bitmap) {
@@ -579,22 +612,26 @@ class PosenetActivity :
               stopRecording(true)
             }*/
         }
+        var resource=requireContext().resources
+        var GoalpostImage = BitmapFactory.decodeResource(resource, R.drawable.goalpost)
+        canvas.drawBitmap(GoalpostImage,15.0f * widthRatio+left,30.0f * heightRatio,paint)
+        setPaint3()
         canvas.drawText(
-                "Score: %.2f".format(person.score),
-                (15.0f * widthRatio),
-                (30.0f * heightRatio + bottom),
+                "거리: %.2f m".format(tracking.distance),
+                (15.0f * widthRatio+right),
+                (30.0f * heightRatio),
                 paint
         )
         canvas.drawText(
-                "Device: %s".format(posenet.device),
-                (15.0f * widthRatio),
-                (50.0f * heightRatio + bottom),
+                "속력: %s".format(posenet.device),
+                (15.0f * widthRatio+right),
+                (50.0f * heightRatio ),
                 paint
         )
         canvas.drawText(
-                "Time: %.2f ms".format(posenet.lastInferenceTimeNanos * 1.0f / 1_000_000),
-                (15.0f * widthRatio),
-                (70.0f * heightRatio + bottom),
+                "성공률: %.2f ms".format(posenet.lastInferenceTimeNanos * 1.0f / 1_000_000),
+                (15.0f * widthRatio+right),
+                (70.0f * heightRatio),
                 paint
         )
         setPaint3()
@@ -849,7 +886,7 @@ class PosenetActivity :
                     Log.e("path.mkdirs", e.toString())
                 }
             }
-            context!!.sendBroadcast(
+            requireContext()!!.sendBroadcast(
                     Intent(
                             Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                             Uri.fromFile(file)
