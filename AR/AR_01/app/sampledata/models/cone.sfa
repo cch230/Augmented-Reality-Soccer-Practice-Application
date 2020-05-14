@@ -37,7 +37,7 @@
     file: 'sampledata/models/cone.obj',
     name: 'cone',
     recenter: 'root',
-    scale: 0.01549998399999999998,
+    scale: 0.2998399999999998,
   },
   version: '0.54:2',
 }

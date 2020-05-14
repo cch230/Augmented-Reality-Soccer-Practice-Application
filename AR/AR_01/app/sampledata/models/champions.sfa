@@ -246,7 +246,7 @@
     file: 'sampledata/models/champions.fbx',
     name: 'champions',
     recenter: 'root',
-    scale: 0.70938699999999999,
+    scale: 0.20938699999999999,
   },
   version: '0.54:2',
 }
