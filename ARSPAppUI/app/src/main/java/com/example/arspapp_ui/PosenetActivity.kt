@@ -151,7 +151,7 @@ class PosenetActivity :
     private var flag1: Int = 0
     private var flag2: Int = 0
 
-
+    var gura:Int=0
     var save_Vec1:Float?=null
     var save_Vec2:Float?=null
     var Foot_Ball_distance=0.0
@@ -242,7 +242,7 @@ class PosenetActivity :
     }
 
     override fun onPause() {
-        stopRecording(true)
+        //stopRecording(true)
         closeCamera()
         stopBackgroundThread()
         mSensorManager.unregisterListener(deviceOrientation!!.eventListener)
@@ -527,7 +527,7 @@ class PosenetActivity :
         paint.strokeWidth = 15.0f
     }
     private fun setPaint4() {
-        paint.color = Color.BLACK
+        paint.color = Color.GREEN
         paint.textSize = 80.0f
         paint.strokeWidth = 15.0f
     }
@@ -613,8 +613,14 @@ class PosenetActivity :
             }*/
         }
         var resource=requireContext().resources
-        var GoalpostImage = BitmapFactory.decodeResource(resource, R.drawable.goalpost)
-        canvas.drawBitmap(GoalpostImage,15.0f * widthRatio+left,30.0f * heightRatio,paint)
+        var GoalpostImage = BitmapFactory.decodeResource(resource, R.drawable.goalpost1)
+        canvas.drawBitmap(GoalpostImage,15.0f,120.0f,paint)
+        setPaint4()
+        canvas.drawLine(15.0f,180.0f,375.0f,180.0f,paint) //가로
+        canvas.drawLine(15.0f,240.0f,375.0f,240.0f,paint)
+        canvas.drawLine(135.0f,120.0f,135.0f,300.0f,paint)  //세로
+        canvas.drawLine(255.0f,120.0f,255.0f,300.0f,paint)
+
         setPaint3()
         canvas.drawText(
                 "거리: %.2f m".format(tracking.distance),
@@ -623,13 +629,13 @@ class PosenetActivity :
                 paint
         )
         canvas.drawText(
-                "속력: %s".format(posenet.device),
+                "디바이스: %s".format(posenet.device),
                 (15.0f * widthRatio+right),
                 (50.0f * heightRatio ),
                 paint
         )
         canvas.drawText(
-                "성공률: %.2f ms".format(posenet.lastInferenceTimeNanos * 1.0f / 1_000_000),
+                "속도: %.2f ms".format(posenet.lastInferenceTimeNanos * 1.0f / 1_000_000),
                 (15.0f * widthRatio+right),
                 (70.0f * heightRatio),
                 paint
@@ -755,7 +761,7 @@ class PosenetActivity :
 
 
 
-
+/*
 
     private fun startRecording() {
         Log.i(TAG,"?щ줈1")
@@ -914,7 +920,7 @@ class PosenetActivity :
         }
     }
 
-
+*/
 
 
 

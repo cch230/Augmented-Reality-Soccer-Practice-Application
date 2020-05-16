@@ -41,6 +41,7 @@
         android:layout_centerInParent="true"
         android:gravity="center_vertical"
         android:hint="    비밀번호"
+        android:inputType="textPassword"
         android:background="@drawable/rectangle_1"
 
         />

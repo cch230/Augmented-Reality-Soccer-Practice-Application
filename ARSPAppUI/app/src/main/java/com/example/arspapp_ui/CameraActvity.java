@@ -2,6 +2,7 @@ package com.example.arspapp_ui;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,6 +27,7 @@ public class CameraActvity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
         Log.i("idontknow","What");
         setContentView(R.layout.activity_camera);
         loaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);

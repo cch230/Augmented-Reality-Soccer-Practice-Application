@@ -38,7 +38,13 @@
         <activity android:name=".bottombar" />
         <activity android:name=".CameraActvity"
             android:screenOrientation="landscape"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:hardwareAccelerated="true"/>
+        <activity android:name=".PosenetActivity"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity"
+            android:hardwareAccelerated="true"
+            />
         <activity
             android:name=".trapping2"
             android:screenOrientation="landscape"
