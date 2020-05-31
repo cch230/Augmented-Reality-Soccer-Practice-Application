@@ -1,0 +1,5 @@
+classes = 1
+train = F:/Goals_Deeplearning/txtfile/train.txt
+valid = F:/Goals_Deeplearning/txtfile/test.txt
+names = F:/Goals_Deeplearning/goals.names
+backup = F:/Goals_Deeplearning/backup/

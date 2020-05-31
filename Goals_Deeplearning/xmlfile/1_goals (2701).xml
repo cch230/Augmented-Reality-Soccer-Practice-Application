@@ -1,0 +1,26 @@
+<annotation>
+	<folder>goals w r</folder>
+	<filename>1_goals (2701).png</filename>
+	<path>F:\Goals_Deeplearning\goals w r\1_goals (2701).png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>150</width>
+		<height>150</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>goals</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>14</xmin>
+			<ymin>18</ymin>
+			<xmax>143</xmax>
+			<ymax>137</ymax>
+		</bndbox>
+	</object>
+</annotation>
