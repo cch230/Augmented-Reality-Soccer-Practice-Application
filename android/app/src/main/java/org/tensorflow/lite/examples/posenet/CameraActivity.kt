@@ -16,8 +16,21 @@
 
 package org.tensorflow.lite.examples.posenet
 
+import android.graphics.ImageFormat
+import android.hardware.camera2.CaptureRequest
+import android.media.ImageReader
+import android.media.MediaRecorder
 import android.os.Bundle
+import android.os.Environment
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import android.util.Size
+import android.view.View
+import android.widget.Toast
+import kotlinx.android.synthetic.main.tfe_pn_activity_posenet.*
+import java.io.File
+import java.io.IOException
 
 class CameraActivity : AppCompatActivity() {
 
@@ -27,5 +40,6 @@ class CameraActivity : AppCompatActivity() {
     savedInstanceState ?: supportFragmentManager.beginTransaction()
       .replace(R.id.container, PosenetActivity())
       .commit()
+
   }
 }

@@ -81,22 +81,25 @@ public class MainActivity extends AppCompatActivity{
                 });
 
 
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(View->{
-            if(videoRecorder ==null){
-                videoRecorder =new VideoRecorder();
-                videoRecorder.setSceneView(customArFragment.getArSceneView());
 
-                int orientation = getResources().getConfiguration().orientation;
-                videoRecorder.setVideoQuality(CamcorderProfile.QUALITY_HIGH,orientation);
-            }
-            boolean isRecording = videoRecorder.onToggleRecord();
-            if(isRecording)
-                Toast.makeText(this,"Starting",Toast.LENGTH_SHORT).show();
-            else
-                Toast.makeText(this,"end",Toast.LENGTH_SHORT).show();
+       customArFragment.setOnTapArPlaneListener(new BaseArFragment.OnTapArPlaneListener() {
+           @Override
+           public void onTapPlane(HitResult hitResult, Plane plane, MotionEvent motionEvent) {
+               if (videoRecorder == null) {
+                   videoRecorder = new VideoRecorder();
+                   videoRecorder.setSceneView(customArFragment.getArSceneView());
 
-        });
+                   int orientation = MainActivity.this.getResources().getConfiguration().orientation;
+                   videoRecorder.setVideoQuality(CamcorderProfile.QUALITY_HIGH, orientation);
+               }
+               boolean isRecording = videoRecorder.onToggleRecord();
+               if (isRecording)
+                   Toast.makeText(MainActivity.this, "Starting", Toast.LENGTH_SHORT).show();
+               else
+                   Toast.makeText(MainActivity.this, "end", Toast.LENGTH_SHORT).show();
+
+           }
+       });
     }
 
     private void addModelToScene(Anchor anchor, ModelRenderable modelRederable) {

@@ -1,19 +1,19 @@
 [
     {
-        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_fab_ripple_color.xml.flat",
-        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\9827c0d451a5ff0d05e209b34784e0a2\\res\\color\\mtrl_fab_ripple_color.xml"
-    },
-    {
-        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_image.jpg.flat",
-        "source": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\src\\main\\res\\drawable\\image.jpg"
+        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_list_selector_disabled_holo_light.9.png.flat",
+        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable-xhdpi-v4\\abc_list_selector_disabled_holo_light.9.png"
     },
     {
         "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_ic_ab_back_material.xml.flat",
         "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable\\abc_ic_ab_back_material.xml"
     },
     {
-        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_list_selector_disabled_holo_light.9.png.flat",
-        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable-xhdpi-v4\\abc_list_selector_disabled_holo_light.9.png"
+        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_image.jpg.flat",
+        "source": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\src\\main\\res\\drawable\\image.jpg"
+    },
+    {
+        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_fab_ripple_color.xml.flat",
+        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\9827c0d451a5ff0d05e209b34784e0a2\\res\\color\\mtrl_fab_ripple_color.xml"
     },
     {
         "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_action_menu_item_layout.xml.flat",
@@ -112,12 +112,12 @@
         "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable-hdpi-v4\\abc_text_select_handle_right_mtrl_light.png"
     },
     {
-        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_list_longpressed_holo.9.png.flat",
-        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable-mdpi-v4\\abc_list_longpressed_holo.9.png"
-    },
-    {
         "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_ic_menu_copy_mtrl_am_alpha.png.flat",
         "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable-xhdpi-v4\\abc_ic_menu_copy_mtrl_am_alpha.png"
+    },
+    {
+        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_list_longpressed_holo.9.png.flat",
+        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable-mdpi-v4\\abc_list_longpressed_holo.9.png"
     },
     {
         "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21_avd_show_password.xml.flat",
@@ -320,16 +320,16 @@
         "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable\\abc_btn_check_material.xml"
     },
     {
-        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_ic_star_half_black_48dp.png.flat",
-        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable-xxhdpi-v4\\abc_ic_star_half_black_48dp.png"
+        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_text_select_handle_middle_mtrl_light.png.flat",
+        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable-xxhdpi-v4\\abc_text_select_handle_middle_mtrl_light.png"
     },
     {
         "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_tfe_pn_activity_camera.xml.flat",
         "source": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\src\\main\\res\\layout\\tfe_pn_activity_camera.xml"
     },
     {
-        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_text_select_handle_middle_mtrl_light.png.flat",
-        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable-xxhdpi-v4\\abc_text_select_handle_middle_mtrl_light.png"
+        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_ic_star_half_black_48dp.png.flat",
+        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable-xxhdpi-v4\\abc_ic_star_half_black_48dp.png"
     },
     {
         "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_mtrl_chip_checked_circle.xml.flat",
@@ -420,16 +420,16 @@
         "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\layout\\abc_search_view.xml"
     },
     {
-        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_tabs_colored_ripple_color.xml.flat",
-        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\9827c0d451a5ff0d05e209b34784e0a2\\res\\color\\mtrl_tabs_colored_ripple_color.xml"
+        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
     },
     {
         "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_notification_bg_normal.9.png.flat",
         "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\cebf2e9ec0946c6abf2181feb924a30b\\res\\drawable-mdpi-v4\\notification_bg_normal.9.png"
     },
     {
-        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_tabs_colored_ripple_color.xml.flat",
+        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\9827c0d451a5ff0d05e209b34784e0a2\\res\\color\\mtrl_tabs_colored_ripple_color.xml"
     },
     {
         "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_btn_check_to_on_mtrl_015.png.flat",
@@ -456,12 +456,12 @@
         "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\layout\\abc_list_menu_item_checkbox.xml"
     },
     {
-        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_seekbar_tick_mark_material.xml.flat",
-        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
-    },
-    {
         "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_ic_voice_search_api_material.xml.flat",
         "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable\\abc_ic_voice_search_api_material.xml"
+    },
+    {
+        "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_seekbar_tick_mark_material.xml.flat",
+        "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
     },
     {
         "merged": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_chip_text_color.xml.flat",

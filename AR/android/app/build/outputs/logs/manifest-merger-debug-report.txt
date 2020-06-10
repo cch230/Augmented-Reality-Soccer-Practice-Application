@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-35:12
+ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-36:12
 MERGED from [:posenet] D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\posenet\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [com.android.support:design:28.0.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\9827c0d451a5ff0d05e209b34784e0a2\AndroidManifest.xml:17:1-24:12
 MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\64db14f5083a9557cf78480e911a0a05\AndroidManifest.xml:17:1-22:12
@@ -44,20 +44,20 @@ MERGED from [com.google.ar.sceneform:rendering:1.15.0] C:\Users\chansol\.gradle\
 MERGED from [com.google.ar.sceneform:sceneform-base:1.15.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\eedee8efbb1842b976ff60e659406451\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.ar.sceneform:filament-android:1.15.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\eea469ea2f7bfecfacfa3cd0ed05cb16\AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.ar:core:1.15.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\d7cc93dfb926818404c96acbe41c6bd6\AndroidManifest.xml:17:1-46:12
-INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-36:12
 	package
 		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:3:5-51
 		INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml
 		INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-35:12
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-36:12
 		INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-35:12
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:1-36:12
 		INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:2:11-69
@@ -77,16 +77,16 @@ uses-feature#android.hardware.camera.autofocus
 ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:8:3-68
 	android:name
 		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:8:17-65
-uses-feature#com.google.ar.core
-ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:9:3-76
+uses-permission#android.hardware.camera.ar
+ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:9:3-88
 	android:required
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:9:51-74
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:9:62-86
 	android:name
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:9:17-50
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:9:20-61
 uses-sdk
-ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:10:3-15
-INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:10:3-15
-INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:10:3-15
+ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:11:3-15
+INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:11:3-15
+INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:11:3-15
 MERGED from [:posenet] D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\posenet\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:posenet] D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\posenet\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:design:28.0.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\9827c0d451a5ff0d05e209b34784e0a2\AndroidManifest.xml:20:5-44
@@ -167,20 +167,20 @@ MERGED from [com.google.ar.sceneform:filament-android:1.15.0] C:\Users\chansol\.
 MERGED from [com.google.ar.sceneform:filament-android:1.15.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\eea469ea2f7bfecfacfa3cd0ed05cb16\AndroidManifest.xml:7:5-9:41
 MERGED from [com.google.ar:core:1.15.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\d7cc93dfb926818404c96acbe41c6bd6\AndroidManifest.xml:26:5-28:41
 MERGED from [com.google.ar:core:1.15.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\d7cc93dfb926818404c96acbe41c6bd6\AndroidManifest.xml:26:5-28:41
-INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:10:3-15
-INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:10:3-15
+INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:11:3-15
+INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:11:3-15
 	android:targetSdkVersion
 		INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:10:3-15
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:11:3-15
 		INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml
 	android:minSdkVersion
 		INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:10:3-15
-		MERGED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:10:3-15
-		MERGED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:10:3-15
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:11:3-15
+		MERGED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:11:3-15
+		MERGED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:11:3-15
 		INJECTED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml
 application
-ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:12:3-33:17
+ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:13:3-34:17
 MERGED from [com.android.support:design:28.0.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\9827c0d451a5ff0d05e209b34784e0a2\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:design:28.0.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\9827c0d451a5ff0d05e209b34784e0a2\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\344011c0afe04c8a2994a9e29b2fd048\AndroidManifest.xml:9:5-20
@@ -198,47 +198,47 @@ MERGED from [com.google.ar:core:1.15.0] C:\Users\chansol\.gradle\caches\transfor
 	android:appComponentFactory
 		ADDED from [com.android.support:support-compat:28.0.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\cebf2e9ec0946c6abf2181feb924a30b\AndroidManifest.xml:22:18-91
 	android:supportsRtl
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:17:7-33
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:18:7-33
 	android:label
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:15:7-46
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:16:7-46
 	android:roundIcon
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:16:7-52
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:17:7-52
 	android:icon
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:14:7-41
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:15:7-41
 	android:allowBackup
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:13:7-33
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:14:7-33
 	android:theme
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:18:7-46
-meta-data#com.google.ar.core
-ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:19:5-76
-	android:value
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:19:50-74
-	android:name
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:19:16-49
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:19:7-46
 activity#org.tensorflow.lite.examples.posenet.TestActivity
-ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:20:5-24:16
+ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:21:5-25:16
 	android:label
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:22:9-48
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:23:9-48
 	android:exported
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:23:9-32
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:24:9-32
 	android:name
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:21:9-37
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:22:9-37
 activity#org.tensorflow.lite.examples.posenet.CameraActivity
-ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:26:5-31:16
+ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:27:5-32:16
 	android:exported
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:26:46-69
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:27:46-69
 	android:name
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:26:15-45
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:27:15-45
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:27:7-30:23
+ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:28:7-31:23
 action#android.intent.action.MAIN
-ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:28:9-60
+ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:29:9-60
 	android:name
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:28:17-58
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:29:17-58
 category#android.intent.category.LAUNCHER
-ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:29:9-68
+ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:30:9-68
 	android:name
-		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:29:19-66
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:30:19-66
+meta-data#com.google.ar.core
+ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:33:3-74
+	android:value
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:33:48-72
+	android:name
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\AR\android\app\src\main\AndroidManifest.xml:33:14-47
 meta-data#com.google.ar.core.min_apk_version
 ADDED from [com.google.ar:core:1.15.0] C:\Users\chansol\.gradle\caches\transforms-2\files-2.1\d7cc93dfb926818404c96acbe41c6bd6\AndroidManifest.xml:33:9-35:41
 	android:value

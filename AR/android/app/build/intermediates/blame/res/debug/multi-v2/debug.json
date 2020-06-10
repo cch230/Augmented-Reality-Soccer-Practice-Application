@@ -153,6 +153,21 @@
             ]
         },
         {
+            "outputFile": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\values-port_values-port.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\values-port\\values-port.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        },
+        {
             "outputFile": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\values-af_values-af.arsc.flat",
             "map": [
                 {
@@ -204,21 +219,6 @@
                         "startOffsets": "105,160,217,342,471",
                         "endColumns": "54,56,124,128,92",
                         "endOffsets": "155,212,337,466,559"
-                    }
-                }
-            ]
-        },
-        {
-            "outputFile": "D:\\git\\Augmented-Reality-Soccer-Practice-Application\\AR\\android\\app\\build\\intermediates\\res\\merged\\debug\\values-port_values-port.arsc.flat",
-            "map": [
-                {
-                    "source": "C:\\Users\\chansol\\.gradle\\caches\\transforms-2\\files-2.1\\64db14f5083a9557cf78480e911a0a05\\res\\values-port\\values-port.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "55",
-                        "endOffsets": "106"
                     }
                 }
             ]

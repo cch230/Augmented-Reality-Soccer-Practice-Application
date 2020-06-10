@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Thu May 14 05:48:53 KST 2020
+#Thu May 28 02:58:55 KST 2020
 4.path=lib/x86_64/libtensorflowlite_jni.so
 8.set=NATIVE_RESOURCE
 6.path=classes.dex

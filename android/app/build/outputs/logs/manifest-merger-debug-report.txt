@@ -59,6 +59,10 @@ uses-permission#android.permission.CAMERA
 ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\android\app\src\main\AndroidManifest.xml:5:3-63
 	android:name
 		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\android\app\src\main\AndroidManifest.xml:5:20-60
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\android\app\src\main\AndroidManifest.xml:6:3-78
+	android:name
+		ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\android\app\src\main\AndroidManifest.xml:6:20-76
 uses-feature#android.hardware.camera
 ADDED from D:\git\Augmented-Reality-Soccer-Practice-Application\android\app\src\main\AndroidManifest.xml:7:3-58
 	android:name

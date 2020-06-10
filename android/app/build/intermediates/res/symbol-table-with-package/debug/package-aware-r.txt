@@ -1065,6 +1065,7 @@ id barrier
 id beginning
 id blocking
 id bottom
+id button1
 id buttonPanel
 id center
 id center_horizontal

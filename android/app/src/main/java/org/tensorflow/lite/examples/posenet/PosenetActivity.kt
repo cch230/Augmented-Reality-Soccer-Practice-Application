@@ -1,18 +1,3 @@
-/*
- * Copyright 2019 The TensorFlow Authors. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 package org.tensorflow.lite.examples.posenet
 
@@ -21,14 +6,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.ImageFormat
-import android.graphics.Matrix
-import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.Rect
+import android.graphics.*
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CameraCharacteristics
@@ -37,9 +15,11 @@ import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CaptureRequest
 import android.hardware.camera2.CaptureResult
 import android.hardware.camera2.TotalCaptureResult
+import android.media.CamcorderProfile
 import android.media.Image
 import android.media.ImageReader
 import android.media.ImageReader.OnImageAvailableListener
+import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
@@ -56,13 +36,14 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
+import kotlinx.android.synthetic.main.tfe_pn_activity_posenet.*
+import org.tensorflow.lite.examples.posenet.lib.*
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
-import org.tensorflow.lite.examples.posenet.lib.BodyPart
-import org.tensorflow.lite.examples.posenet.lib.Person
-import org.tensorflow.lite.examples.posenet.lib.Posenet
+import kotlin.math.PI
 
 class PosenetActivity :
   Fragment(),
@@ -105,6 +86,8 @@ class PosenetActivity :
 
   /** A [SurfaceView] for camera preview.   */
   private var surfaceView: SurfaceView? = null
+
+  private var button:Button?=null
 
   /** A [CameraCaptureSession] for camera preview.   */
   private var captureSession: CameraCaptureSession? = null
@@ -216,6 +199,7 @@ class PosenetActivity :
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     surfaceView = view.findViewById(R.id.surfaceView)
     surfaceHolder = surfaceView!!.holder
+
   }
 
   override fun onResume() {
@@ -528,7 +512,22 @@ class PosenetActivity :
 
     val widthRatio = screenWidth.toFloat() / MODEL_WIDTH
     val heightRatio = screenHeight.toFloat() / MODEL_HEIGHT
-
+    var footkey =0
+    var posi =1
+    /*var lshoulder:KeyPoint?=null
+    var rshoulder:KeyPoint?=null
+    var lelbow:KeyPoint?=null
+    var relbow:KeyPoint?=null
+    var lwrist:KeyPoint?=null
+    var rwrist:KeyPoint?=null
+    var lhip:KeyPoint?=null
+    var rhip:KeyPoint?=null
+    var lknee:KeyPoint?=null
+    var rknee:KeyPoint?=null
+    var lankle:KeyPoint?=null
+    var rankle:KeyPoint?=null
+*/
+    var allkeyPoint= arrayOfNulls<Position>(1000)
     // Draw key points over the image.
     for (keyPoint in person.keyPoints) {
       if (keyPoint.score > minConfidence) {
@@ -536,7 +535,52 @@ class PosenetActivity :
         val adjustedX: Float = position.x.toFloat() * widthRatio + left
         val adjustedY: Float = position.y.toFloat() * heightRatio + top
         canvas.drawCircle(adjustedX, adjustedY, circleRadius, paint)
+        /*footkey++
+        if(footkey>2){
+          when(footkey){
+            5->lshoulder=keyPoint
+            6->rshoulder=keyPoint
+            7->lelbow= keyPoint
+            8->relbow= keyPoint
+            9->lwrist=keyPoint
+            10->rwrist= keyPoint
+            11-> lhip= keyPoint
+            12-> rhip= keyPoint
+            13-> lknee=keyPoint
+            14-> rknee=keyPoint
+            15-> lankle=keyPoint
+            16-> rankle =keyPoint
+          }
+        }*/
+        allkeyPoint.set(footkey,position)
+        footkey++
       }
+    }
+
+    while(allkeyPoint.get(16*posi)!=null) {
+      val lsangle: Double = getAngle(allkeyPoint.get(5 * posi)!!, allkeyPoint.get(7 * posi)!!)
+      System.out.println(" 왼쪽 어깨 각도 " + lsangle + " " + posi)
+      val rsangle: Double = getAngle(allkeyPoint.get(6 * posi)!!, allkeyPoint.get(8 * posi)!!)
+      System.out.println(" 오른쪽 어깨 각도 " + rsangle + " " + posi)
+      val llangle:Double=getAngle(allkeyPoint.get(11*posi)!!,allkeyPoint.get(13*posi)!!)
+      System.out.println(" 왼쪽 허벅지 각도 " + llangle + " " + posi)
+      val rlangle:Double=getAngle(allkeyPoint.get(12*posi)!!,allkeyPoint.get(14*posi)!!)
+      System.out.println(" 오른쪽 허벅지 각도 " + rlangle + " " + posi)
+      val lhangle:Double=getAngle(allkeyPoint.get(5*posi)!!,allkeyPoint.get(11*posi)!!)
+      System.out.println(" 왼쪽 허리 각도 " + lhangle + " " + posi)
+      val rhangle:Double=getAngle(allkeyPoint.get(6*posi)!!,allkeyPoint.get(12*posi)!!)
+      System.out.println(" 오른쪽 허리 각도 " + rhangle + " " + posi)
+      val lfangle: Double = getAngle(allkeyPoint.get(13 * posi)!!, allkeyPoint.get(15 * posi)!!)
+      System.out.println(" 왼쪽 정강이 각도 " + lfangle + " " + posi)
+      val rfangle: Double = getAngle(allkeyPoint.get(14 * posi)!!, allkeyPoint.get(16 * posi)!!)
+      System.out.println(" 오른쪽 정강이 각도 " + rfangle + " " + posi)
+      posi++
+      /*canvas.drawText(
+        "왼쪽 어깨 각도 : %.2f".format(lsangle),
+        (15.0f * widthRatio),
+        (30.0f * heightRatio + bottom),
+        paint
+      )*/
     }
 
     for (line in bodyJoints) {
@@ -576,7 +620,12 @@ class PosenetActivity :
     // Draw!
     surfaceHolder!!.unlockCanvasAndPost(canvas)
   }
-
+  public fun getAngle(start: Position,end:Position):Double{
+    val dx:Double=start.x.toDouble()-end.x.toDouble()
+    val dy:Double=start.y.toDouble()-end.y.toDouble()
+    val angle:Double=Math.atan2(dy,dx)*(180.0/ PI)
+    return angle
+  }
   /** Process image using Posenet library.   */
   private fun processImage(bitmap: Bitmap) {
     // Crop bitmap.

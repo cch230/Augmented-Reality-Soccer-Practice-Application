@@ -13,8 +13,9 @@
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-feature
-        android:name="com.google.ar.core"
+
+    <uses-permission
+        android:name="android.hardware.camera.ar"
         android:required="true" />
 
     <application
@@ -27,10 +28,6 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme.Posenet" >
-        <meta-data
-            android:name="com.google.ar.core"
-            android:value="required" />
-
         <activity
             android:name="org.tensorflow.lite.examples.posenet.TestActivity"
             android:exported="true"
@@ -46,6 +43,9 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="required" />
         <!-- The minimal version code of ARCore APK required for an app using this SDK. -->
         <meta-data
             android:name="com.google.ar.core.min_apk_version"

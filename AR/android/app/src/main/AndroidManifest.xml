@@ -6,7 +6,8 @@
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
   <uses-feature android:name="android.hardware.camera" />
   <uses-feature android:name="android.hardware.camera.autofocus" />
-  <uses-feature android:name="com.google.ar.core" android:required="true"/>
+  <uses-permission android:name="android.hardware.camera.ar" android:required= "true"/>
+
   <uses-sdk />
 
   <application
@@ -16,7 +17,7 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme.Posenet">
-    <meta-data android:name="com.google.ar.core" android:value="required"/>
+
     <activity
         android:name=".TestActivity"
         android:label="@string/tfe_pn_app_name"
@@ -29,7 +30,7 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-
+  <meta-data android:name="com.google.ar.core" android:value="required"/>
   </application>
 
 </manifest>

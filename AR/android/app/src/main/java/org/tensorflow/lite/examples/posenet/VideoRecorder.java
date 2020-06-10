@@ -1,4 +1,5 @@
 package org.tensorflow.lite.examples.posenet;
+
 import android.content.res.Configuration;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
@@ -6,15 +7,12 @@ import android.os.Environment;
 import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
+
 import com.google.ar.sceneform.SceneView;
+
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Video Recorder class handles recording the contents of a SceneView. It uses MediaRecorder to
- * encode the video. The quality settings can be set explicitly or simply use the CamcorderProfile
- * class to select a predefined set of parameters.
- */
 public class VideoRecorder {
     private static final String TAG = "VideoRecorder";
     private static final int DEFAULT_BITRATE = 10000000;
@@ -105,7 +103,7 @@ public class VideoRecorder {
             videoDirectory =
                     new File(
                             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                                    + "/Sceneform");
+                                    + "/Ar");
         }
         if (videoBaseName == null || videoBaseName.isEmpty()) {
             videoBaseName = "Sample";

@@ -1065,14 +1065,12 @@ id add
 id alertTitle
 id all
 id always
-id arfragment
 id async
 id auto
 id barrier
 id beginning
 id blocking
 id bottom
-id button
 id buttonPanel
 id center
 id center_horizontal
@@ -1224,6 +1222,7 @@ id time
 id title
 id titleDividerNoCustom
 id title_template
+id toolbar
 id top
 id topPanel
 id touch_outside
