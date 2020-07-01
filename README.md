@@ -138,7 +138,7 @@ Tensorflow|tensorflow_lite|
 ### 딥러닝
  슈팅 연습 등에 사용할 공과 골대의 인식을 위해 각각의 객체를 DeepLearning으로 검출하고자 하였다. 데이터 라벨링 초기에는 Faster-Rcnn을 사용하여 딥러닝을 진행하려 했지만, 축구의 경우 공의 움직임이 매우 빠른 스포츠이기 때문에 인식의 정확도를 약간 희생하더라도 빠르고 지속적인 인식이 필요했다. 이로 인해 초당 처리 속도가 상대적으로 뛰어난 Yolo를 사용하기로 하였다. 추가로 Yolo는 F-Rcnn에 비해 훨씬 적은 False-Positive(목표 객체가 아닌 대상을 목표 객체로 판단하는 오류)를 보여주어 적은 background error가 발생한다는 장점이 있다.
  
-![inference](./image/inference.jpg)
+![inference](./image/inference.JPG)
 
 Yolo 는 빠른 객체 검출을 위한 딥러닝 기법이다. 이미지를 분할 하지 않고 한 번에 인식하기 때문에, 각 객체에 대한 검출 오류가 상대적으로 적다. 
  전체적인 추론 과정은 다음과 같다.
@@ -158,24 +158,24 @@ Yolo 는 빠른 객체 검출을 위한 딥러닝 기법이다. 이미지를 분
  YOLO를 이용한 훈련으로 윈도우의 정지영상에서는 객체 위치추정의 인식율이 꽤 높았으나 훈련된 모델 파일을android 환경에 적합한 파일로 변환하는 과정에서 정확도가 손실되는 상황이 발생하여 여러 방법을 시도한 결과 Opencv 라이브러리를 이용하여 HSV 색상과 허프 변환을 이용한 공 위치 추적방법을 개선하기로 하였다. HSV 색상의 범위를 증대시켜 공의 회전과 공이 멀어질 때 프레임 상 색상 변화에서도 인식 가능케 하였다.
 다음, ROI를 이용하였다. 공을 인식하게 되면 추적에 성공한 구역의 각각의 RGB 값을 받아 평균을 내어서 저장한 다음 추적 대상을 놓쳐버린 시점에서 마지막으로 추적 성공한 구역의 상단 3방향을 탐색, 각각 RGB 값을 평균값을 비교하여 허프 변환으로는 추적이 불가능한 고속 이동 물체에 대해서도 보다 정확한 추적이 가능하게 하였다. 객체 위치 추적을 위하여 불필요한 연산이 증가하게 되었고, 이를 줄이기 위해 추적에 이용되는 프레임의 수를 줄여 연산을 줄여 이전보다 효율을 높일 수 있었다.
 
-![test](./image/test.jpg)
+![test](./image/test.JPG)
 
 ### Cord 
-![method](./image/method1.jpg)
+![method](./image/method1.JPG)
 
-![method](./image/method2.jpg)
+![method](./image/method2.JPG)
 
-![method](./image/method3.jpg)
-![method](./image/method4.jpg)
+![method](./image/method3.JPG)
+![method](./image/method4.JPG)
 
-![method](./image/method5.jpg)
-![method](./image/method6.jpg)
-![method](./image/method6.jpg)
+![method](./image/method5.JPG)
+![method](./image/method6.JPG)
+![method](./image/method6.JPG)
 
 ### Demo
 [데모영상](https://youtu.be/4QWJPG0yJGU)
 [![Video Label](https://github.com/cch230/balloon/blob/master/KakaoTalk_20200128_193729200.gif)](https://youtu.be/QDb0zTH6a1Q?t=0s) 
-![demo](./image/method6.jpg)
+![demo](./image/method6.JPG)
 
 # 참고 문헌
 *  [앱과 DB연동](https://docs.aws.amazon.com/ko_kr/elasticbeanstalk/latest/dg/java-rds.html)
