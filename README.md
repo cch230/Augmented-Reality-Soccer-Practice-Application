@@ -175,7 +175,7 @@ Yolo 는 빠른 객체 검출을 위한 딥러닝 기법이다. 이미지를 분
 ### Demo
 그림을 클릭하면 유튜브 영상으로 이동합니다.
 Click on the picture to go to the Homesoccer demo video.
-[![Video Label](https://github.com/cch230/Augmented-Reality-Soccer-Practice-Application/blob/master/image/demo.JPG)](https://youtu.be/4QWJPG0yJGU) 
+[![Video Label](https://github.com/cch230/Augmented-Reality-Soccer-Practice-Application/blob/master/image/demo.JPG)](https://youtu.be/YXiMBcdOf4w 
 
 
 # 참고 문헌
