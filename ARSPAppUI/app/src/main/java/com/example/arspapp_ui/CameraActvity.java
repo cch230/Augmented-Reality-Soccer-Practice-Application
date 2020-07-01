@@ -37,6 +37,8 @@ public class CameraActvity extends AppCompatActivity {
                     .commit();
     }
 
+
+
     }
     private BaseLoaderCallback loaderCallback = new BaseLoaderCallback(this) {
         @Override

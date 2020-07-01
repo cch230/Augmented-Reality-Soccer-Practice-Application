@@ -15,16 +15,25 @@
 
     <uses-feature android:name="android.hardware.camera2.full" />
     <uses-feature android:name="android.hardware.location.gps" />
-    <uses-feature android:name="android.hardware.camera" android:required="false"/>
-    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
-    <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
-    <uses-feature android:name="android.hardware.camera.front.autofocus"  android:required="false"/>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front.autofocus"
+        android:required="false" />
 
-    <supports-screens android:resizeable="true"
-        android:smallScreens="true"
-        android:normalScreens="true"
+    <supports-screens
+        android:anyDensity="true"
         android:largeScreens="true"
-        android:anyDensity="true" />
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
 
     <application
         android:allowBackup="true"
@@ -33,18 +42,24 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".upload"></activity>
+        <activity android:name=".shootingResult"></activity>
+        <activity
+            android:name=".trapping"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".upload" />
         <activity android:name=".mainmenu" />
         <activity android:name=".bottombar" />
-        <activity android:name=".CameraActvity"
-            android:screenOrientation="landscape"
-            tools:ignore="LockedOrientationActivity"
-            android:hardwareAccelerated="true"/>
-        <activity android:name=".PosenetActivity"
-            android:screenOrientation="landscape"
-            tools:ignore="LockedOrientationActivity"
+        <activity
+            android:name=".CameraActvity"
             android:hardwareAccelerated="true"
-            />
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".PosenetActivity"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".trapping2"
             android:screenOrientation="landscape"
@@ -80,8 +95,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity" />
 
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"

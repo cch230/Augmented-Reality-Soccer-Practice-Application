@@ -67,14 +67,12 @@
                     android:layout_marginLeft="146dp"
                     android:layout_marginTop="395dp"
                     android:background="@drawable/download_btn" />
-
                 <ImageButton
                     android:layout_width="24dp"
                     android:layout_height="33dp"
                     android:layout_marginLeft="171dp"
                     android:layout_marginTop="416dp"
                     android:background="@drawable/delete_btn" />
-
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="33dp"
@@ -101,7 +99,7 @@
         </HorizontalScrollView>
 
         <TextView
-            android:layout_width="185dp"
+            android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_marginLeft="21dp"
             android:layout_marginTop="498dp"

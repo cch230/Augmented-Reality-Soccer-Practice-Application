@@ -33,12 +33,14 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import org.tensorflow.lite.examples.posenet.lib.BodyPart
+import org.tensorflow.lite.examples.posenet.lib.KeyPoint
 import org.tensorflow.lite.examples.posenet.lib.Person
 import org.tensorflow.lite.examples.posenet.lib.Posenet
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
+import kotlin.math.PI
 import kotlin.math.abs
 
 class PosenetActivity :
@@ -48,7 +50,6 @@ class PosenetActivity :
 
     /** List of body joints that should be connected.    */
     private val bodyJoints = listOf(
-
             Pair(BodyPart.LEFT_HIP, BodyPart.RIGHT_HIP),
             Pair(BodyPart.LEFT_HIP, BodyPart.LEFT_KNEE),
             Pair(BodyPart.LEFT_KNEE, BodyPart.LEFT_ANKLE),
@@ -56,6 +57,10 @@ class PosenetActivity :
             Pair(BodyPart.RIGHT_KNEE, BodyPart.RIGHT_ANKLE)
     )
 
+
+    var footkey=0
+    var posi =1
+    var allkeyPoint= arrayOfNulls<KeyPoint>(10000)
     private var mNextVideoAbsolutePath: String? = null
     private val DETAIL_PATH = "DCIM/test1/"
     private var mediaRecorder: MediaRecorder? = null
@@ -139,6 +144,8 @@ class PosenetActivity :
 
     private var recordingSurface: Surface?=null
 
+    private var mRecorderSurface: Surface?=null
+
     private var deviceOrientation: DeviceOrientation? = null
 
     private lateinit var mSensorManager: SensorManager
@@ -146,14 +153,18 @@ class PosenetActivity :
     private lateinit var mAccelerometer: Sensor
     private lateinit var mMagnetometer: Sensor
 
-    var tracking = com.example.arspapp_ui.tracking()
-
+    private var VIDEOFILE_REQUEST=1
+    // var tracking = com.example.arspapp_ui.tracking()
+    var test = com.example.arspapp_ui.tracking()
+    private var requestflag=true
     private var flag1: Int = 0
     private var flag2: Int = 0
-
+    private var file:File?=null;
     var gura:Int=0
     var save_Vec1:Float?=null
     var save_Vec2:Float?=null
+    var save_Vec3:Float?=null
+    var save_Vec4:Float?=null
     var Foot_Ball_distance=0.0
     var tracking_sig:Boolean=false
     /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
@@ -222,6 +233,7 @@ class PosenetActivity :
         initSensor()
         deviceOrientation = DeviceOrientation()
         surfaceHolder = surfaceView!!.holder
+
     }
 
     override fun onResume() {
@@ -247,11 +259,13 @@ class PosenetActivity :
         stopBackgroundThread()
         mSensorManager.unregisterListener(deviceOrientation!!.eventListener)
         super.onPause()
+        onDestroy()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         posenet.close()
+        mNextVideoAbsolutePath?.let { capturePhoto(it) }
     }
 
     private fun requestCameraPermission() {
@@ -311,7 +325,7 @@ class PosenetActivity :
 
                 imageReader = ImageReader.newInstance(
                         PREVIEW_WIDTH, PREVIEW_HEIGHT,
-                        ImageFormat.YUV_420_888, /*maxImages*/ 2
+                        ImageFormat.YUV_420_888, /*maxImages*/ 20
                 )
 
                 sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION)!!
@@ -465,10 +479,10 @@ class PosenetActivity :
             )
             image.close()
             // Process an image for analysis in every 3 frames.
-            frameCounter = (frameCounter + 1) % 1
-            if (frameCounter == 0) {
-                processImage(imageBitmap)
-            }
+
+
+            processImage(imageBitmap)
+
         }
     }
 
@@ -581,10 +595,31 @@ class PosenetActivity :
                     save_Vec1 = position.x.toFloat() * widthRatio + left
                     save_Vec2 = position.y.toFloat() * heightRatio + top
                 }
+
+
                 val adjustedX: Float = position.x.toFloat() * widthRatio + left
                 val adjustedY: Float = position.y.toFloat() * heightRatio + top
                 canvas.drawCircle(adjustedX, adjustedY, circleRadius, paint)
             }
+        }
+        if(allkeyPoint.get(16)!=null) {
+            val lsangle: Double = getAngle(allkeyPoint.get(5 * posi)!!, allkeyPoint.get(7 * posi)!!)
+            System.out.println(" 왼쪽 어깨 각도 " + lsangle + " " + posi)
+            val rsangle: Double = getAngle(allkeyPoint.get(6 * posi)!!, allkeyPoint.get(8 * posi)!!)
+            System.out.println(" 오른쪽 어깨 각도 " + rsangle + " " + posi)
+            val llangle: Double = getAngle(allkeyPoint.get(11 * posi)!!, allkeyPoint.get(13 * posi)!!)
+            System.out.println(" 왼쪽 허벅지 각도 " + llangle + " " + posi)
+            val rlangle: Double = getAngle(allkeyPoint.get(12 * posi)!!, allkeyPoint.get(14 * posi)!!)
+            System.out.println(" 오른쪽 허벅지 각도 " + rlangle + " " + posi)
+            val lhangle: Double = getAngle(allkeyPoint.get(5 * posi)!!, allkeyPoint.get(11 * posi)!!)
+            System.out.println(" 왼쪽 허리 각도 " + lhangle + " " + posi)
+            val rhangle: Double = getAngle(allkeyPoint.get(6 * posi)!!, allkeyPoint.get(12 * posi)!!)
+            System.out.println(" 오른쪽 허리 각도 " + rhangle + " " + posi)
+            val lfangle: Double = getAngle(allkeyPoint.get(13 * posi)!!, allkeyPoint.get(15 * posi)!!)
+            System.out.println(" 왼쪽 정강이 각도 " + lfangle + " " + posi)
+            val rfangle: Double = getAngle(allkeyPoint.get(14 * posi)!!, allkeyPoint.get(16 * posi)!!)
+            System.out.println(" 오른쪽 정강이 각도 " + rfangle + " " + posi)
+            posi++
         }
         setPaint()
         for (line in bodyJoints) {
@@ -600,17 +635,14 @@ class PosenetActivity :
                         paint
                 )
             }
-            /*if(person.score>0.5&&flag2==0){
-              flag1=1
-              flag2=1
-              Log.i(TAG,person.score.toString())
-              startRecording()
+            /* if(frameCounter==1){
+                 startRecording()
+             }*/
+            if(frameCounter==500){
+                stopRecording(true)
             }
-            if(person.score>0.85&&flag1==1){
-              flag1=2
-              Log.i(TAG,person.score.toString())
-              stopRecording(true)
-            }*/
+            frameCounter++
+            Log.i("count",frameCounter.toString())
         }
         var resource=requireContext().resources
         var GoalpostImage = BitmapFactory.decodeResource(resource, R.drawable.goalpost1)
@@ -623,7 +655,7 @@ class PosenetActivity :
 
         setPaint3()
         canvas.drawText(
-                "거리: %.2f m".format(tracking.distance),
+                "거리: %.2f m".format(test.distance),
                 (15.0f * widthRatio+right),
                 (30.0f * heightRatio),
                 paint
@@ -639,11 +671,12 @@ class PosenetActivity :
                 (15.0f * widthRatio+right),
                 (70.0f * heightRatio),
                 paint
+
         )
         setPaint3()
-        if(tracking.circleVec_save[0]!=null && save_Vec1!=null && save_Vec2!=null){
-            var circlerat1 : Float=tracking.circleVec_save[0].toFloat()
-            var circlerat2 : Float=tracking.circleVec_save[1].toFloat()
+        if(test.circleVec_save[0]!=null && save_Vec1!=null && save_Vec2!=null){
+            var circlerat1 : Float=test.circleVec_save[0].toFloat()
+            var circlerat2 : Float=test.circleVec_save[1].toFloat()
             Log.i("center: ",circlerat1.toString()+" , "+ circlerat2.toString())
             Foot_Ball_distance=FootAndBall(save_Vec1,save_Vec2,circlerat1,circlerat2)
         }
@@ -676,7 +709,7 @@ class PosenetActivity :
     /** Process image using Posenet library.   */
     private fun processImage(bitmap: Bitmap) {
         // Crop bitmap.
-        val TrackingBitmap = tracking.trackingBall(bitmap, tracking_sig)
+        val TrackingBitmap = test.trackingBall(bitmap, tracking_sig)
         val croppedBitmap = cropBitmap(TrackingBitmap)
 
         // Created scaled version of bitmap for model input.
@@ -694,9 +727,54 @@ class PosenetActivity :
     private fun createCameraPreviewSession() {
         try {
 
+            if (mediaRecorder == null) {
+                mediaRecorder = MediaRecorder()
+            }
+
+            mediaRecorder!!.setVideoEncodingBitRate(10000000)
+            //  mediaRecorder!!.setMaxDuration(6000000) // 60 seconds
+
+            mediaRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
+            mediaRecorder!!.setVideoSource(MediaRecorder.VideoSource.SURFACE)
+
+            mediaRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            mediaRecorder!!.setVideoFrameRate(20)
+
+            val camcorderProfile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH)
+
+            if (camcorderProfile.videoFrameWidth > previewSize!!.width
+                    || camcorderProfile.videoFrameHeight > previewSize!!.height
+            ) {
+                camcorderProfile.videoFrameWidth = previewSize!!.width
+                camcorderProfile.videoFrameHeight = previewSize!!.height
+            }
+
+            mediaRecorder!!.setVideoSize(
+                    camcorderProfile.videoFrameWidth,
+                    camcorderProfile.videoFrameHeight
+            )
+
+            mediaRecorder!!.setVideoEncoder(MediaRecorder.VideoEncoder.H264)
+            mediaRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+
+            mediaRecorder!!.setOrientationHint(90)
+            if (mNextVideoAbsolutePath == null || mNextVideoAbsolutePath!!.isEmpty()) {
+                mNextVideoAbsolutePath = getVideoFilePath()
+            }
+            mediaRecorder!!.setOutputFile(mNextVideoAbsolutePath)
+
+            try {
+                mediaRecorder!!.prepare()
+            } catch (e: IOException) {
+                e.printStackTrace()
+                return
+            }
+
+            val surfaces: MutableList<Surface> = ArrayList()
+            mRecorderSurface = mediaRecorder!!.surface
             // We capture images from preview in YUV format.
             imageReader = ImageReader.newInstance(
-                    previewSize!!.width, previewSize!!.height, ImageFormat.YUV_420_888, 2
+                    previewSize!!.width, previewSize!!.height, ImageFormat.YUV_420_888, 20
             )
             imageReader!!.setOnImageAvailableListener(imageAvailableListener, backgroundHandler)
 
@@ -707,44 +785,68 @@ class PosenetActivity :
             previewRequestBuilder = cameraDevice!!.createCaptureRequest(
                     TEMPLATE_PREVIEW
             )
+            surfaces.add(recordingSurface!!)
+
             previewRequestBuilder!!.addTarget(recordingSurface)
+            Log.i(TAG,"start")
+            surfaces.add(mRecorderSurface!!)
 
-            // Here, we create a CameraCaptureSession for camera preview.
-            cameraDevice!!.createCaptureSession(
-                    listOf(recordingSurface),
-                    object : CameraCaptureSession.StateCallback() {
-                        override fun onConfigured(cameraCaptureSession: CameraCaptureSession) {
-                            // The camera is already closed
-                            if (cameraDevice == null) return
+            previewRequestBuilder!!.addTarget(mRecorderSurface)
+            //  previewBuilder!!.addTarget(mRecorderSurface!!)
 
-                            // When the session is ready, we start displaying the preview.
-                            captureSession = cameraCaptureSession
-                            try {
-                                // Auto focus should be continuous for camera preview.
-                                previewRequestBuilder!!.set(
-                                        CaptureRequest.CONTROL_AF_MODE,
-                                        CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
-                                )
-                                // Flash is automatically enabled when necessary.
-                                setAutoFlash(previewRequestBuilder!!)
+            //  val mediaRecorderSurface:Surface = mediaRecorder!!.surface
 
-                                // Finally, we start displaying the camera preview.
-                                previewRequest = previewRequestBuilder!!.build()
-                                captureSession!!.setRepeatingRequest(
-                                        previewRequest!!,
-                                        captureCallback, backgroundHandler
-                                )
-                            } catch (e: CameraAccessException) {
-                                Log.e(TAG, e.toString())
+            // previewRequestBuilder!!.addTarget(mediaRecorderSurface)
+
+            // Set up Surface for the MediaRecorder
+
+
+            try {
+                //  previewBuilder = cameraDevice!!.createCaptureRequest(TEMPLATE_PREVIEW)
+
+                //previewRequestBuilder!!.addTarget(mRecorderSurface)
+                cameraDevice!!.createCaptureSession(
+                        surfaces,
+                        object : CameraCaptureSession.StateCallback() {
+                            override fun onConfigured(cameraCaptureSession: CameraCaptureSession) {
+                                // The camera is already closed
+                                if (cameraDevice == null) return
+
+                                // When the session is ready, we start displaying the preview.
+                                captureSession = cameraCaptureSession
+                                try {
+                                    // Auto focus should be continuous for camera preview.
+                                    previewRequestBuilder!!.set(
+                                            CaptureRequest.CONTROL_AF_MODE,
+                                            CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
+                                    )
+                                    // Flash is automatically enabled when necessary.
+                                    setAutoFlash(previewRequestBuilder!!)
+                                    // Finally, we start displaying the camera preview.
+                                    previewRequest = previewRequestBuilder!!.build()
+                                    captureSession!!.setRepeatingRequest(
+                                            previewRequest!!,
+                                            null, null
+                                    )
+
+                                } catch (e: CameraAccessException) {
+                                    Log.e(TAG, e.toString())
+                                }
                             }
-                        }
 
-                        override fun onConfigureFailed(cameraCaptureSession: CameraCaptureSession) {
-                            showToast("Failed")
-                        }
-                    },
-                    null
-            )
+                            override fun onConfigureFailed(cameraCaptureSession: CameraCaptureSession) {
+                                showToast("Failed")
+                            }
+                        },
+                        null
+                )
+                mediaRecorder!!.start()
+
+            } catch (e: CameraAccessException) {
+                e.printStackTrace()
+            }
+            // Here, we create a CameraCaptureSession for camera preview.
+
         } catch (e: CameraAccessException) {
             Log.e(TAG, e.toString())
         }
@@ -759,105 +861,6 @@ class PosenetActivity :
         }
     }
 
-
-
-/*
-
-    private fun startRecording() {
-        Log.i(TAG,"?щ줈1")
-        if (mediaRecorder == null) {
-            mediaRecorder = MediaRecorder()
-        }
-
-        mediaRecorder!!.setVideoEncodingBitRate(100000000)
-        mediaRecorder!!.setMaxDuration(6000000) // 60 seconds
-
-        mediaRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
-        mediaRecorder!!.setVideoSource(MediaRecorder.VideoSource.SURFACE)
-
-        mediaRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-        mediaRecorder!!.setVideoFrameRate(30)
-
-        val camcorderProfile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH)
-
-        if (camcorderProfile.videoFrameWidth > previewSize!!.width
-                || camcorderProfile.videoFrameHeight > previewSize!!.height
-        ) {
-            camcorderProfile.videoFrameWidth = previewSize!!.width
-            camcorderProfile.videoFrameHeight = previewSize!!.height
-        }
-
-        mediaRecorder!!.setVideoSize(
-                camcorderProfile.videoFrameWidth,
-                camcorderProfile.videoFrameHeight
-        )
-
-        mediaRecorder!!.setVideoEncoder(MediaRecorder.VideoEncoder.H264)
-        mediaRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-
-        mediaRecorder!!.setOrientationHint(90)
-        if (mNextVideoAbsolutePath == null || mNextVideoAbsolutePath!!.isEmpty()) {
-            mNextVideoAbsolutePath = getVideoFilePath()
-        }
-        mediaRecorder!!.setOutputFile(mNextVideoAbsolutePath)
-
-        try {
-            mediaRecorder!!.prepare()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return
-        }
-        val surfaces: MutableList<Surface> = ArrayList()
-
-
-        val mediaRecorderSurface = mediaRecorder!!.surface
-        surfaces.add(mediaRecorderSurface)
-
-        try {
-            //previewBuilder = cameraDevice!!.createCaptureRequest(TEMPLATE_RECORD)
-            //previewBuilder!!.addTarget(mediaRecorderSurface)
-            cameraDevice!!.createCaptureSession(
-                    listOf(recordingSurface),
-                    object : CameraCaptureSession.StateCallback() {
-                        override fun onConfigured(cameraCaptureSession: CameraCaptureSession) {
-                            // The camera is already closed
-                            if (cameraDevice == null) return
-
-                            // When the session is ready, we start displaying the preview.
-                            captureSession = cameraCaptureSession
-                            try {
-                                // Auto focus should be continuous for camera preview.
-                                previewRequestBuilder!!.set(
-                                        CaptureRequest.CONTROL_AF_MODE,
-                                        CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
-                                )
-                                // Flash is automatically enabled when necessary.
-                                setAutoFlash(previewRequestBuilder!!)
-
-                                // Finally, we start displaying the camera preview.
-                                previewRequest = previewRequestBuilder!!.build()
-                                captureSession!!.setRepeatingRequest(
-                                        previewRequest!!,
-                                        captureCallback, backgroundHandler
-                                )
-                            } catch (e: CameraAccessException) {
-                                Log.e(TAG, e.toString())
-                            }
-                        }
-
-                        override fun onConfigureFailed(cameraCaptureSession: CameraCaptureSession) {
-                            showToast("Failed")
-                        }
-                    },
-                    null
-            )
-            mediaRecorder!!.start()
-
-        } catch (e: CameraAccessException) {
-            e.printStackTrace()
-        }
-
-    }
 
 
 
@@ -878,11 +881,11 @@ class PosenetActivity :
             }
             mediaRecorder!!.stop()
             mediaRecorder!!.reset()
-            mediaRecorder!!.release()
+            // mediaRecorder!!.release()
             mediaRecorder = null
 
             val file = File(mNextVideoAbsolutePath)
-            // ?꾨옒 肄붾뱶媛 ?놁쑝硫?媛ㅻ윭由?????곸슜???덈맖.
+            // ?꾨옒 肄붾뱶媛  ?놁쑝硫?媛ㅻ윭由?? ???곸슜???덈맖.
 
             if(!file.exists()){
                 try {
@@ -899,6 +902,8 @@ class PosenetActivity :
                     )
             )
         }
+
+        onPause()
     }
     private val captureStateCallback: CameraCaptureSession.StateCallback =
             object : CameraCaptureSession.StateCallback() {
@@ -912,15 +917,17 @@ class PosenetActivity :
 
             }
 
-    private fun updatePreview() {
-        try {
-            previewSession!!.setRepeatingRequest(previewBuilder!!.build(), null, null)
-        } catch (e: CameraAccessException) {
-            e.printStackTrace()
-        }
+    fun getAngle(start: KeyPoint,end:KeyPoint):Double{
+        val position = start.position
+        val position2 = end.position
+
+        val dx:Double=position.x.toDouble()-position2.x.toDouble()
+        val dy:Double=position.y.toDouble()-position2.y.toDouble()
+        val angle:Double=Math.atan2(dy,dx)*(180.0/ PI)
+        return angle
     }
 
-*/
+
 
 
 
@@ -969,6 +976,15 @@ class PosenetActivity :
          * Tag for the [Log].
          */
         private const val TAG = "PosenetActivity"
+        const val REQUEST_VIDEO_CAPTURE = 1
+    }
+
+    fun capturePhoto(targetFilename: String) {
+        val uri = Uri.fromFile(file)
+        val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri)
+        intent.action = Intent.ACTION_GET_CONTENT
+
+
     }
 
 }

@@ -17,35 +17,47 @@ import java.util.List;
 
 public class tracking {
     private Mat matResult;
-    private Scalar yellowLower = new Scalar(0,164,114);
-    private Scalar yellowUpper = new Scalar(94,255,255);
-    private Scalar whiteUpper = new Scalar(0,0,255);
-    private Scalar whiteLower = new Scalar(0,0,127);
+    private Scalar yellowLower = new Scalar(20,30,60);
+    private Scalar yellowUpper = new Scalar(59,255,255);
+
     public Double[] circleVec_save=new Double[2];
     private ArrayList <Point> line_list=new ArrayList<>();
     private List<MatOfPoint> contours = new ArrayList<>();
-    private Rect rect;
     public Double distance=0.0;
     private Boolean dist_sig=false;
     public Boolean CanNotFind=false;
-    public Double[][] goalpostPoint=new Double[9][2];
     public boolean Imready=false;
+    public Double r=null;
+    private Scalar red = new Scalar(255,0,0);
+    private Scalar whiteLower = new Scalar(0,0,180);
+    private Scalar whiteUpper = new Scalar(255,30,255);
+
+    private Rect rectGoals;
+
     public Bitmap trackingBall(Bitmap bitmap,Boolean signal){
         Mat matGaussian=new Mat();
         Mat matHsv=new Mat();
         Mat matDilatedMask =new Mat();
         Mat matMask=new Mat();
-        Mat matCny=new Mat();
-        Mat matGray=new Mat();
-        Mat hierarchy = new Mat();
         Mat matInput=new Mat();
         Utils.bitmapToMat(bitmap, matInput);
         Mat input =new Mat();
         Utils.bitmapToMat(bitmap, input);
-        //Mat kernel1=Mat.ones(2,2,0);
-        Mat kernel2=Mat.ones(5,5,0);
         Point goalpost=null;
-        Point center=null;
+        Point center;
+        Mat matHsvGoals = new Mat();
+        Mat matDilatedMaskGoals =new Mat();
+        Mat matDilatedMaskGoals2 =new Mat();
+        Mat matDilatedMaskGoals3 =new Mat();
+        Mat matDilatedMaskGoals4 =new Mat();
+        Mat matContourGoals =new Mat();
+        Mat kernelGoals = Mat.ones(5,5,0);
+        Mat matMaskGoals = new Mat();
+        Mat hierarchyGoals = new Mat();
+        Mat matInputGoals = new Mat();
+        Utils.bitmapToMat(bitmap, matInputGoals);
+        Utils.bitmapToMat(bitmap, input);
+
 
 
 
@@ -60,51 +72,47 @@ public class tracking {
         Core.inRange(matHsv, yellowLower, yellowUpper, matMask);
         Imgproc.dilate(matMask, matDilatedMask, new Mat());
         Imgproc.GaussianBlur(matDilatedMask, matGaussian, s, 0, 0);
-        Imgproc.cvtColor(input, matGray, Imgproc.COLOR_BGR2GRAY,1);
+        if (matResult == null)
+            matResult = new Mat(matInputGoals.rows(), matInputGoals.cols(), matInputGoals.type());
 
-        //Core.inRange(matHsv, whiteLower, whiteUpper, matMask);
-        Imgproc.Canny(matGray, matCny, 10, 100, 3, true); // Canny Edge 검출
+        Imgproc.cvtColor(input, matHsvGoals, Imgproc.COLOR_RGB2HSV_FULL);
+        Core.inRange(matHsvGoals, whiteLower, whiteUpper, matMaskGoals);
+        Imgproc.dilate(matMaskGoals, matDilatedMaskGoals, new Mat());
+        Imgproc.dilate(matDilatedMaskGoals, matDilatedMaskGoals2, new Mat());
+        Imgproc.dilate(matDilatedMaskGoals2, matDilatedMaskGoals3, new Mat());
+        Imgproc.dilate(matDilatedMaskGoals3, matDilatedMaskGoals4, new Mat());
+        Imgproc.morphologyEx(matDilatedMaskGoals4, matContourGoals, Imgproc.MORPH_CLOSE, kernelGoals);
 
-        Imgproc.adaptiveThreshold(matCny, matGray, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY_INV, 3, 12);  //block size 3
-        //Imgproc.morphologyEx(matGray,matCny,Imgproc.MORPH_GRADIENT,kernel2);
-        Imgproc.morphologyEx(matGray,matDilatedMask,Imgproc.MORPH_CLOSE,kernel2);
-        Imgproc.findContours(matDilatedMask, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE, new Point(0, 0));
+        Imgproc.findContours(matContourGoals, contours, hierarchyGoals, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
 
-        if(contours.size()>0) {
-            // for(int idx = 0; idx < contours.size(); idx++) {
-            rect = Imgproc.boundingRect(contours.get(contours.size()-1));
-            if (/*rect.width /rect.height>2 && rect.width /rect.height<4 &&*/ rect.width>rect.height&&rect.height<300&&rect.width<300&&rect.height > 10/* && rect.width > 40*/){
-                goalpost=new Point(rect.br().x - rect.width/2,rect.br().y);
-                Imgproc.rectangle(matInput,new Point(rect.br().x - rect.width, rect.br().y - rect.height), rect.br(), new Scalar(0,255, 0), 3);
-                Imgproc.circle(matInput,goalpost,1,new Scalar(255, 0, 0));
-            }
-            // }
-        }
-       /* if(rect!=null){
-            Imgproc.rectangle(matInput, new Point(rect.br().x - rect.width, rect.br().y - rect.height)
-                    , rect.br()
-                    , new Scalar(0, 0, 0), 3);
-            Imgproc.circle(matInput,new Point(rect.br().x - rect.width/2,rect.br().y),4,new Scalar(255, 0, 0));
-        }
-*/
+
+
+
+
+
+
         Mat circle = new Mat();
         circleVec_save[0]=null;
         circleVec_save[1]=null;
 
         Imgproc.HoughCircles(matGaussian,circle,Imgproc.HOUGH_GRADIENT,2.0,20,70,30,20,1000);
-
+        center = new Point(560, 480);
+        int radius = 8;
+        Imgproc.circle(matInput, center, radius, new Scalar(0, 0, 0), 2);
         if (circle.cols() > 0) {
             for (int x = 0; x < Math.min(circle.cols(), 1); x++) {
                 double circleVec[] = circle.get(0, x);
                 if (circleVec == null) {
                     break;
                 }
-                center = new Point((int) circleVec[0], (int) circleVec[1]);
+                center = new Point(100, 100);
                 Log.i("center_r",center.toString());
                 circleVec_save[0]=circleVec[0];
                 circleVec_save[1]=circleVec[1];
-
-                int radius = (int) circleVec[2];
+                radius = 8;
+                //(int) circleVec[2];
+                r=radius+0.0;
+                Log.i("di",String.valueOf(r));
                 //Imgproc.circle(matInput, center, 3, new Scalar(0, 0, 0), 2);
                 Imgproc.circle(matInput, center, radius, new Scalar(0, 0, 0), 2);
 
@@ -139,14 +147,24 @@ public class tracking {
                 }
             }
         }
-       else{
-           CanNotFind =true;
+        else{
+            CanNotFind =true;
         }
         if(goalpost!=null&&center!=null&&dist_sig==false){
             dist_sig=true;
             distance=balldistance(goalpost,center)*40;
             Log.i("distance",distance.toString());
         }
+
+
+        if(contours.size() > 0) {
+            rectGoals = Imgproc.boundingRect(contours.get(contours.size() - 1));
+            if (rectGoals.x != 0 && rectGoals.y != 0 && rectGoals.width > 2 * rectGoals.height && 3 * rectGoals.height > rectGoals.width){
+                Imgproc.rectangle(matInput, rectGoals.tl(), rectGoals.br(), red, 3);
+            }
+        }
+
+
 
         Utils.matToBitmap(matInput,bitmap);
         return bitmap;
