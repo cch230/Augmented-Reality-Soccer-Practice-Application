@@ -709,16 +709,23 @@ class PosenetActivity :
     /** Process image using Posenet library.   */
     private fun processImage(bitmap: Bitmap) {
         // Crop bitmap.
-        val TrackingBitmap = test.trackingBall(bitmap, tracking_sig)
-        val croppedBitmap = cropBitmap(TrackingBitmap)
+        //val TrackingBitmap = tracking.trackingBall(bitmap)
+        val croppedBitmap = cropBitmap(bitmap)
 
         // Created scaled version of bitmap for model input.
         val scaledBitmap = Bitmap.createScaledBitmap(croppedBitmap, MODEL_WIDTH, MODEL_HEIGHT, true)
 
         // Perform inference.
         val person = posenet.estimateSinglePose(scaledBitmap)
+        var TrackingBitmap = test.trackingBall(scaledBitmap);
+       // var TrackingGoal =test.trackingPost(TrackingBitmap)
+
+        /*if((ballPoint.y-circlerat2)>100){
+
+            TrackingBitmap=tracking.finishTrack(scaledBitmap);
+        }*/
         val canvas: Canvas = surfaceHolder!!.lockCanvas()
-        draw(canvas, person, scaledBitmap)
+        draw(canvas, person, TrackingBitmap)
     }
 
     /**
