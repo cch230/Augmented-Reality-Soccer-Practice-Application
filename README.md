@@ -175,7 +175,7 @@ Yolo 는 빠른 객체 검출을 위한 딥러닝 기법이다. 이미지를 분
 ### Demo
 [데모영상](https://youtu.be/4QWJPG0yJGU)
 [![Video Label](https://github.com/cch230/balloon/blob/master/KakaoTalk_20200128_193729200.gif)](https://youtu.be/QDb0zTH6a1Q?t=0s) 
-![demo](./image/method6.JPG)
+![demo](./image/demo.JPG)
 
 # 참고 문헌
 *  [앱과 DB연동](https://docs.aws.amazon.com/ko_kr/elasticbeanstalk/latest/dg/java-rds.html)
