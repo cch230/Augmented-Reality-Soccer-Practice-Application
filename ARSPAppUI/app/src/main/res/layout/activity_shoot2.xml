@@ -22,6 +22,45 @@
         android:text="슈팅 횟수 지정"
         android:textSize="22sp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="147dp"
+        android:text="훈련 종류 지정"
+
+        android:textSize="22sp" />
+
+    <RadioGroup
+        android:id="@+id/shrd_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginLeft="218dp"
+        android:layout_marginTop="150dp"
+        >
+
+        <RadioButton
+            android:id="@+id/radio_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="왼발"
+            android:textSize="16sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/radio_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오른발"
+            android:textSize="16sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            />
+
+    </RadioGroup>
+
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="110dp"
@@ -80,6 +119,9 @@
         android:textColor="#FF0000"
         android:layout_marginLeft="149dp"
         android:layout_marginTop="305dp"/>
+
+
+
 
 
 

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.google.ar.sceneform.plugin'
 
 android {
     compileSdkVersion 28
@@ -94,3 +95,12 @@ dependencies {
     implementation project(path: ':opencv')
     implementation 'androidx.fragment:fragment-ktx:1.2.4'
 }
+
+/*
+sceneform.asset('sampledata/models/andy_dance.fbx',
+        'default',
+        'sampledata/models/andy_dance.sfa',
+        'src/main/assets/andy_dance',
+        ['sampledata/models/andy_dance.fbx'])
+
+ */
