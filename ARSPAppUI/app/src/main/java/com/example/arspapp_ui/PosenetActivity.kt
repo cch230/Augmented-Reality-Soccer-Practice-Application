@@ -38,6 +38,7 @@ import org.tensorflow.lite.examples.posenet.lib.Person
 import org.tensorflow.lite.examples.posenet.lib.Posenet
 import java.io.File
 import java.io.IOException
+import java.net.URL
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 import kotlin.math.PI
@@ -265,7 +266,7 @@ class PosenetActivity :
     override fun onDestroy() {
         super.onDestroy()
         posenet.close()
-        mNextVideoAbsolutePath?.let { capturePhoto(it) }
+        mNextVideoAbsolutePath!!.let { capturePhoto(it) }
     }
 
     private fun requestCameraPermission() {
@@ -987,11 +988,11 @@ class PosenetActivity :
     }
 
     fun capturePhoto(targetFilename: String) {
-        val uri = Uri.fromFile(file)
-        val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri)
-        intent.action = Intent.ACTION_GET_CONTENT
 
-
+        val intent = Intent(context, shootingResult::class.java).apply {
+            val url= URL(targetFilename)
+        }
+        startActivity(intent)
     }
 
 }
