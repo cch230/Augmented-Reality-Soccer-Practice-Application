@@ -72,10 +72,11 @@
                     android:layout_height="200dp"/>
             </LinearLayout>
         </TableRow>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="160dp"
+            android:layout_marginHorizontal="150dp"
             android:paddingTop="10dp"
             android:text="자세 피드백"
             android:textSize="17sp" />

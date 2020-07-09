@@ -59,13 +59,11 @@ class PosenetActivity :
     )
 
 
-    var footkey=0
     var posi =1
     var allkeyPoint= arrayOfNulls<KeyPoint>(10000)
     private var mNextVideoAbsolutePath: String? = null
     private val DETAIL_PATH = "DCIM/test1/"
     private var mediaRecorder: MediaRecorder? = null
-    private var previewBuilder: CaptureRequest.Builder? = null
 
     /** Threshold for confidence score. */
     private val minConfidence = 0.5
@@ -154,18 +152,13 @@ class PosenetActivity :
     private lateinit var mAccelerometer: Sensor
     private lateinit var mMagnetometer: Sensor
 
-    private var VIDEOFILE_REQUEST=1
+
     // var tracking = com.example.arspapp_ui.tracking()
     var test = com.example.arspapp_ui.tracking()
-    private var requestflag=true
-    private var flag1: Int = 0
-    private var flag2: Int = 0
-    private var file:File?=null;
-    var gura:Int=0
+
     var save_Vec1:Float?=null
     var save_Vec2:Float?=null
-    var save_Vec3:Float?=null
-    var save_Vec4:Float?=null
+
     var Foot_Ball_distance=0.0
     var tracking_sig:Boolean=false
     /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
@@ -255,18 +248,16 @@ class PosenetActivity :
     }
 
     override fun onPause() {
-        //stopRecording(true)
+        super.onPause()
         closeCamera()
         stopBackgroundThread()
         mSensorManager.unregisterListener(deviceOrientation!!.eventListener)
-        super.onPause()
-        onDestroy()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         posenet.close()
-        mNextVideoAbsolutePath!!.let { capturePhoto(it) }
+
     }
 
     private fun requestCameraPermission() {
@@ -636,11 +627,10 @@ class PosenetActivity :
                         paint
                 )
             }
-            /* if(frameCounter==1){
-                 startRecording()
-             }*/
-            if(frameCounter==500){
+
+            if(frameCounter==250){
                 stopRecording(true)
+                mNextVideoAbsolutePath!!.let { capturePhoto(it) }
             }
             frameCounter++
             Log.i("count",frameCounter.toString())
@@ -741,8 +731,6 @@ class PosenetActivity :
 
             mediaRecorder!!.setVideoEncodingBitRate(10000000)
             //  mediaRecorder!!.setMaxDuration(6000000) // 60 seconds
-
-            mediaRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
             mediaRecorder!!.setVideoSource(MediaRecorder.VideoSource.SURFACE)
 
             mediaRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
@@ -763,7 +751,7 @@ class PosenetActivity :
             )
 
             mediaRecorder!!.setVideoEncoder(MediaRecorder.VideoEncoder.H264)
-            mediaRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+
 
             mediaRecorder!!.setOrientationHint(90)
             if (mNextVideoAbsolutePath == null || mNextVideoAbsolutePath!!.isEmpty()) {
@@ -990,9 +978,11 @@ class PosenetActivity :
     fun capturePhoto(targetFilename: String) {
 
         val intent = Intent(context, shootingResult::class.java).apply {
-            val url= URL(targetFilename)
+            val url= targetFilename//오류
         }
+        intent.putExtra("key", targetFilename);
         startActivity(intent)
+
     }
 
 }
