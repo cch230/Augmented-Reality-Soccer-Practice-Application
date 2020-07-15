@@ -43,6 +43,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".shootingResult"></activity>
+
+        <provider
+            android:authorities="${applicationId}.provider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity
             android:name=".trapping"
             android:screenOrientation="landscape"
@@ -77,15 +88,7 @@
         <activity android:name=".privacy" />
         <activity android:name=".profile" />
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.arspapp_ui.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+
 
         <activity android:name=".rate" />
         <activity android:name=".setting" />

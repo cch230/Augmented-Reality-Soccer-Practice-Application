@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.HandlerThread
+import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
 import android.util.SparseIntArray
@@ -29,6 +30,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -630,6 +632,10 @@ class PosenetActivity :
 
             if(frameCounter==250){
                 stopRecording(true)
+                closeCamera()
+                stopBackgroundThread()
+                mSensorManager.unregisterListener(deviceOrientation!!.eventListener)
+                posenet.close()
                 mNextVideoAbsolutePath!!.let { capturePhoto(it) }
             }
             frameCounter++
@@ -978,7 +984,6 @@ class PosenetActivity :
     fun capturePhoto(targetFilename: String) {
 
         val intent = Intent(context, shootingResult::class.java).apply {
-            val url= targetFilename//오류
         }
         intent.putExtra("key", targetFilename);
         startActivity(intent)
