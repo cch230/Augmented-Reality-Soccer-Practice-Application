@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 #opencv library
-OPENCVROOT:=C:\Users\chansol\Documents\GitHub\Augmented-Reality-Soccer-Practice-Application\new\opencv
+OPENCVROOT:D:\git\Augmented-Reality-Soccer-Practice-Application\new\opencv
 
 OPENCV_CAMERA_MODULES:=on
 OPENCV_INSTALL_MODULES:=on

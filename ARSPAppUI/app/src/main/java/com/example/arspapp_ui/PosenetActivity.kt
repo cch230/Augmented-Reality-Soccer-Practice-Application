@@ -722,6 +722,7 @@ class PosenetActivity :
         var circlerat1 : Float=tracking.circleVec_save[0].toFloat()
         var circlerat2 : Float=tracking.circleVec_save[1].toFloat()
 
+        System.out.println("공"+ballPoint);
         /*if((ballPoint.y-circlerat2)>100){
             TrackingBitmap=tracking.finishTrack(scaledBitmap);
         }*/

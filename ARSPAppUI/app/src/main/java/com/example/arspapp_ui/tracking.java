@@ -30,8 +30,8 @@ public class tracking{
     public Boolean CanNotFind=false;
 
     private Mat matResult;
-    private Scalar yellowLower = new Scalar(20,90,140);
-    private Scalar yellowUpper = new Scalar(125,255,255);
+    private Scalar yellowLower = new Scalar(-10,100,100);
+    private Scalar yellowUpper = new Scalar(10,255,255);
     private Scalar yellowLower1 = new Scalar(50,0,30);
     private Scalar yellowUpper1 = new Scalar(130,100,200);
 
@@ -152,8 +152,7 @@ public class tracking{
         return bitmap;
     }
 
-    public Point ballCenter(){
-        return moveBall;
+    public Point ballCenter(){ return moveBall;
     }
 
     public Bitmap finishTrack(Bitmap bitmap){
