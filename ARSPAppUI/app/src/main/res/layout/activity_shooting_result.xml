@@ -26,14 +26,33 @@
             android:paddingTop="10dp"
             android:text="자신의 훈련 영상을 확인해 보세요"
             android:textSize="17sp" />
-        <VideoView
-            android:id="@+id/resultvideo"
-            android:layout_width="720px"
-            android:layout_height="720px"
-            android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="65dp"
-            android:layout_gravity="center_vertical"
-            />
+        <RelativeLayout
+            android:id="@+id/rl_video"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/my_black">
+            <VideoView
+                android:id="@+id/playTextureView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <ProgressBar
+                android:id="@+id/pb_video"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:indeterminateTint="@color/white"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_play_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_margin="10dp"/>
+        </RelativeLayout>
         <TableRow
             android:layout_weight="1"
             android:layout_height="0dp"

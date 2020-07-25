@@ -1,6 +1,7 @@
 package com.example.arspapp_ui
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -22,7 +23,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.HandlerThread
-import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
 import android.util.SparseIntArray
@@ -30,9 +30,9 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import org.tensorflow.lite.examples.posenet.lib.BodyPart
 import org.tensorflow.lite.examples.posenet.lib.KeyPoint
@@ -40,9 +40,11 @@ import org.tensorflow.lite.examples.posenet.lib.Person
 import org.tensorflow.lite.examples.posenet.lib.Posenet
 import java.io.File
 import java.io.IOException
-import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 import kotlin.math.PI
 import kotlin.math.abs
 
@@ -154,6 +156,7 @@ class PosenetActivity :
     private lateinit var mAccelerometer: Sensor
     private lateinit var mMagnetometer: Sensor
 
+    var pose:FragmentActivity?=null
 
     // var tracking = com.example.arspapp_ui.tracking()
     var test = com.example.arspapp_ui.tracking()
@@ -230,6 +233,9 @@ class PosenetActivity :
         deviceOrientation = DeviceOrientation()
         surfaceHolder = surfaceView!!.holder
 
+
+
+
     }
 
     override fun onResume() {
@@ -246,6 +252,7 @@ class PosenetActivity :
     override fun onStart() {
         super.onStart()
         openCamera()
+
         posenet = Posenet(this.requireContext())
     }
 
@@ -254,6 +261,7 @@ class PosenetActivity :
         closeCamera()
         stopBackgroundThread()
         mSensorManager.unregisterListener(deviceOrientation!!.eventListener)
+        onDestroy()
     }
 
     override fun onDestroy() {
@@ -377,7 +385,7 @@ class PosenetActivity :
     /**
      * Closes the current [CameraDevice].
      */
-    private fun closeCamera() {
+     fun closeCamera() {
         if (captureSession == null) {
             return
         }
@@ -395,6 +403,8 @@ class PosenetActivity :
         } finally {
             cameraOpenCloseLock.release()
         }
+
+
     }
 
     /**
@@ -542,6 +552,16 @@ class PosenetActivity :
 
     /** Draw bitmap on Canvas.   */
     private fun draw(canvas: Canvas, person: Person, bitmap: Bitmap) {
+
+        if(frameCounter==60){
+
+            stopRecording(true)
+
+            mNextVideoAbsolutePath!!.let { capturePhoto(it) }
+        }
+        frameCounter++
+        Log.i("count",frameCounter.toString())
+
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
         // Draw `bitmap` and `person` in square canvas.
         val screenWidth: Int
@@ -629,17 +649,6 @@ class PosenetActivity :
                         paint
                 )
             }
-
-            if(frameCounter==250){
-                stopRecording(true)
-                closeCamera()
-                stopBackgroundThread()
-                mSensorManager.unregisterListener(deviceOrientation!!.eventListener)
-                posenet.close()
-                mNextVideoAbsolutePath!!.let { capturePhoto(it) }
-            }
-            frameCounter++
-            Log.i("count",frameCounter.toString())
         }
         var resource=requireContext().resources
         var GoalpostImage = BitmapFactory.decodeResource(resource, R.drawable.goalpost1)
@@ -671,37 +680,13 @@ class PosenetActivity :
 
         )
         setPaint3()
-        if(test.circleVec_save[0]!=null && save_Vec1!=null && save_Vec2!=null){
-            var circlerat1 : Float=test.circleVec_save[0].toFloat()
-            var circlerat2 : Float=test.circleVec_save[1].toFloat()
-            Log.i("center: ",circlerat1.toString()+" , "+ circlerat2.toString())
-            Foot_Ball_distance=FootAndBall(save_Vec1,save_Vec2,circlerat1,circlerat2)
-        }
-        if(Foot_Ball_distance!! >0.2&&count<=2000){
-            count++
-            tracking_sig=true
-        }
-        if(count>2000){
-            tracking_sig=false
-        }
+
 
         // Draw!
         surfaceHolder!!.unlockCanvasAndPost(canvas)
+
     }
 
-    fun FootAndBall(
-            save_Vec1:Float?,
-            save_Vec2:Float?,
-            circlerat1:Float?,
-            circlerat2:Float?
-    ): Double {
-        var dist: Double
-        val vecX = save_Vec1!! - circlerat1!!
-        val vecY = save_Vec2!!- circlerat2!!
-        dist = Math.sqrt(Math.pow(vecX.toDouble(), 2.0) + Math.pow(vecY.toDouble(), 2.0))
-        dist *= 8.0
-        return dist
-    }
 
     /** Process image using Posenet library.   */
     private fun processImage(bitmap: Bitmap) {
@@ -736,7 +721,7 @@ class PosenetActivity :
             }
 
             mediaRecorder!!.setVideoEncodingBitRate(10000000)
-            //  mediaRecorder!!.setMaxDuration(6000000) // 60 seconds
+            //mediaRecorder!!.setMaxDuration(10000) // 10 seconds
             mediaRecorder!!.setVideoSource(MediaRecorder.VideoSource.SURFACE)
 
             mediaRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
@@ -794,19 +779,11 @@ class PosenetActivity :
             surfaces.add(mRecorderSurface!!)
 
             previewRequestBuilder!!.addTarget(mRecorderSurface)
-            //  previewBuilder!!.addTarget(mRecorderSurface!!)
 
-            //  val mediaRecorderSurface:Surface = mediaRecorder!!.surface
-
-            // previewRequestBuilder!!.addTarget(mediaRecorderSurface)
-
-            // Set up Surface for the MediaRecorder
 
 
             try {
-                //  previewBuilder = cameraDevice!!.createCaptureRequest(TEMPLATE_PREVIEW)
 
-                //previewRequestBuilder!!.addTarget(mRecorderSurface)
                 cameraDevice!!.createCaptureSession(
                         surfaces,
                         object : CameraCaptureSession.StateCallback() {
@@ -868,26 +845,29 @@ class PosenetActivity :
 
     private fun getVideoFilePath(): String? {
         val dir = Environment.getExternalStorageDirectory().absoluteFile
+        val time = System.currentTimeMillis() //시간 받기
+
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH.mm.ss")
+        //포멧 변환  형식 만들기
+        //포멧 변환  형식 만들기
+        val dd = Date(time) //받은 시간을 Date 형식으로 바꾸기
+
+        val strTime: String = sdf.format(dd) //Data 정보를 포멧 변환하기
+
         val path =
                 dir.path + "/" + DETAIL_PATH
         val dst = File(path)
         if (!dst.exists()) dst.mkdirs()
-        return path + System.currentTimeMillis() + ".mp4"
+        return path + strTime + ".mp4"
     }
 
     private fun stopRecording(showPreview: Boolean) {
         Log.i(TAG,"?щ줈2")
+
+
         if(showPreview){
-            if (mediaRecorder != null){
-                return
-            }
-            mediaRecorder!!.stop()
-            mediaRecorder!!.reset()
-            // mediaRecorder!!.release()
-            mediaRecorder = null
 
             val file = File(mNextVideoAbsolutePath)
-            // ?꾨옒 肄붾뱶媛  ?놁쑝硫?媛ㅻ윭由?? ???곸슜???덈맖.
 
             if(!file.exists()){
                 try {
@@ -897,16 +877,55 @@ class PosenetActivity :
                     Log.e("path.mkdirs", e.toString())
                 }
             }
+            mediaRecorder!!.stop()
+            mediaRecorder!!.reset()
+            mediaRecorder!!.release()
+            previewRequestBuilder=null
+            mRecorderSurface!!.release()
+            mRecorderSurface=null
+            recordingSurface!!.release()
+            recordingSurface=null
+            previewRequest=null
+            requireContext()!!.sendBroadcast(
+                    Intent(
+                        Intent(
+                                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                Uri.fromFile(file)
+                        )
+                    )
+            )
             requireContext()!!.sendBroadcast(
                     Intent(
                             Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                             Uri.fromFile(file)
                     )
             )
-        }
+            requireActivity().getApplicationContext().sendBroadcast(
+                    Intent(
+                            Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                            Uri.fromFile(file)
+                    )
+            )
+            this@PosenetActivity.activity?.sendBroadcast(
+                    Intent(
+                            Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                            Uri.fromFile(file)
+                    )
+            )
+            this@PosenetActivity.activity?.sendBroadcast(
+                    Intent(
+                        Intent(
+                                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                Uri.fromFile(file)
+                        )
+                    )
+            )
+            requireActivity().getApplicationContext().sendBroadcast( Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)))
 
-        onPause()
+            closeCamera()
+        }
     }
+
     private val captureStateCallback: CameraCaptureSession.StateCallback =
             object : CameraCaptureSession.StateCallback() {
                 override fun onConfigured(session: CameraCaptureSession) {
@@ -981,12 +1000,15 @@ class PosenetActivity :
         const val REQUEST_VIDEO_CAPTURE = 1
     }
 
+    @SuppressLint("UseRequireInsteadOfGet")
     fun capturePhoto(targetFilename: String) {
-
+       // pose = this@PosenetActivity.requireActivity()
         val intent = Intent(context, shootingResult::class.java).apply {
         }
         intent.putExtra("key", targetFilename);
         startActivity(intent)
+        //this@PosenetActivity.activity?.finish()
+        //requireActivity().finish()
 
     }
 

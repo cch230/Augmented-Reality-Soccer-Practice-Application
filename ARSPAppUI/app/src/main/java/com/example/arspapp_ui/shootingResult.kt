@@ -1,20 +1,19 @@
 package com.example.arspapp_ui
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.media.AudioManager
 import android.media.MediaPlayer
-import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.os.Environment
+import android.util.AttributeSet
 import android.widget.ImageView
 import android.widget.MediaController
 import android.widget.Toast
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
-import java.io.File
+import androidx.fragment.app.FragmentActivity
 
 
 class shootingResult : AppCompatActivity() {
@@ -23,81 +22,59 @@ class shootingResult : AppCompatActivity() {
     private var imageView1: ImageView? = null
     private var imageView2: ImageView? = null
     private var mediaPlayer: MediaPlayer? = null
+    private val DETAIL_PATH = "DCIM/test1/"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    }
-}
-      /*  Uri videoUri=Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4");
-
-        PlayerView pv;
-        //실제 비디오를 플레이하는 객체의 참조 변수
-        SimpleExoPlayer player;
-
-
-        //화면에 보이기 시작할때!!
-
-        //화면에 안보일 때..
-
-        Toast.makeText(this, str, Toast.LENGTH_LONG).show()
-        if(file.exists()) {
-
-
-             mediaPlayer = MediaPlayer().apply {
-                setAudioStreamType(AudioManager.STREAM_MUSIC)
-                setDataSource(applicationContext, videouri)
-                prepare()
-                start()
-            }
-        }
         setContentView(R.layout.activity_shooting_result)
+        var aty: Activity? = CameraActvity.CameraActivity
+        aty!!.finish()
+
+        videoView=findViewById(R.id.playTextureView)
+        val str = intent.getStringExtra("key") //인텐트의 key값을 통해 해당 String을 받는다.
+        val dir = Environment.getExternalStorageDirectory().absoluteFile
+        val path =
+                dir.path + "/" + DETAIL_PATH
+        var filename=path + "2020-07-24 23.38.14" + ".mp4"
+        Toast.makeText(this, str, Toast.LENGTH_LONG).show()
+
+
+        this.sendBroadcast(
+                Intent(
+                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                        Uri.parse(str)
+                )
+        )
+
+        val mc = MediaController(this)
+        videoView!!.setMediaController(mc)
+        //비디오 경로 설정
+        //비디오 경로 설정
+
+        videoView!!.setVideoURI(Uri.parse(str))
+
+        ///포커스를 설정
+        videoView!!.requestFocus()
+
+        //비디오 뷰의 재생 준비가 완료되었을 때 수행할 내용
+
+        //비디오 뷰의 재생 준비가 완료되었을 때 수행할 내용
+        videoView!!.setOnPreparedListener { Toast.makeText(this, "비디오 재생 준비 완료", Toast.LENGTH_LONG).show() }
+
+        //비디오 재생이 완료되었을 때 수행할 내용
+        //비디오 파일이 여러 개일 때 다음 비디오 파일을 재생한다던가 사용자에게
+        //재생 완료를 알려주는 코드를 작성
+
+        //비디오 재생이 완료되었을 때 수행할 내용
+        //비디오 파일이 여러 개일 때 다음 비디오 파일을 재생한다던가 사용자에게
+        //재생 완료를 알려주는 코드를 작성
+        videoView!!.setOnCompletionListener { Toast.makeText(this, "재생이 완료되었습니다.", Toast.LENGTH_LONG).show() }
     }
 
-    override fun onStart() {
-        super.onStart();
-
-        //SimpleExoPlayer객체 생성
-        player= ExoPlayerFactory.newSimpleInstance(this, new DefaultTrackSelector());
-        //플레이어뷰에게 플레이어 설정
-        pv.setPlayer(player);
-
-        //비디오데이터 소스를 관리하는 DataSource 객체를 만들어주는 팩토리 객체 생성
-        DataSource.Factory factory= new DefaultDataSourceFactory(this,"Ex89VideoAndExoPlayer");
-        //비디오데이터를 Uri로 부터 추출해서 DataSource객체 (CD or LP판 같은 ) 생성
-        ProgressiveMediaSource mediaSource= new ProgressiveMediaSource.Factory(factory).createMediaSource(videoUri);
-
-        //만들어진 비디오데이터 소스객체인 mediaSource를
-        //플레이어 객체에게 전당하여 준비하도록!![ 로딩하도록 !!]
-        player.prepare(mediaSource);
-
-        //로딩이 완료되어 준비가 되었을 때
-        //자동 실행되도록..
-        player.setPlayWhenReady(true);
-
+    override fun onPostResume() {
+        super.onPostResume()
+        //여기서 duration을 1을 준것은 굉장히 중요합니다!! 1을 줘도 무방합니다.
+        //원래 MainActivity안에 있어서 this만 사용해도 됩니다.
+        Toast.makeText(this, "동영상 준비 중입니다.", Toast.LENGTH_LONG).show()
     }
-
-    override fun onPause() {
-        super.onPause()
-
-        //비디오 일시 정지
-        if ( videoView != null &&  videoView!!.isPlaying())  videoView!!.pause()
-    }
-
-    //액티비티가 메모리에서 사라질때..
-
-    override fun onDestroy() {
-        super.onDestroy()
-        //
-        if ( videoView != null)  videoView!!.stopPlayback()
-        mediaPlayer?.release()
-        mediaPlayer = null
-    }
-    @Override
-    override fun onStop() {
-        super.onStop();
-        //플레이어뷰 및 플레이어 객체 초기화
-        pv.setPlayer(null);
-        player.release();
-        player=null;
 }
-
-*/

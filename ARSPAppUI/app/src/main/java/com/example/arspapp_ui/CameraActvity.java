@@ -1,4 +1,5 @@
 package com.example.arspapp_ui;
+import android.app.Activity;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -14,6 +15,7 @@ import org.opencv.android.JavaCameraView;
 
 public class CameraActvity extends AppCompatActivity {
     public static final String TAG = "src";
+    public static Activity CameraActivity;
     private JavaCameraView cameraView;
 
     static {
@@ -27,6 +29,7 @@ public class CameraActvity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CameraActivity=CameraActvity.this;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
         Log.i("idontknow","What");
         setContentView(R.layout.activity_camera);
@@ -35,10 +38,7 @@ public class CameraActvity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, new PosenetActivity())
                     .commit();
-    }
-
-
-
+        }
     }
     private BaseLoaderCallback loaderCallback = new BaseLoaderCallback(this) {
         @Override
