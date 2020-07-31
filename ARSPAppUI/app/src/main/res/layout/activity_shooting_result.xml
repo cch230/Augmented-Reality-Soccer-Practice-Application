@@ -28,30 +28,16 @@
             android:textSize="17sp" />
         <RelativeLayout
             android:id="@+id/rl_video"
-            android:layout_width="match_parent"
+            android:layout_width="267dp"
             android:layout_height="200dp"
             android:background="@color/my_black">
             <VideoView
                 android:id="@+id/playTextureView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <ProgressBar
-                android:id="@+id/pb_video"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:indeterminateTint="@color/white"
-                android:layout_centerInParent="true"
-                android:visibility="gone"/>
+                android:layout_width="267dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                />
 
-            <TextView
-                android:id="@+id/tv_play_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:layout_margin="10dp"/>
         </RelativeLayout>
         <TableRow
             android:layout_weight="1"
@@ -71,6 +57,7 @@
                     android:text="훈련 궤적"
                     android:textSize="17sp" />
                 <ImageView
+                    android:id="@+id/ball"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"/>
             </LinearLayout>
@@ -87,6 +74,7 @@
                     android:text="슈팅 자세"
                     android:textSize="17sp" />
                 <ImageView
+                    android:id="@+id/feed"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"/>
             </LinearLayout>

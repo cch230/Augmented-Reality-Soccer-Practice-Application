@@ -19,15 +19,13 @@ import android.media.ImageReader
 import android.media.ImageReader.OnImageAvailableListener
 import android.media.MediaRecorder
 import android.net.Uri
-import android.os.Bundle
-import android.os.Environment
-import android.os.Handler
-import android.os.HandlerThread
+import android.os.*
 import android.util.Log
 import android.util.Size
 import android.util.SparseIntArray
 import android.view.*
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -39,6 +37,8 @@ import org.tensorflow.lite.examples.posenet.lib.KeyPoint
 import org.tensorflow.lite.examples.posenet.lib.Person
 import org.tensorflow.lite.examples.posenet.lib.Posenet
 import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -68,7 +68,7 @@ class PosenetActivity :
     private var mNextVideoAbsolutePath: String? = null
     private val DETAIL_PATH = "DCIM/test1/"
     private var mediaRecorder: MediaRecorder? = null
-
+    var Cachedir: File?=null
     /** Threshold for confidence score. */
     private val minConfidence = 0.5
 
@@ -160,12 +160,18 @@ class PosenetActivity :
 
     // var tracking = com.example.arspapp_ui.tracking()
     var test = com.example.arspapp_ui.tracking()
+    var point = com.example.arspapp_ui.point()
 
     var save_Vec1:Float?=null
     var save_Vec2:Float?=null
+    private var feedbackimg:String?=null
+    private var Save_Bitmap:Bitmap?=null
+    var key_list=java.util.ArrayList<Point>()
+    var start_joint_list=java.util.ArrayList<Point>()
+    var stop_joint_list=java.util.ArrayList<Point>()
+    var startPoint:Point?=null
+    var stopPoint:Point?=null
 
-    var Foot_Ball_distance=0.0
-    var tracking_sig:Boolean=false
     /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
     private val stateCallback = object : StateCallback() {
 
@@ -233,7 +239,7 @@ class PosenetActivity :
         deviceOrientation = DeviceOrientation()
         surfaceHolder = surfaceView!!.holder
 
-
+        Cachedir=requireContext()!!.cacheDir
 
 
     }
@@ -446,6 +452,7 @@ class PosenetActivity :
 
     /** A [OnImageAvailableListener] to receive frames as they are available.  */
     private var imageAvailableListener = object : OnImageAvailableListener {
+        @RequiresApi(Build.VERSION_CODES.N)
         override fun onImageAvailable(imageReader: ImageReader) {
             // We need wait until we have some size from onPreviewSizeChosen
             if (previewWidth == 0 || previewHeight == 0) {
@@ -551,13 +558,13 @@ class PosenetActivity :
     }
 
     /** Draw bitmap on Canvas.   */
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun draw(canvas: Canvas, person: Person, bitmap: Bitmap) {
-
         if(frameCounter==60){
 
             stopRecording(true)
 
-            mNextVideoAbsolutePath!!.let { capturePhoto(it) }
+            mNextVideoAbsolutePath!!.let { tranfer_intant(it) }
         }
         frameCounter++
         Log.i("count",frameCounter.toString())
@@ -570,7 +577,6 @@ class PosenetActivity :
         val right: Int
         val top: Int
         val bottom: Int
-        var count:Int=0
         if (canvas.height > canvas.width) {
             screenWidth = canvas.width
             screenHeight = canvas.width
@@ -598,7 +604,6 @@ class PosenetActivity :
         var footkey=0
         // Draw key points over the image.
         for (keyPoint in person.keyPoints) {
-            footkey++
             if(footkey==15) {
                 setPaint2()
             }
@@ -613,6 +618,11 @@ class PosenetActivity :
 
                 val adjustedX: Float = position.x.toFloat() * widthRatio + left
                 val adjustedY: Float = position.y.toFloat() * heightRatio + top
+                if(frameCounter==59){
+                    key_list!!.add(footkey, Point(adjustedX.toInt(),adjustedY.toInt()))
+                    Log.i("원",key_list.get(footkey).toString())
+                    footkey++
+                }
                 canvas.drawCircle(adjustedX, adjustedY, circleRadius, paint)
             }
         }
@@ -636,11 +646,24 @@ class PosenetActivity :
             posi++
         }
         setPaint()
+        var bodykey=0
         for (line in bodyJoints) {
+
             if (
                     (person.keyPoints[line.first.ordinal].score > minConfidence) and
                     (person.keyPoints[line.second.ordinal].score > minConfidence)
             ) {
+                if(frameCounter==59){
+                    var startX=person.keyPoints[line.first.ordinal].position.x.toFloat() * widthRatio + left
+                    var startY=person.keyPoints[line.first.ordinal].position.y.toFloat() * heightRatio + top
+                    var stopX=person.keyPoints[line.second.ordinal].position.x.toFloat() * widthRatio + left
+                    var stopY=person.keyPoints[line.second.ordinal].position.y.toFloat() * heightRatio + top
+                    startPoint=Point(startX.toInt(),startY.toInt())
+                    stopPoint=Point(stopX.toInt(),stopY.toInt())
+                    start_joint_list!!.add(bodykey,startPoint!!)
+                    stop_joint_list!!.add(bodykey,stopPoint!!)
+                    bodykey++
+                }
                 canvas.drawLine(
                         person.keyPoints[line.first.ordinal].position.x.toFloat() * widthRatio + left,
                         person.keyPoints[line.first.ordinal].position.y.toFloat() * heightRatio + top,
@@ -681,6 +704,16 @@ class PosenetActivity :
         )
         setPaint3()
 
+        if(frameCounter==59){
+            point.givebitmap(bitmap,key_list,start_joint_list,stop_joint_list,Cachedir)
+
+          /*  val time = System.currentTimeMillis() //시간 받기
+            val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH.mm.ss")
+            //포멧 변환  형식 만들기
+            val dd = Date(time) //받은 시간을 Date 형식으로 바꾸기
+            val dir: String = sdf.format(dd)+" (2)" //Data 정보를 포멧 변환하기
+            feedbackimg = saveBitmapToJpeg(Save_Bitmap!!, dir,Cachedir!!)*/
+        }
 
         // Draw!
         surfaceHolder!!.unlockCanvasAndPost(canvas)
@@ -689,6 +722,7 @@ class PosenetActivity :
 
 
     /** Process image using Posenet library.   */
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun processImage(bitmap: Bitmap) {
         // Crop bitmap.
         //val TrackingBitmap = tracking.trackingBall(bitmap)
@@ -699,7 +733,7 @@ class PosenetActivity :
 
         // Perform inference.
         val person = posenet.estimateSinglePose(scaledBitmap)
-        var TrackingBitmap = test.trackingBall(scaledBitmap);
+        var TrackingBitmap = test.trackingBall(scaledBitmap,Cachedir);
        // var TrackingGoal =test.trackingPost(TrackingBitmap)
 
         /*if((ballPoint.y-circlerat2)>100){
@@ -707,7 +741,10 @@ class PosenetActivity :
             TrackingBitmap=tracking.finishTrack(scaledBitmap);
         }*/
         val canvas: Canvas = surfaceHolder!!.lockCanvas()
-        draw(canvas, person, TrackingBitmap)
+        if(frameCounter==59){
+            draw(canvas, person, scaledBitmap)
+        }
+        else draw(canvas, person, TrackingBitmap)
     }
 
     /**
@@ -744,7 +781,7 @@ class PosenetActivity :
             mediaRecorder!!.setVideoEncoder(MediaRecorder.VideoEncoder.H264)
 
 
-            mediaRecorder!!.setOrientationHint(90)
+            //mediaRecorder!!.setOrientationHint(90)
             if (mNextVideoAbsolutePath == null || mNextVideoAbsolutePath!!.isEmpty()) {
                 mNextVideoAbsolutePath = getVideoFilePath()
             }
@@ -847,7 +884,7 @@ class PosenetActivity :
         val dir = Environment.getExternalStorageDirectory().absoluteFile
         val time = System.currentTimeMillis() //시간 받기
 
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH.mm.ss")
+        val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH.mm.ss")
         //포멧 변환  형식 만들기
         //포멧 변환  형식 만들기
         val dd = Date(time) //받은 시간을 Date 형식으로 바꾸기
@@ -1000,12 +1037,50 @@ class PosenetActivity :
         const val REQUEST_VIDEO_CAPTURE = 1
     }
 
+
+    private fun saveBitmapToJpeg(bitmap: Bitmap, name: String, dir: File): String? {
+
+        //내부저장소 캐시 경로를 받아옵니다.
+
+        //저장할 파일 이름
+        val fileName = "$name.jpg"
+        var cachedir:String?=null
+        //storage 에 파일 인스턴스를 생성합니다.
+        val tempFile = File(dir, fileName)
+        try {
+
+            // 자동으로 빈 파일을 생성합니다.
+            tempFile.createNewFile()
+
+            // 파일을 쓸 수 있는 스트림을 준비합니다.
+            val out = FileOutputStream(tempFile)
+
+            // compress 함수를 사용해 스트림에 비트맵을 저장합니다.
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+
+            // 스트림 사용후 닫아줍니다.
+            out.close()
+            cachedir = tempFile.path
+        } catch (e: FileNotFoundException) {
+            Log.e("MyTag", "FileNotFoundException : " + e.message)
+        } catch (e: IOException) {
+            Log.e("MyTag", "IOException : " + e.message)
+        }
+        return cachedir
+    }
+
+
+
+
+
     @SuppressLint("UseRequireInsteadOfGet")
-    fun capturePhoto(targetFilename: String) {
+    fun tranfer_intant(targetFilename: String) {
        // pose = this@PosenetActivity.requireActivity()
         val intent = Intent(context, shootingResult::class.java).apply {
         }
         intent.putExtra("key", targetFilename);
+        intent.putExtra("trajectory",test.filename!!)
+        intent.putExtra("feedback",point.filename!!)
         startActivity(intent)
         //this@PosenetActivity.activity?.finish()
         //requireActivity().finish()
