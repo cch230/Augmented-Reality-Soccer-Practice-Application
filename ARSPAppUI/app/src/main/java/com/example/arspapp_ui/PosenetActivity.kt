@@ -566,7 +566,6 @@ class PosenetActivity :
 
             mNextVideoAbsolutePath!!.let { tranfer_intant(it) }
         }
-        frameCounter++
         Log.i("count",frameCounter.toString())
 
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
@@ -619,7 +618,7 @@ class PosenetActivity :
                 val adjustedX: Float = position.x.toFloat() * widthRatio + left
                 val adjustedY: Float = position.y.toFloat() * heightRatio + top
                 if(frameCounter==59){
-                    key_list!!.add(footkey, Point(adjustedX.toInt(),adjustedY.toInt()))
+                    key_list!!.add(footkey, Point(position.x,position.y))
                     Log.i("원",key_list.get(footkey).toString())
                     footkey++
                 }
@@ -654,12 +653,12 @@ class PosenetActivity :
                     (person.keyPoints[line.second.ordinal].score > minConfidence)
             ) {
                 if(frameCounter==59){
-                    var startX=person.keyPoints[line.first.ordinal].position.x.toFloat() * widthRatio + left
-                    var startY=person.keyPoints[line.first.ordinal].position.y.toFloat() * heightRatio + top
-                    var stopX=person.keyPoints[line.second.ordinal].position.x.toFloat() * widthRatio + left
-                    var stopY=person.keyPoints[line.second.ordinal].position.y.toFloat() * heightRatio + top
-                    startPoint=Point(startX.toInt(),startY.toInt())
-                    stopPoint=Point(stopX.toInt(),stopY.toInt())
+                    var startX=person.keyPoints[line.first.ordinal].position.x
+                    var startY=person.keyPoints[line.first.ordinal].position.y
+                    var stopX=person.keyPoints[line.second.ordinal].position.x
+                    var stopY=person.keyPoints[line.second.ordinal].position.y
+                    startPoint=Point(startX,startY)
+                    stopPoint=Point(stopX,stopY)
                     start_joint_list!!.add(bodykey,startPoint!!)
                     stop_joint_list!!.add(bodykey,stopPoint!!)
                     bodykey++
@@ -703,8 +702,8 @@ class PosenetActivity :
 
         )
         setPaint3()
-
-        if(frameCounter==59){
+        frameCounter++
+        if(frameCounter==60){
             point.givebitmap(bitmap,key_list,start_joint_list,stop_joint_list,Cachedir)
 
           /*  val time = System.currentTimeMillis() //시간 받기
@@ -714,6 +713,7 @@ class PosenetActivity :
             val dir: String = sdf.format(dd)+" (2)" //Data 정보를 포멧 변환하기
             feedbackimg = saveBitmapToJpeg(Save_Bitmap!!, dir,Cachedir!!)*/
         }
+
 
         // Draw!
         surfaceHolder!!.unlockCanvasAndPost(canvas)
@@ -733,18 +733,22 @@ class PosenetActivity :
 
         // Perform inference.
         val person = posenet.estimateSinglePose(scaledBitmap)
-        var TrackingBitmap = test.trackingBall(scaledBitmap,Cachedir);
+
        // var TrackingGoal =test.trackingPost(TrackingBitmap)
 
         /*if((ballPoint.y-circlerat2)>100){
 
             TrackingBitmap=tracking.finishTrack(scaledBitmap);
         }*/
-        val canvas: Canvas = surfaceHolder!!.lockCanvas()
-        if(frameCounter==59){
+        if(frameCounter>50){
+            val canvas: Canvas = surfaceHolder!!.lockCanvas()
             draw(canvas, person, scaledBitmap)
         }
-        else draw(canvas, person, TrackingBitmap)
+        if(frameCounter<=50){
+            var TrackingBitmap = test.trackingBall(scaledBitmap, Cachedir)
+            val canvas: Canvas = surfaceHolder!!.lockCanvas()
+            draw(canvas, person, TrackingBitmap)
+        }
     }
 
     /**

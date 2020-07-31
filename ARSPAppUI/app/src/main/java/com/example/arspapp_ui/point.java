@@ -38,7 +38,7 @@ public class point {
 
             keypoint= new org.opencv.core.Point[keylist.size()];
             keypoint[j]= new org.opencv.core.Point(keylist.get(j).x,keylist.get(j).y);
-            Imgproc.circle(matInput,keypoint[j],10, new Scalar(255, 0, 0));
+            Imgproc.circle(matInput,keypoint[j],1, new Scalar(255, 0, 0),2);
             Log.i("원",keypoint[j].toString());
         }
         for (int j = 0; j < startlist.size(); j++) {
@@ -47,7 +47,7 @@ public class point {
             stoppoint=new org.opencv.core.Point[startlist.size()];
             stoppoint[j]= new org.opencv.core.Point(stoplist.get(j).x,stoplist.get(j).y);
 
-            Imgproc.line(matInput,startpoint[j],stoppoint[j], new Scalar(255,0, 0), 10);
+            Imgproc.line(matInput,startpoint[j],stoppoint[j], new Scalar(255,0, 0), 2);
             Log.i("잇1",startpoint[j].toString());
             Log.i("잇2",stoppoint[j].toString());
         }
@@ -64,7 +64,7 @@ public class point {
         //내부저장소 캐시 경로를 받아옵니다.
         File storage = dir;
         //저장할 파일 이름
-        String fileName = name + ".jpg";
+        String fileName = name + " (2).jpg";
 
         //storage 에 파일 인스턴스를 생성합니다.
         File tempFile = new File(storage, fileName);
