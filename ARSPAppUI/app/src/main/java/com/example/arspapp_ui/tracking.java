@@ -88,61 +88,62 @@ public class tracking{
 
                 int radius = (int) circleVec[2];
                 Imgproc.circle(matInput, center, radius, new Scalar(0, 0, 0), 2);
-
-                if (trackOX == true) {
-                    moveBall=center;
-                    rectB.x = (int) (center.x - radius);
-                    rectB.y = (int) (center.y - radius);
-                    rectB.height = (int) radius * 2;
-                    rectB.width = (int) radius * 2;
-                    if (rectB.width > 0 && rectB.height > 0) {
-                        trackingOx = -1;
-                        trackOX = false;
-                    }
-                }
-
-                if (trackingOx != 0) {
-                    matHue.create(matHsv.size(), matHsv.depth());
-                    List<Mat> hueList = new LinkedList<Mat>();
-                    List<Mat> hsvList = new LinkedList<Mat>();
-                    hsvList.add(matHsv);
-                    hueList.add(matHue);
-                    MatOfInt ch = new MatOfInt(0, 0);
-                    Core.mixChannels(hsvList, hueList, ch);
-                    MatOfFloat histRange = new MatOfFloat(0, 180);
-                    if (trackingOx < 0) {
-                        Mat matBall = matInput.submat(rectB);
-                        Imgproc.calcHist(Arrays.asList(matBall), new MatOfInt(0), new Mat(), matHist, new MatOfInt(16), histRange);
-                        Core.normalize(matHist, matHist, 0, 255, Core.NORM_MINMAX);
-                        rect = rectB;
-                        trackingOx = 1;
-                    }
-                    MatOfInt ch2 = new MatOfInt(0, 1);
-                    Imgproc.calcBackProject(Arrays.asList(matHue), ch2, matHist, matBack, histRange, 1);
-                    Core.bitwise_and(matBack, matMask, matBack);
-                    RotatedRect trackBox = Video.CamShift(matBack, rect, new TermCriteria(TermCriteria.EPS | TermCriteria.MAX_ITER, 10, 1));
-                    Imgproc.ellipse(matInput, trackBox, new Scalar(0, 0, 255), 4);
-                    if (rect.area() <= 1) {
-                        trackingOx = 0;
-                    }
-
-                    if (center.x>0||center.y>0) {
-                        line_list.add(0, center);
-                        line_save.add(0, center);
-                    } else {
-                        if(trackBox.center.y > 0 || trackBox.center.x > 0){
-                            line_list.add(0, trackBox.center);
-                            line_save.add(0, trackBox.center);
+                if(framecnt!=50){
+                    if (trackOX == true) {
+                        moveBall=center;
+                        rectB.x = (int) (center.x - radius);
+                        rectB.y = (int) (center.y - radius);
+                        rectB.height = (int) radius * 2;
+                        rectB.width = (int) radius * 2;
+                        if (rectB.width > 0 && rectB.height > 0) {
+                            trackingOx = -1;
+                            trackOX = false;
                         }
                     }
 
-                    while (line_list.size() > 10) {
-                        line_list.remove(line_list.size() - 1);
-                    }
+                    if (trackingOx != 0) {
+                        matHue.create(matHsv.size(), matHsv.depth());
+                        List<Mat> hueList = new LinkedList<Mat>();
+                        List<Mat> hsvList = new LinkedList<Mat>();
+                        hsvList.add(matHsv);
+                        hueList.add(matHue);
+                        MatOfInt ch = new MatOfInt(0, 0);
+                        Core.mixChannels(hsvList, hueList, ch);
+                        MatOfFloat histRange = new MatOfFloat(0, 180);
+                        if (trackingOx < 0) {
+                            Mat matBall = matInput.submat(rectB);
+                            Imgproc.calcHist(Arrays.asList(matBall), new MatOfInt(0), new Mat(), matHist, new MatOfInt(16), histRange);
+                            Core.normalize(matHist, matHist, 0, 255, Core.NORM_MINMAX);
+                            rect = rectB;
+                            trackingOx = 1;
+                        }
+                        MatOfInt ch2 = new MatOfInt(0, 1);
+                        Imgproc.calcBackProject(Arrays.asList(matHue), ch2, matHist, matBack, histRange, 1);
+                        Core.bitwise_and(matBack, matMask, matBack);
+                        RotatedRect trackBox = Video.CamShift(matBack, rect, new TermCriteria(TermCriteria.EPS | TermCriteria.MAX_ITER, 10, 1));
+                        Imgproc.ellipse(matInput, trackBox, new Scalar(0, 0, 255), 4);
+                        if (rect.area() <= 1) {
+                            trackingOx = 0;
+                        }
 
-                    for (int j = 1; j < line_list.size(); j++) {
-                        int thickness = (int) Math.sqrt(40 / ((float) (j + 1)) * 5);
-                        Imgproc.line(matInput, line_list.get(j - 1), line_list.get(j), new Scalar(0, 0, 0), thickness);
+                        if (center.x>0||center.y>0) {
+                            line_list.add(0, center);
+                            line_save.add(0, center);
+                        } else {
+                            if(trackBox.center.y > 0 || trackBox.center.x > 0){
+                                line_list.add(0, trackBox.center);
+                                line_save.add(0, trackBox.center);
+                            }
+                        }
+
+                        while (line_list.size() > 10) {
+                            line_list.remove(line_list.size() - 1);
+                        }
+
+                        for (int j = 1; j < line_list.size(); j++) {
+                            int thickness = (int) Math.sqrt(40 / ((float) (j + 1)) * 5);
+                            Imgproc.line(matInput, line_list.get(j - 1), line_list.get(j), new Scalar(0, 0, 0), thickness);
+                        }
                     }
                 }
             }
@@ -150,7 +151,7 @@ public class tracking{
         else {
             CanNotFind =true;
         }
-        if(framecnt==61){
+        if(framecnt==50){
             for (int j = 1; j < line_save.size(); j++) {
                 int thickness = (int) Math.sqrt(40 / ((float) (j + 1)) * 5);
                 Imgproc.line(matSave, line_save.get(j - 1), line_save.get(j), new Scalar(0, 0, 0), thickness);
@@ -165,6 +166,7 @@ public class tracking{
             Utils.matToBitmap(matSave,list);
             filename= saveBitmapToJpeg(list,strTime,filedir);
         }
+
         Utils.matToBitmap(matInput,bitmap);
         return bitmap;
     }
