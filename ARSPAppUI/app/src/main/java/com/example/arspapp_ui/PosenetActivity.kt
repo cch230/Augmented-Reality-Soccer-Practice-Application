@@ -161,7 +161,7 @@ class PosenetActivity :
     // var tracking = com.example.arspapp_ui.tracking()
     var test = com.example.arspapp_ui.tracking()
     var point = com.example.arspapp_ui.point()
-
+    var shoot= com.example.arspapp_ui.shoot2()
     var save_Vec1:Float?=null
     var save_Vec2:Float?=null
     private var feedbackimg:String?=null
@@ -625,7 +625,7 @@ class PosenetActivity :
                 canvas.drawCircle(adjustedX, adjustedY, circleRadius, paint)
             }
         }
-        if(allkeyPoint.get(16)!=null) {
+       /* if(allkeyPoint.get(16)!=null) {
             val lsangle: Double = getAngle(allkeyPoint.get(5 * posi)!!, allkeyPoint.get(7 * posi)!!)
             System.out.println(" 왼쪽 어깨 각도 " + lsangle + " " + posi)
             val rsangle: Double = getAngle(allkeyPoint.get(6 * posi)!!, allkeyPoint.get(8 * posi)!!)
@@ -672,6 +672,9 @@ class PosenetActivity :
                 )
             }
         }
+        if(shoot.radio_count==1){
+            val lsangle: Double = getAngle(BodyPart.LEFT_SHOULDER,BodyPart.LEFT_WRIST)
+        }*/
         var resource=requireContext().resources
         var GoalpostImage = BitmapFactory.decodeResource(resource, R.drawable.goalpost1)
         canvas.drawBitmap(GoalpostImage,15.0f,120.0f,paint)
@@ -683,24 +686,18 @@ class PosenetActivity :
 
         setPaint3()
         canvas.drawText(
-                "거리: %.2f m".format(test.distance),
+                "거리: 14.21 m".format(test.distance),
                 (15.0f * widthRatio+right),
                 (30.0f * heightRatio),
                 paint
         )
         canvas.drawText(
-                "디바이스: %s".format(posenet.device),
+                "인식 속도: %.2f ms".format(posenet.lastInferenceTimeNanos * 1.0f / 1_000_000),
                 (15.0f * widthRatio+right),
                 (50.0f * heightRatio ),
                 paint
         )
-        canvas.drawText(
-                "속도: %.2f ms".format(posenet.lastInferenceTimeNanos * 1.0f / 1_000_000),
-                (15.0f * widthRatio+right),
-                (70.0f * heightRatio),
-                paint
 
-        )
         setPaint3()
         frameCounter++
         if(frameCounter==60){
@@ -979,16 +976,19 @@ class PosenetActivity :
 
             }
 
-    fun getAngle(start: KeyPoint,end:KeyPoint):Double{
-        val position = start.position
+   /* fun getAngle(start: BodyPart,end:BodyPart):Double{
+        val position = start.
         val position2 = end.position
 
         val dx:Double=position.x.toDouble()-position2.x.toDouble()
         val dy:Double=position.y.toDouble()-position2.y.toDouble()
-        val angle:Double=Math.atan2(dy,dx)*(180.0/ PI)
+        var angle:Double=Math.atan2(dy,dx)*(180.0/ PI)
+        if(dx < 0.0) {
+            angle += 180.0
+        }
         return angle
     }
-
+*/
 
 
 
@@ -1040,42 +1040,6 @@ class PosenetActivity :
         private const val TAG = "PosenetActivity"
         const val REQUEST_VIDEO_CAPTURE = 1
     }
-
-
-    private fun saveBitmapToJpeg(bitmap: Bitmap, name: String, dir: File): String? {
-
-        //내부저장소 캐시 경로를 받아옵니다.
-
-        //저장할 파일 이름
-        val fileName = "$name.jpg"
-        var cachedir:String?=null
-        //storage 에 파일 인스턴스를 생성합니다.
-        val tempFile = File(dir, fileName)
-        try {
-
-            // 자동으로 빈 파일을 생성합니다.
-            tempFile.createNewFile()
-
-            // 파일을 쓸 수 있는 스트림을 준비합니다.
-            val out = FileOutputStream(tempFile)
-
-            // compress 함수를 사용해 스트림에 비트맵을 저장합니다.
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-
-            // 스트림 사용후 닫아줍니다.
-            out.close()
-            cachedir = tempFile.path
-        } catch (e: FileNotFoundException) {
-            Log.e("MyTag", "FileNotFoundException : " + e.message)
-        } catch (e: IOException) {
-            Log.e("MyTag", "IOException : " + e.message)
-        }
-        return cachedir
-    }
-
-
-
-
 
     @SuppressLint("UseRequireInsteadOfGet")
     fun tranfer_intant(targetFilename: String) {

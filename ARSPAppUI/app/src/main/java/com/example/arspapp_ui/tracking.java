@@ -19,6 +19,7 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.core.TermCriteria;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.video.KalmanFilter;
 import org.opencv.video.Video;
 
 import java.io.File;
@@ -51,6 +52,8 @@ public class tracking{
 
     public String filename;
     private String f_name;
+    private KalmanFilter kalmanX;
+    private KalmanFilter kalmanY;
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Bitmap trackingBall(Bitmap bitmap,File filedir){
         Mat matGaussian = new Mat();
@@ -73,9 +76,13 @@ public class tracking{
         Imgproc.Canny(matGaussian,matCny,130,210,3);
 
 
+
         Mat circle = new Mat();
         Rect rectB = new Rect();
         Imgproc.HoughCircles(matGaussian,circle,Imgproc.HOUGH_GRADIENT,2,matInput.height()/4,100,40,1,200);
+
+        kalmanY = new KalmanFilter(0.0f);
+        kalmanX = new KalmanFilter(0.0f);
 
         if(circle.cols()>0) {
             for (int x = 0; x < Math.min(circle.cols(), 1); x++) {
@@ -126,9 +133,15 @@ public class tracking{
                             trackingOx = 0;
                         }
 
-                        if (center.x>0||center.y>0) {
-                            line_list.add(0, center);
-                            line_save.add(0, center);
+                        if (center.x>0&&center.y>0) {
+                            //line_list.add(0, center);
+                            float listx = (float) center.x;
+                            float listy = (float) center.y;
+                            //칼만필터를 적용한다
+                            float filteredX = (float) kalmanX.update(listx);
+                            float filteredY = (float) kalmanY.update(listy);
+                            line_list.add(0, new Point(filteredX, filteredY));
+
                         } else {
                             if(trackBox.center.y > 0 || trackBox.center.x > 0){
                                 line_list.add(0, trackBox.center);
@@ -168,7 +181,30 @@ public class tracking{
         }
 
         Utils.matToBitmap(matInput,bitmap);
+
+
         return bitmap;
+    }
+    class KalmanFilter {
+        private double Q = 0.00001;
+        private double R = 0.001;
+        private double X = 0, P = 1, K;
+        //첫번째값을 입력받아 초기화 한다. 예전값들을 계산해서 현재값에 적용해야 하므로 반드시 하나이상의 값이 필요하므로~
+        KalmanFilter(double initValue) {
+            X = initValue;
+        }
+        //예전값들을 공식으로 계산한다
+        private void measurementUpdate(){
+            K = (P + Q) / (P + Q + R);
+            P = R * (P + Q) / (R + P + Q);
+        }
+        //현재값을 받아 계산된 공식을 적용하고 반환한다
+        public double update(double measurement){
+            measurementUpdate();
+            X = X + (measurement - X) * K;
+            return X;
+        }
+
     }
     private String saveBitmapToJpeg(Bitmap bitmap, String name,File dir) {
 
