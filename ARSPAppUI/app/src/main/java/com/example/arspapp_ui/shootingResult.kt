@@ -6,10 +6,8 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.widget.ImageView
-import android.widget.MediaController
-import android.widget.Toast
-import android.widget.VideoView
+import android.util.Log
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -18,6 +16,7 @@ class shootingResult : AppCompatActivity() {
     private var videoView: VideoView? = null
     private var imageView1: ImageView? = null
     private var imageView2: ImageView? = null
+    private var textView:TextView?=null
     private val DETAIL_PATH = "DCIM/test1/"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +27,7 @@ class shootingResult : AppCompatActivity() {
         videoView=findViewById(R.id.playTextureView)
         imageView1=findViewById(R.id.ball)
         imageView2=findViewById(R.id.feed)
+        textView=findViewById(R.id.text)
         val str = intent.getStringExtra("key") //인텐트의 key값을 통해 해당 String을 받는다.
         val trajectory_dir = intent.getStringExtra("trajectory")
         val feedback_dir = intent.getStringExtra("feedback")
@@ -36,13 +36,14 @@ class shootingResult : AppCompatActivity() {
         val path =
                 dir.path + "/" + DETAIL_PATH
         Toast.makeText(this, str, Toast.LENGTH_LONG).show()
+        Log.i("str",path)
         this.sendBroadcast(
                 Intent(
                         Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                         Uri.parse(str)
                 )
         )
-        val mc = MediaController(this)
+        val mc: MediaController = MediaController(this)
         videoView!!.setMediaController(mc)
         //비디오 경로 설정
         videoView!!.setVideoURI(Uri.parse(str))
@@ -59,6 +60,7 @@ class shootingResult : AppCompatActivity() {
         val feedback = BitmapFactory.decodeFile(feedback_dir)
         imageView1!!.setImageBitmap(trajectory)
         imageView2!!.setImageBitmap(feedback)
+        textView!!.setText("허리를 좀더 피세요!!")
     }
 
     override fun onPostResume() {

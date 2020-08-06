@@ -81,18 +81,19 @@
         </TableRow>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="150dp"
             android:paddingTop="10dp"
             android:text="자세 피드백"
             android:textSize="17sp" />
         <TextView
+            android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:layout_marginLeft="20dp"
             android:layout_marginTop="7dp"
+            android:layout_marginLeft="100dp"
             android:text="자세 피드백"
             android:textSize="20sp" />
     </TableLayout>

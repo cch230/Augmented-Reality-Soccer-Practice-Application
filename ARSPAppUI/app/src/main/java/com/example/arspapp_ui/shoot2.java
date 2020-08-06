@@ -21,7 +21,7 @@ public class shoot2 extends AppCompatActivity {
     RadioButton radio_left;
     RadioButton radio_right;
     RadioGroup shrd_group;
-    private int  radio_count;
+    public int  radio_count;
 
 
     @Override
