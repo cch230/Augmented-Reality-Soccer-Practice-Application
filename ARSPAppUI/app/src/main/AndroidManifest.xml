@@ -42,11 +42,16 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".shootingResult"></activity>
+        <activity android:name=".trappingResult"></activity>
+        <activity android:name=".posenet_trapping" />
+        <activity
+            android:name=".Trapping_camera"
+            android:screenOrientation="landscape" />
+        <activity android:name=".shootingResult" />
 
         <provider
-            android:authorities="${applicationId}.provider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -87,9 +92,6 @@
         <activity android:name=".post" />
         <activity android:name=".privacy" />
         <activity android:name=".profile" />
-
-
-
         <activity android:name=".rate" />
         <activity android:name=".setting" />
         <activity

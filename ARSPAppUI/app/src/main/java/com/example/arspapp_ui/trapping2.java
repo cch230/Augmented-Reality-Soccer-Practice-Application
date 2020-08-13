@@ -38,8 +38,8 @@ public class trapping2 extends AppCompatActivity {
         Intent intent;
         text = spinner2.getSelectedItem().toString();
         if (v==trapping2_btn) {
-            intent = new Intent(trapping2.this, trapping.class);
-            intent.putExtra("text", text);
+            intent = new Intent(trapping2.this, Trapping_camera.class);
+            intent.putExtra("key", text);
             startActivity(intent);
         }
     }
