@@ -16,13 +16,11 @@ import android.widget.Spinner;
 
 public class shoot2 extends AppCompatActivity {
 
-    private Spinner spinner1;
     ImageButton shoot2_btn;
     RadioButton radio_left;
     RadioButton radio_right;
     RadioGroup shrd_group;
-    public int  radio_count;
-
+    public int  radio_count=-1 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +28,10 @@ public class shoot2 extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_shoot2);
-        Spinner spinner1 = findViewById(R.id.spinner1);
         shoot2_btn = findViewById(R.id.shoot2_btn);
         radio_left = findViewById(R.id.radio_left);
         radio_right = findViewById(R.id.radio_right);
         shrd_group = findViewById(R.id.shrd_group);
-
-        final String[] data = getResources().getStringArray(R.array.shoot_array);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,data);
-        spinner1.setAdapter(adapter);
-
     }
 
     public void onClick(View v) {
@@ -49,25 +41,21 @@ public class shoot2 extends AppCompatActivity {
 
             switch (shrd_group.getCheckedRadioButtonId()) {
                 case R.id.radio_left:
-                    intent = new Intent(shoot2.this, CameraActvity.class);
-                    startActivity(intent);
                     radio_count = 1;
+                    intent = new Intent(shoot2.this, CameraActvity.class);
+                    intent.putExtra("key",radio_count);
+                    startActivity(intent);
                     break;
 
                 case R.id.radio_right:
-                    intent = new Intent(shoot2.this, CameraActvity.class);
-                    startActivity(intent);
                     radio_count = 0;
+                    intent = new Intent(shoot2.this, CameraActvity.class);
+                    intent.putExtra("key",radio_count);
+                    startActivity(intent);
                     break;
 
             }
         }
-
-
-
-
     }
-
-
 }
 

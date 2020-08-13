@@ -49,13 +49,16 @@ public class tracking{
     private Rect rect;
     private int framecnt=0;
     public Mat matSave=new Mat();
-
+    private Boolean InputCenter=false;
     public String filename;
     private String f_name;
+    public Point Boundary_LH=new Point(0,0);
+    private Point Boundary_RL=new Point(0,0);
     private KalmanFilter kalmanX;
     private KalmanFilter kalmanY;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public Bitmap trackingBall(Bitmap bitmap,File filedir){
+    public Bitmap trackingBall(Bitmap bitmap,File filedir,Boolean signal){
         Mat matGaussian = new Mat();
         Mat matHsv = new Mat();
         Mat matMask = new Mat();
@@ -76,11 +79,9 @@ public class tracking{
         Imgproc.Canny(matGaussian,matCny,130,210,3);
 
 
-
         Mat circle = new Mat();
         Rect rectB = new Rect();
         Imgproc.HoughCircles(matGaussian,circle,Imgproc.HOUGH_GRADIENT,2,matInput.height()/4,100,40,1,200);
-
         kalmanY = new KalmanFilter(0.0f);
         kalmanX = new KalmanFilter(0.0f);
 
@@ -90,6 +91,11 @@ public class tracking{
                 if (circleVec == null)
                     break;
                 center = new Point((int) circleVec[0], (int) circleVec[1]);
+                if(center.x!=0&&center.y!=0&&InputCenter!=true){
+                    InputCenter=true;
+                    Boundary_LH = new Point(center.x-25,center.y-25);
+                        Boundary_RL = new Point(center.x+25,center.y+25);
+                }
                 circleVec_save[0] = circleVec[0];
                 circleVec_save[1] = circleVec[1];
 
@@ -164,7 +170,8 @@ public class tracking{
         else {
             CanNotFind =true;
         }
-        if(framecnt==50){
+        if(signal==true){
+            Log.i("진실",String.valueOf(signal));
             for (int j = 1; j < line_save.size(); j++) {
                 int thickness = (int) Math.sqrt(40 / ((float) (j + 1)) * 5);
                 Imgproc.line(matSave, line_save.get(j - 1), line_save.get(j), new Scalar(0, 0, 0), thickness);
@@ -236,6 +243,14 @@ public class tracking{
             Log.e("MyTag","IOException : " + e.getMessage());
         }
         return f_name;
+    }
+    public int BoundaryCheck(android.graphics.Point point){
+        Log.i("point",Boundary_LH.x+" "+Boundary_RL.x+"///"+Boundary_LH.y+" "+Boundary_RL.y);
+        if(Boundary_RL.x!=-1&&Boundary_LH.x!=-1&&Boundary_LH.x<point.x && Boundary_LH.y<point.y && Boundary_RL.x>point.x && Boundary_RL.y>point.y){
+            Log.i("hello",Boundary_LH.toString());
+            return framecnt;
+        }
+        else return 100;
     }
 
 }

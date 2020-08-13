@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.hardware.Sensor
@@ -37,8 +38,6 @@ import org.tensorflow.lite.examples.posenet.lib.KeyPoint
 import org.tensorflow.lite.examples.posenet.lib.Person
 import org.tensorflow.lite.examples.posenet.lib.Posenet
 import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -62,9 +61,6 @@ class PosenetActivity :
             Pair(BodyPart.RIGHT_KNEE, BodyPart.RIGHT_ANKLE)
     )
 
-
-    var posi =1
-    var allkeyPoint= arrayOfNulls<KeyPoint>(10000)
     private var mNextVideoAbsolutePath: String? = null
     private val DETAIL_PATH = "DCIM/test1/"
     private var mediaRecorder: MediaRecorder? = null
@@ -112,6 +108,8 @@ class PosenetActivity :
     /** A counter to keep count of total frames.  */
     private var frameCounter = 0
 
+    private var saveframe=-100
+
     /** An IntArray to save image data in ARGB8888 format  */
     private lateinit var rgbBytes: IntArray
 
@@ -155,23 +153,33 @@ class PosenetActivity :
 
     private lateinit var mAccelerometer: Sensor
     private lateinit var mMagnetometer: Sensor
-
+    var left_ankle:Point= Point(-1,-1)
+    var right_ankle:Point=Point(-1,-1)
+    var left_shoulder:Point=Point(-1,-1)
+    var right_soulder:Point=Point(-1,-1)
+    var left_wrist:Point=Point(-1,-1)
+    var right_wtist:Point=Point(-1,-1)
+    var left_knee:Point=Point(-1,-1)
+    var right_knee:Point?=Point(-1,-1)
+    var Result_Boundary_Check= 100
+    var Result_Boundadry_flag=false
+    var Pose_estimation_err=false
     var pose:FragmentActivity?=null
 
     // var tracking = com.example.arspapp_ui.tracking()
     var test = com.example.arspapp_ui.tracking()
     var point = com.example.arspapp_ui.point()
-    var shoot= com.example.arspapp_ui.shoot2()
-    var save_Vec1:Float?=null
-    var save_Vec2:Float?=null
-    private var feedbackimg:String?=null
-    private var Save_Bitmap:Bitmap?=null
+    var setting_foot:Int?=null
     var key_list=java.util.ArrayList<Point>()
     var start_joint_list=java.util.ArrayList<Point>()
     var stop_joint_list=java.util.ArrayList<Point>()
     var startPoint:Point?=null
     var stopPoint:Point?=null
-
+    var core_angle:Double=0.0
+    var leg_angle:Double=0.0
+    var angle_sig= 0
+    var train_grade_int=0
+    var shoot_check=false
     /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
     private val stateCallback = object : StateCallback() {
 
@@ -228,20 +236,24 @@ class PosenetActivity :
             savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.activity_posenet, container, false)
 
+
+
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         surfaceView = view.findViewById(R.id.surfaceView)
         mSensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-
         initSensor()
         deviceOrientation = DeviceOrientation()
         surfaceHolder = surfaceView!!.holder
 
         Cachedir=requireContext()!!.cacheDir
-
-
+        var settings:SharedPreferences = requireContext().getSharedPreferences("pref",0)
+        setting_foot =settings.getInt("foot",0)
     }
 
     override fun onResume() {
@@ -564,7 +576,7 @@ class PosenetActivity :
 
             stopRecording(true)
 
-            mNextVideoAbsolutePath!!.let { tranfer_intant(it) }
+            mNextVideoAbsolutePath!!.let { transfer_intant(it) }
         }
         Log.i("count",frameCounter.toString())
 
@@ -601,50 +613,60 @@ class PosenetActivity :
         val widthRatio = screenWidth.toFloat() / MODEL_WIDTH
         val heightRatio = screenHeight.toFloat() / MODEL_HEIGHT
         var footkey=0
+        var footflag=0
         // Draw key points over the image.
         for (keyPoint in person.keyPoints) {
-            if(footkey==15) {
-                setPaint2()
-            }
+
             if (keyPoint.score > minConfidence) {
                 val position = keyPoint.position
+                if(footkey==5) {
+                    left_shoulder=Point(position.x,position.y)
+                    Log.i("관절", "왼쪽어깨 :"+left_shoulder.toString())
+                }
+                if(footkey==6) {
+                    right_soulder=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "오른쪽어깨 :"+right_soulder.toString())
+                }
+                if(footkey==9) {
+                    left_wrist=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "왼쪽허리 :"+left_wrist.toString())
+                }
+                if(footkey==10) {
+                    right_wtist=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "오른쪽허리 :"+right_wtist.toString())
+                }
+                if(footkey==13) {
+                    left_knee=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "왼쪽무릎 :"+right_wtist.toString())
+                }
+                if(footkey==14) {
+                    right_knee=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "오른쪽무릎 :"+right_knee.toString())
+                }
                 if(footkey==15) {
-                    setPaint2()
-                    save_Vec1 = position.x.toFloat() * widthRatio + left
-                    save_Vec2 = position.y.toFloat() * heightRatio + top
+                    left_ankle=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "왼쪽발목 :"+left_ankle.toString())
+                }
+                if(footkey==16) {
+                    right_ankle=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "오른쪽발목 :"+right_ankle.toString())
                 }
 
 
                 val adjustedX: Float = position.x.toFloat() * widthRatio + left
                 val adjustedY: Float = position.y.toFloat() * heightRatio + top
-                if(frameCounter==59){
-                    key_list!!.add(footkey, Point(position.x,position.y))
-                    Log.i("원",key_list.get(footkey).toString())
-                    footkey++
+                if(frameCounter==saveframe+1&&angle_sig==0){
+                    angle_sig=1
+                    key_list!!.add(footflag, Point(position.x,position.y))
+                    //Log.i("원",key_list.get(footkey).toString())
+                    footflag++
                 }
+
                 canvas.drawCircle(adjustedX, adjustedY, circleRadius, paint)
             }
+            footkey++
         }
-       /* if(allkeyPoint.get(16)!=null) {
-            val lsangle: Double = getAngle(allkeyPoint.get(5 * posi)!!, allkeyPoint.get(7 * posi)!!)
-            System.out.println(" 왼쪽 어깨 각도 " + lsangle + " " + posi)
-            val rsangle: Double = getAngle(allkeyPoint.get(6 * posi)!!, allkeyPoint.get(8 * posi)!!)
-            System.out.println(" 오른쪽 어깨 각도 " + rsangle + " " + posi)
-            val llangle: Double = getAngle(allkeyPoint.get(11 * posi)!!, allkeyPoint.get(13 * posi)!!)
-            System.out.println(" 왼쪽 허벅지 각도 " + llangle + " " + posi)
-            val rlangle: Double = getAngle(allkeyPoint.get(12 * posi)!!, allkeyPoint.get(14 * posi)!!)
-            System.out.println(" 오른쪽 허벅지 각도 " + rlangle + " " + posi)
-            val lhangle: Double = getAngle(allkeyPoint.get(5 * posi)!!, allkeyPoint.get(11 * posi)!!)
-            System.out.println(" 왼쪽 허리 각도 " + lhangle + " " + posi)
-            val rhangle: Double = getAngle(allkeyPoint.get(6 * posi)!!, allkeyPoint.get(12 * posi)!!)
-            System.out.println(" 오른쪽 허리 각도 " + rhangle + " " + posi)
-            val lfangle: Double = getAngle(allkeyPoint.get(13 * posi)!!, allkeyPoint.get(15 * posi)!!)
-            System.out.println(" 왼쪽 정강이 각도 " + lfangle + " " + posi)
-            val rfangle: Double = getAngle(allkeyPoint.get(14 * posi)!!, allkeyPoint.get(16 * posi)!!)
-            System.out.println(" 오른쪽 정강이 각도 " + rfangle + " " + posi)
-            posi++
-        }
-        setPaint()
+
         var bodykey=0
         for (line in bodyJoints) {
 
@@ -652,7 +674,8 @@ class PosenetActivity :
                     (person.keyPoints[line.first.ordinal].score > minConfidence) and
                     (person.keyPoints[line.second.ordinal].score > minConfidence)
             ) {
-                if(frameCounter==59){
+                if(frameCounter==saveframe+1&&angle_sig==1){
+                    angle_sig=2
                     var startX=person.keyPoints[line.first.ordinal].position.x
                     var startY=person.keyPoints[line.first.ordinal].position.y
                     var stopX=person.keyPoints[line.second.ordinal].position.x
@@ -662,6 +685,19 @@ class PosenetActivity :
                     start_joint_list!!.add(bodykey,startPoint!!)
                     stop_joint_list!!.add(bodykey,stopPoint!!)
                     bodykey++
+                }else{
+                    if(frameCounter==saveframe+1)
+                    {
+                        var startX=person.keyPoints[line.first.ordinal].position.x
+                        var startY=person.keyPoints[line.first.ordinal].position.y
+                        var stopX=person.keyPoints[line.second.ordinal].position.x
+                        var stopY=person.keyPoints[line.second.ordinal].position.y
+                        startPoint=Point(startX,startY)
+                        stopPoint=Point(stopX,stopY)
+                        start_joint_list!!.add(bodykey,startPoint!!)
+                        stop_joint_list!!.add(bodykey,stopPoint!!)
+                        bodykey++
+                    }
                 }
                 canvas.drawLine(
                         person.keyPoints[line.first.ordinal].position.x.toFloat() * widthRatio + left,
@@ -672,9 +708,94 @@ class PosenetActivity :
                 )
             }
         }
-        if(shoot.radio_count==1){
-            val lsangle: Double = getAngle(BodyPart.LEFT_SHOULDER,BodyPart.LEFT_WRIST)
-        }*/
+
+        Log.i("qkf2",setting_foot.toString())
+        if(setting_foot==1){
+            if(left_ankle!=null&&left_ankle!!.x!=null){
+                Result_Boundary_Check=test.BoundaryCheck(left_ankle)
+            }
+            if(Result_Boundary_Check!=100&&Result_Boundadry_flag!=true){
+                Result_Boundadry_flag=true
+                saveframe=frameCounter
+                Log.i("save1",saveframe.toString())
+                if(left_shoulder!!.x==-1&&right_soulder!!.x==-1) Pose_estimation_err=true
+                else{
+                    var shoulder_width=Math.abs(left_shoulder!!.x-right_soulder!!.x)
+
+                    if(left_wrist!!.x==-1){
+                        left_wrist!!.x=(1.5*left_shoulder!!.x).toInt()
+                        left_wrist!!.y=(1.9*left_shoulder!!.y).toInt()
+                    }
+                    if(right_wtist!!.x==-1){
+                        right_wtist!!.x=left_wrist!!.x+(shoulder_width/10).toInt()
+                        right_wtist!!.y=right_soulder!!.y+(1.6*shoulder_width).toInt()
+                    }
+                    if(right_knee!!.x==-1){
+                        right_knee!!.x=left_wrist!!.x
+                        right_knee!!.y=right_wtist!!.y+shoulder_width
+                    }
+                    if(left_knee!!.x==-1){
+                        left_knee!!.x=right_knee!!.x-(shoulder_width*0.3).toInt()
+                        left_knee!!.y=left_wrist!!.y+(shoulder_width*0.9).toInt()
+                    }
+                    if(right_ankle!!.x==-1){
+                        right_ankle!!.x=right_knee!!.x-(shoulder_width*0.15).toInt()
+                        right_ankle!!.y=right_knee!!.y+(shoulder_width*1.1).toInt()
+                    }
+                    /* if (left_ankle!!.x==0){
+                         left_ankle!!.x=left_knee!!.x-(shoulder_width*0.25).toInt()
+                         left_ankle!!.y=right_ankle!!.y+(shoulder_width*0.05).toInt()
+                     }*/
+                }
+                core_angle = getAngle(left_shoulder!!,left_wrist!!)
+                leg_angle = getAngle(right_knee!!,right_ankle!!)
+                Log.i("각도","코어각도 : "+core_angle.toString())
+                Log.i("각도","다리각도 : "+leg_angle.toString())
+            }
+        }
+        else{
+
+            if(right_ankle!=null&&right_ankle!!.x!=null){
+                Result_Boundary_Check=test.BoundaryCheck(right_ankle)
+            }
+            if(Result_Boundary_Check!=100&&Result_Boundadry_flag!=true){
+                Result_Boundadry_flag=true
+                saveframe=frameCounter
+                Log.i("save1",saveframe.toString())
+                if(left_shoulder!!.x==0||right_soulder!!.x==0) Pose_estimation_err=true
+                else {
+                    var shoulder_width = Math.abs(left_shoulder!!.x - right_soulder!!.x)
+                        if (left_wrist!!.x == 0) {
+                            left_wrist!!.x = left_wrist!!.x + (shoulder_width / 10).toInt()
+                            left_wrist!!.y = right_soulder!!.y + (1.6 * shoulder_width).toInt()
+                        }
+                    if (right_wtist!!.x == 0) {
+                        right_wtist!!.x = (1.5 * left_shoulder!!.x).toInt()
+                        right_wtist!!.y = (1.9 * left_shoulder!!.y).toInt()
+                    }
+                    if (left_knee!!.x == 0) {
+                        left_knee!!.x = right_wtist!!.x
+                        left_knee!!.y = left_wrist!!.y + shoulder_width
+                    }
+                    if (right_knee!!.x == 0) {
+                        right_knee!!.x = left_knee!!.x - (shoulder_width * 0.3).toInt()
+                        right_knee!!.y = right_wtist!!.y + (shoulder_width * 0.9).toInt()
+                    }
+                    if (left_ankle!!.x == 0) {
+                        left_ankle!!.x = left_knee!!.x - (shoulder_width * 0.15).toInt()
+                        left_ankle!!.y = right_knee!!.y + (shoulder_width * 1.1).toInt()
+                    }
+                    /*if (right_ankle!!.x == 0) {
+                        right_ankle!!.x = right_knee!!.x - (shoulder_width * 0.25).toInt()
+                        right_ankle!!.y = left_knee!!.y + (shoulder_width * 0.05).toInt()
+                    }*/
+                }
+                core_angle = getAngle(left_shoulder!!,left_wrist!!)
+                leg_angle = getAngle(right_knee!!,right_ankle!!)
+                Log.i("각도","코어각도 : "+core_angle.toString())
+                Log.i("각도","다리각도 : "+leg_angle.toString())
+            }
+        }
         var resource=requireContext().resources
         var GoalpostImage = BitmapFactory.decodeResource(resource, R.drawable.goalpost1)
         canvas.drawBitmap(GoalpostImage,15.0f,120.0f,paint)
@@ -699,17 +820,21 @@ class PosenetActivity :
         )
 
         setPaint3()
-        frameCounter++
-        if(frameCounter==60){
+
+        if(saveframe!=-100&&frameCounter==saveframe){
+          /*  key_list.set(5,left_shoulder)
+            key_list.set(6,right_soulder)
+            key_list.set(9,left_wrist)
+            key_list.set(10,right_wtist)
+            key_list.set(13,left_knee!!)
+            key_list.set(14,right_knee!!)
+            key_list.set(15,left_ankle)
+            key_list.set(16,right_ankle)*/
             point.givebitmap(bitmap,key_list,start_joint_list,stop_joint_list,Cachedir)
 
-          /*  val time = System.currentTimeMillis() //시간 받기
-            val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH.mm.ss")
-            //포멧 변환  형식 만들기
-            val dd = Date(time) //받은 시간을 Date 형식으로 바꾸기
-            val dir: String = sdf.format(dd)+" (2)" //Data 정보를 포멧 변환하기
-            feedbackimg = saveBitmapToJpeg(Save_Bitmap!!, dir,Cachedir!!)*/
+
         }
+        frameCounter++
 
 
         // Draw!
@@ -722,7 +847,7 @@ class PosenetActivity :
     @RequiresApi(Build.VERSION_CODES.N)
     private fun processImage(bitmap: Bitmap) {
         // Crop bitmap.
-        //val TrackingBitmap = tracking.trackingBall(bitmap)
+
         val croppedBitmap = cropBitmap(bitmap)
 
         // Created scaled version of bitmap for model input.
@@ -731,18 +856,17 @@ class PosenetActivity :
         // Perform inference.
         val person = posenet.estimateSinglePose(scaledBitmap)
 
-       // var TrackingGoal =test.trackingPost(TrackingBitmap)
 
-        /*if((ballPoint.y-circlerat2)>100){
-
-            TrackingBitmap=tracking.finishTrack(scaledBitmap);
-        }*/
         if(frameCounter>50){
             val canvas: Canvas = surfaceHolder!!.lockCanvas()
             draw(canvas, person, scaledBitmap)
         }
         if(frameCounter<=50){
-            var TrackingBitmap = test.trackingBall(scaledBitmap, Cachedir)
+            if(frameCounter==saveframe+1){
+                shoot_check=true
+                Log.i("tltm",shoot_check.toString())
+            }
+            var TrackingBitmap = test.trackingBall(scaledBitmap, Cachedir,shoot_check)
             val canvas: Canvas = surfaceHolder!!.lockCanvas()
             draw(canvas, person, TrackingBitmap)
         }
@@ -976,19 +1100,17 @@ class PosenetActivity :
 
             }
 
-   /* fun getAngle(start: BodyPart,end:BodyPart):Double{
-        val position = start.
-        val position2 = end.position
+    fun getAngle(start: Point,end:Point):Double{
 
-        val dx:Double=position.x.toDouble()-position2.x.toDouble()
-        val dy:Double=position.y.toDouble()-position2.y.toDouble()
+
+        val dx:Double=start.x.toDouble()-end.x.toDouble()
+        val dy:Double=start.y.toDouble()-end.y.toDouble()
         var angle:Double=Math.atan2(dy,dx)*(180.0/ PI)
         if(dx < 0.0) {
             angle += 180.0
         }
         return angle
     }
-*/
 
 
 
@@ -1038,21 +1160,74 @@ class PosenetActivity :
          * Tag for the [Log].
          */
         private const val TAG = "PosenetActivity"
-        const val REQUEST_VIDEO_CAPTURE = 1
     }
 
     @SuppressLint("UseRequireInsteadOfGet")
-    fun tranfer_intant(targetFilename: String) {
-       // pose = this@PosenetActivity.requireActivity()
+    fun transfer_intant(targetFilename: String) {
+        var feedback_str=feedback_union(core_angle,leg_angle)
+        var check=0
         val intent = Intent(context, shootingResult::class.java).apply {
         }
-        intent.putExtra("key", targetFilename);
-        intent.putExtra("trajectory",test.filename!!)
-        intent.putExtra("feedback",point.filename!!)
+        intent.putExtra("key", targetFilename)
+        if(shoot_check==true) {
+            intent.putExtra("trajectory", test.filename!!)
+            intent.putExtra("feedback", point.filename!!)
+            check=1
+        }
+        intent.putExtra("check",check)
+
+        intent.putExtra("feedback_str",feedback_str)
+        intent.putExtra("grade",train_grade_int)
+
         startActivity(intent)
-        //this@PosenetActivity.activity?.finish()
-        //requireActivity().finish()
-
     }
-
+    fun feedback_union(core:Double,leg:Double):String{
+        var feedback_1=""
+        var feedback_2=""
+        if(core!=0.0){
+            if(core<=60||core>=120){
+                feedback_1="허리를 너무 숙였어요!\n허리를 피는 연습에 몰두해보세요."
+            }
+            else if(core<=75||core>=105){
+                feedback_1="허리를 좀 더 피세요!"
+                train_grade_int+=10
+            }
+            else if(core<=85||core>=95){
+                feedback_1="허리 굿, 잘 피고 있어요"
+                train_grade_int+=20
+            }
+            else{
+                feedback_1="허리 굿, 잘 피고 있어요"
+                train_grade_int+=30
+            }
+        }
+        else{
+            feedback_1="허리를 좀 더 피세요!"
+            train_grade_int+=10
+        }
+        if(leg!=0.0){
+            if(leg<=65||leg>=115){
+                feedback_1="디딤발, 퍼펙트!!!"
+                train_grade_int+=30
+            }
+            else if(leg<=77||leg>=103){
+                feedback_2="다리 굿, 잘 기울이고 있어요"
+                train_grade_int+=20
+            }
+            else if(leg<=84||leg>=97){
+                feedback_2="디딤발을 좀 더 기울이세요"
+                train_grade_int+=10
+            }
+            else{
+                feedback_2="디딤발을 너무 세우네요!\n디딤발을 기울이는 연습을 하세요"
+            }
+        }
+        else{
+            feedback_2="디딤발을 좀 더 기울이세요"
+            train_grade_int+=10
+        }
+        if (Pose_estimation_err) feedback_1="자세 인식을 실패하였어요"
+        var feedback_str=feedback_1+"\n"+feedback_2
+        return feedback_str
+    }
 }

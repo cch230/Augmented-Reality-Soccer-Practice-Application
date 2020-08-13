@@ -14,13 +14,6 @@
         android:textColor="#000000"
         android:textSize="28sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="48dp"
-        android:layout_marginTop="108dp"
-        android:text="슈팅 횟수 지정"
-        android:textSize="22sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,25 +54,7 @@
 
     </RadioGroup>
 
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="110dp"
-        android:layout_height="40dp"
-        android:spinnerMode="dropdown"
-        android:visibility="visible"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="100dp"
-        android:textSize="26sp"
-        />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="회"
-        android:textSize="24sp"
-        android:layout_marginLeft="310dp"
-        android:layout_marginTop="105dp"
-        />
     <TextView
         android:id="@+id/spinner11"
         android:layout_width="wrap_content"
