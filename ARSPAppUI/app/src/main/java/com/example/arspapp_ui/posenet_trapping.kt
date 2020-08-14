@@ -154,10 +154,7 @@ class posenet_trapping :
     private lateinit var mMagnetometer: Sensor
     var left_ankle:Point= Point(-1,-1)
     var right_ankle:Point=Point(-1,-1)
-    var left_shoulder:Point=Point(-1,-1)
-    var right_soulder:Point=Point(-1,-1)
-    var left_wrist:Point=Point(-1,-1)
-    var right_wtist:Point=Point(-1,-1)
+    var nose:Point=Point(-1,-1)
     var left_knee:Point=Point(-1,-1)
     var right_knee:Point?=Point(-1,-1)
     var Result_Boundary_Check= 0
@@ -173,6 +170,7 @@ class posenet_trapping :
     var angle_sig= 0
     var shoot_check=false
     var min=0
+    var trapping_check=false
     /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
     private val stateCallback = object : StateCallback() {
 
@@ -618,25 +616,13 @@ class posenet_trapping :
 
             if (keyPoint.score > minConfidence) {
                 val position = keyPoint.position
-                if(footkey==5) {
-                    left_shoulder=Point(position.x,position.y)
-                    Log.i("관절", "왼쪽어깨 :"+left_shoulder.toString())
-                }
-                if(footkey==6) {
-                    right_soulder=Point(position.x,position.y)
-                    if(position.x!=0) Log.i("관절", "오른쪽어깨 :"+right_soulder.toString())
-                }
-                if(footkey==9) {
-                    left_wrist=Point(position.x,position.y)
-                    if(position.x!=0) Log.i("관절", "왼쪽허리 :"+left_wrist.toString())
-                }
-                if(footkey==10) {
-                    right_wtist=Point(position.x,position.y)
-                    if(position.x!=0) Log.i("관절", "오른쪽허리 :"+right_wtist.toString())
+                if(footkey==0) {
+                    nose=Point(position.x+40,position.y)
+                    Log.i("관절", "ajfl :"+nose.toString())
                 }
                 if(footkey==13) {
                     left_knee=Point(position.x,position.y)
-                    if(position.x!=0) Log.i("관절", "왼쪽무릎 :"+right_wtist.toString())
+                    if(position.x!=0) Log.i("관절", "왼쪽무릎 :"+left_knee.toString())
                 }
                 if(footkey==14) {
                     right_knee=Point(position.x,position.y)
@@ -707,12 +693,46 @@ class posenet_trapping :
                 )
             }
         }
-
-        if(left_ankle!=null&&left_ankle!!.x!=null){
-            Result_Boundary_Check+=test.BoundaryCheck(left_ankle)
+        trapping_check=false
+        if(nose!=null&&nose!!.x!=null&&trapping_check==false) {
+            var check = 0
+            check = test.BoundaryCheck(nose)
+            if (check != 0) {
+                trapping_check = true
+                Result_Boundary_Check += check
+            }
         }
-        if(right_ankle!!.x!=null&&right_ankle!=null){
-            Result_Boundary_Check+=test.BoundaryCheck(right_ankle)
+        if(left_knee!=null&&left_knee!!.x!=null&&trapping_check==false) {
+            var check = 0
+            check = test.BoundaryCheck(left_knee)
+            if (check != 0) {
+                trapping_check = true
+                Result_Boundary_Check += check
+            }
+        }
+        if(right_knee!=null&&right_knee!!.x!=null&&trapping_check==false) {
+            var check = 0
+            check = test.BoundaryCheck(right_knee)
+            if (check != 0) {
+                trapping_check = true
+                Result_Boundary_Check += check
+            }
+        }
+        if(left_ankle!=null&&left_ankle!!.x!=null&&trapping_check==false) {
+            var check = 0
+            check = test.BoundaryCheck(left_ankle)
+            if (check != 0) {
+                trapping_check = true
+                Result_Boundary_Check += check
+            }
+        }
+        if(right_ankle!=null&&right_ankle!!.x!=null&&trapping_check==false) {
+            var check = 0
+            check = test.BoundaryCheck(right_ankle)
+            if (check != 0) {
+                trapping_check = true
+                Result_Boundary_Check += check
+            }
         }
         var resource=requireContext().resources
         var GoalpostImage = BitmapFactory.decodeResource(resource, R.drawable.goalpost1)

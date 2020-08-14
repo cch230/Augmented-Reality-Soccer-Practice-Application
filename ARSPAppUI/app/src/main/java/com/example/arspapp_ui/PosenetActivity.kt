@@ -572,7 +572,7 @@ class PosenetActivity :
     /** Draw bitmap on Canvas.   */
     @RequiresApi(Build.VERSION_CODES.N)
     private fun draw(canvas: Canvas, person: Person, bitmap: Bitmap) {
-        if(frameCounter==60){
+        if(frameCounter==70){
 
             stopRecording(true)
 
@@ -655,8 +655,7 @@ class PosenetActivity :
 
                 val adjustedX: Float = position.x.toFloat() * widthRatio + left
                 val adjustedY: Float = position.y.toFloat() * heightRatio + top
-                if(frameCounter==saveframe+1&&angle_sig==0){
-                    angle_sig=1
+                if(frameCounter==saveframe+1){
                     key_list!!.add(footflag, Point(position.x,position.y))
                     //Log.i("원",key_list.get(footkey).toString())
                     footflag++
@@ -674,8 +673,7 @@ class PosenetActivity :
                     (person.keyPoints[line.first.ordinal].score > minConfidence) and
                     (person.keyPoints[line.second.ordinal].score > minConfidence)
             ) {
-                if(frameCounter==saveframe+1&&angle_sig==1){
-                    angle_sig=2
+                if(frameCounter==saveframe+1){
                     var startX=person.keyPoints[line.first.ordinal].position.x
                     var startY=person.keyPoints[line.first.ordinal].position.y
                     var stopX=person.keyPoints[line.second.ordinal].position.x
