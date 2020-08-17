@@ -1,0 +1,24 @@
+# Blender MTL File: 'classic ball autmn 2.blend'
+# Material Count: 2
+
+newmtl black
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.161520 0.161520 0.161520
+Ks 0.106557 0.106557 0.106557
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd black.jpg
+
+newmtl white
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.221311 0.221311 0.221311
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd white.jpg

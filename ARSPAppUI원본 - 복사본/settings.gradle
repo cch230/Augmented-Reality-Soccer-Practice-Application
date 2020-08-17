@@ -1,3 +1,0 @@
-include ':app', ':posenet'
-rootProject.name='ARSPApp-UI'
-include ':opencv'

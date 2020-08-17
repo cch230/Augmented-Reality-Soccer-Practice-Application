@@ -1,10 +1,12 @@
 package com.example.arspapp_ui
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.hardware.Sensor
@@ -18,19 +20,18 @@ import android.media.ImageReader
 import android.media.ImageReader.OnImageAvailableListener
 import android.media.MediaRecorder
 import android.net.Uri
-import android.os.Bundle
-import android.os.Environment
-import android.os.Handler
-import android.os.HandlerThread
+import android.os.*
 import android.util.Log
 import android.util.Size
 import android.util.SparseIntArray
 import android.view.*
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import org.tensorflow.lite.examples.posenet.lib.BodyPart
 import org.tensorflow.lite.examples.posenet.lib.KeyPoint
@@ -38,10 +39,11 @@ import org.tensorflow.lite.examples.posenet.lib.Person
 import org.tensorflow.lite.examples.posenet.lib.Posenet
 import java.io.File
 import java.io.IOException
-import java.lang.Thread.sleep
-import java.security.Key
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 import kotlin.math.PI
 import kotlin.math.abs
 
@@ -59,18 +61,10 @@ class PosenetActivity :
             Pair(BodyPart.RIGHT_KNEE, BodyPart.RIGHT_ANKLE)
     )
 
-
-    var footkey=0
-    var posi =1
-    var footkeyPoint = arrayOfNulls<KeyPoint>(100)
-    var allkeyPoint= arrayOfNulls<KeyPoint>(10000)
     private var mNextVideoAbsolutePath: String? = null
     private val DETAIL_PATH = "DCIM/test1/"
     private var mediaRecorder: MediaRecorder? = null
-    private var previewBuilder: CaptureRequest.Builder? = null
-
-
-
+    var Cachedir: File?=null
     /** Threshold for confidence score. */
     private val minConfidence = 0.5
 
@@ -114,6 +108,8 @@ class PosenetActivity :
     /** A counter to keep count of total frames.  */
     private var frameCounter = 0
 
+    private var saveframe=-100
+
     /** An IntArray to save image data in ARGB8888 format  */
     private lateinit var rgbBytes: IntArray
 
@@ -149,25 +145,41 @@ class PosenetActivity :
 
     private var recordingSurface: Surface?=null
 
+    private var mRecorderSurface: Surface?=null
+
     private var deviceOrientation: DeviceOrientation? = null
 
     private lateinit var mSensorManager: SensorManager
 
     private lateinit var mAccelerometer: Sensor
     private lateinit var mMagnetometer: Sensor
+    var left_ankle:Point= Point(-1,-1)
+    var right_ankle:Point=Point(-1,-1)
+    var left_shoulder:Point=Point(-1,-1)
+    var right_soulder:Point=Point(-1,-1)
+    var left_wrist:Point=Point(-1,-1)
+    var right_wtist:Point=Point(-1,-1)
+    var left_knee:Point=Point(-1,-1)
+    var right_knee:Point?=Point(-1,-1)
+    var Result_Boundary_Check= 100
+    var Result_Boundadry_flag=false
+    var Pose_estimation_err=false
+    var pose:FragmentActivity?=null
 
-    var tracking = com.example.arspapp_ui.tracking()
-
-    private var flag1: Int = 0
-    private var flag2: Int = 0
-
-    var gura:Int=0
-    var save_Vec1:Float?=null
-    var save_Vec2:Float?=null
-    var save_Vec3:Float?=null
-    var save_Vec4:Float?=null
-    var Foot_Ball_distance=0.0
-    var tracking_sig:Boolean=false
+    // var tracking = com.example.arspapp_ui.tracking()
+    var test = com.example.arspapp_ui.tracking()
+    var point = com.example.arspapp_ui.point()
+    var setting_foot:Int?=null
+    var key_list=java.util.ArrayList<Point>()
+    var start_joint_list=java.util.ArrayList<Point>()
+    var stop_joint_list=java.util.ArrayList<Point>()
+    var startPoint:Point?=null
+    var stopPoint:Point?=null
+    var core_angle:Double=0.0
+    var leg_angle:Double=0.0
+    var angle_sig= 0
+    var train_grade_int=0
+    var shoot_check=false
     /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
     private val stateCallback = object : StateCallback() {
 
@@ -224,17 +236,20 @@ class PosenetActivity :
             savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.activity_posenet, container, false)
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         surfaceView = view.findViewById(R.id.surfaceView)
         mSensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-
         initSensor()
         deviceOrientation = DeviceOrientation()
         surfaceHolder = surfaceView!!.holder
 
+        Cachedir=requireContext()!!.cacheDir
+        var settings:SharedPreferences = requireContext().getSharedPreferences("pref",0)
+        setting_foot =settings.getInt("foot",0)
     }
 
     override fun onResume() {
@@ -251,20 +266,22 @@ class PosenetActivity :
     override fun onStart() {
         super.onStart()
         openCamera()
+
         posenet = Posenet(this.requireContext())
     }
 
     override fun onPause() {
-        //stopRecording(true)
+        super.onPause()
         closeCamera()
         stopBackgroundThread()
         mSensorManager.unregisterListener(deviceOrientation!!.eventListener)
-        super.onPause()
+        onDestroy()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         posenet.close()
+
     }
 
     private fun requestCameraPermission() {
@@ -324,7 +341,7 @@ class PosenetActivity :
 
                 imageReader = ImageReader.newInstance(
                         PREVIEW_WIDTH, PREVIEW_HEIGHT,
-                        ImageFormat.YUV_420_888, /*maxImages*/ 24
+                        ImageFormat.YUV_420_888, /*maxImages*/ 20
                 )
 
                 sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION)!!
@@ -382,7 +399,7 @@ class PosenetActivity :
     /**
      * Closes the current [CameraDevice].
      */
-    private fun closeCamera() {
+     fun closeCamera() {
         if (captureSession == null) {
             return
         }
@@ -400,6 +417,8 @@ class PosenetActivity :
         } finally {
             cameraOpenCloseLock.release()
         }
+
+
     }
 
     /**
@@ -441,6 +460,7 @@ class PosenetActivity :
 
     /** A [OnImageAvailableListener] to receive frames as they are available.  */
     private var imageAvailableListener = object : OnImageAvailableListener {
+        @RequiresApi(Build.VERSION_CODES.N)
         override fun onImageAvailable(imageReader: ImageReader) {
             // We need wait until we have some size from onPreviewSizeChosen
             if (previewWidth == 0 || previewHeight == 0) {
@@ -478,10 +498,10 @@ class PosenetActivity :
             )
             image.close()
             // Process an image for analysis in every 3 frames.
-            frameCounter = (frameCounter + 1) % 1
-            if (frameCounter == 0) {
-                processImage(imageBitmap)
-            }
+
+
+            processImage(imageBitmap)
+
         }
     }
 
@@ -546,7 +566,16 @@ class PosenetActivity :
     }
 
     /** Draw bitmap on Canvas.   */
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun draw(canvas: Canvas, person: Person, bitmap: Bitmap) {
+        if(frameCounter==60){
+
+            stopRecording(true)
+
+            mNextVideoAbsolutePath!!.let { transfer_intant(it) }
+        }
+        Log.i("count",frameCounter.toString())
+
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
         // Draw `bitmap` and `person` in square canvas.
         val screenWidth: Int
@@ -555,7 +584,6 @@ class PosenetActivity :
         val right: Int
         val top: Int
         val bottom: Int
-        var count:Int=0
         if (canvas.height > canvas.width) {
             screenWidth = canvas.width
             screenHeight = canvas.width
@@ -581,50 +609,92 @@ class PosenetActivity :
         val widthRatio = screenWidth.toFloat() / MODEL_WIDTH
         val heightRatio = screenHeight.toFloat() / MODEL_HEIGHT
         var footkey=0
+        var footflag=0
         // Draw key points over the image.
         for (keyPoint in person.keyPoints) {
-            footkey++
-            if(footkey==15) {
-                setPaint2()
-            }
+
             if (keyPoint.score > minConfidence) {
                 val position = keyPoint.position
-                if(footkey==15) {
-                    setPaint2()
-                    save_Vec1 = position.x.toFloat() * widthRatio + left
-                    save_Vec2 = position.y.toFloat() * heightRatio + top
+                if(footkey==5) {
+                    left_shoulder=Point(position.x,position.y)
+                    Log.i("관절", "왼쪽어깨 :"+left_shoulder.toString())
                 }
+                if(footkey==6) {
+                    right_soulder=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "오른쪽어깨 :"+right_soulder.toString())
+                }
+                if(footkey==9) {
+                    left_wrist=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "왼쪽허리 :"+left_wrist.toString())
+                }
+                if(footkey==10) {
+                    right_wtist=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "오른쪽허리 :"+right_wtist.toString())
+                }
+                if(footkey==13) {
+                    left_knee=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "왼쪽무릎 :"+right_wtist.toString())
+                }
+                if(footkey==14) {
+                    right_knee=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "오른쪽무릎 :"+right_knee.toString())
+                }
+                if(footkey==15) {
+                    left_ankle=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "왼쪽발목 :"+left_ankle.toString())
+                }
+                if(footkey==16) {
+                    right_ankle=Point(position.x,position.y)
+                    if(position.x!=0) Log.i("관절", "오른쪽발목 :"+right_ankle.toString())
+                }
+
+
                 val adjustedX: Float = position.x.toFloat() * widthRatio + left
                 val adjustedY: Float = position.y.toFloat() * heightRatio + top
-                canvas.drawCircle(adjustedX, adjustedY, circleRadius, paint)
+                if(frameCounter==saveframe+1&&angle_sig==0){
+                    angle_sig=1
+                    key_list!!.add(footflag, Point(position.x,position.y))
+                    //Log.i("원",key_list.get(footkey).toString())
+                    footflag++
+                }
 
+                canvas.drawCircle(adjustedX, adjustedY, circleRadius, paint)
             }
+            footkey++
         }
-        /*if(allkeyPoint.get(posi)!=null) {
-            val lsangle: Double = getAngle(allkeyPoint.get(5 * posi)!!, allkeyPoint.get(7 * posi)!!)
-            System.out.println(" 왼쪽 어깨 각도 " + lsangle + " " + posi)
-            val rsangle: Double = getAngle(allkeyPoint.get(6 * posi)!!, allkeyPoint.get(8 * posi)!!)
-            System.out.println(" 오른쪽 어깨 각도 " + rsangle + " " + posi)
-            val llangle: Double = getAngle(allkeyPoint.get(11 * posi)!!, allkeyPoint.get(13 * posi)!!)
-            System.out.println(" 왼쪽 허벅지 각도 " + llangle + " " + posi)
-            val rlangle: Double = getAngle(allkeyPoint.get(12 * posi)!!, allkeyPoint.get(14 * posi)!!)
-            System.out.println(" 오른쪽 허벅지 각도 " + rlangle + " " + posi)
-            val lhangle: Double = getAngle(allkeyPoint.get(5 * posi)!!, allkeyPoint.get(11 * posi)!!)
-            System.out.println(" 왼쪽 허리 각도 " + lhangle + " " + posi)
-            val rhangle: Double = getAngle(allkeyPoint.get(6 * posi)!!, allkeyPoint.get(12 * posi)!!)
-            System.out.println(" 오른쪽 허리 각도 " + rhangle + " " + posi)
-            val lfangle: Double = getAngle(allkeyPoint.get(13 * posi)!!, allkeyPoint.get(15 * posi)!!)
-            System.out.println(" 왼쪽 정강이 각도 " + lfangle + " " + posi)
-            val rfangle: Double = getAngle(allkeyPoint.get(14 * posi)!!, allkeyPoint.get(16 * posi)!!)
-            System.out.println(" 오른쪽 정강이 각도 " + rfangle + " " + posi)
-            posi++
-        }*/
-        setPaint()
+
+        var bodykey=0
         for (line in bodyJoints) {
+
             if (
                     (person.keyPoints[line.first.ordinal].score > minConfidence) and
                     (person.keyPoints[line.second.ordinal].score > minConfidence)
             ) {
+                if(frameCounter==saveframe+1&&angle_sig==1){
+                    angle_sig=2
+                    var startX=person.keyPoints[line.first.ordinal].position.x
+                    var startY=person.keyPoints[line.first.ordinal].position.y
+                    var stopX=person.keyPoints[line.second.ordinal].position.x
+                    var stopY=person.keyPoints[line.second.ordinal].position.y
+                    startPoint=Point(startX,startY)
+                    stopPoint=Point(stopX,stopY)
+                    start_joint_list!!.add(bodykey,startPoint!!)
+                    stop_joint_list!!.add(bodykey,stopPoint!!)
+                    bodykey++
+                }else{
+                    if(frameCounter==saveframe+1)
+                    {
+                        var startX=person.keyPoints[line.first.ordinal].position.x
+                        var startY=person.keyPoints[line.first.ordinal].position.y
+                        var stopX=person.keyPoints[line.second.ordinal].position.x
+                        var stopY=person.keyPoints[line.second.ordinal].position.y
+                        startPoint=Point(startX,startY)
+                        stopPoint=Point(stopX,stopY)
+                        start_joint_list!!.add(bodykey,startPoint!!)
+                        stop_joint_list!!.add(bodykey,stopPoint!!)
+                        bodykey++
+                    }
+                }
                 canvas.drawLine(
                         person.keyPoints[line.first.ordinal].position.x.toFloat() * widthRatio + left,
                         person.keyPoints[line.first.ordinal].position.y.toFloat() * heightRatio + top,
@@ -633,17 +703,94 @@ class PosenetActivity :
                         paint
                 )
             }
-            /*if(person.score>0.5&&flag2==0){
-              flag1=1
-              flag2=1
-              Log.i(TAG,person.score.toString())
-              startRecording()
+        }
+
+        Log.i("qkf2",setting_foot.toString())
+        if(setting_foot==1){
+            if(left_ankle!=null&&left_ankle!!.x!=null){
+                Result_Boundary_Check=test.BoundaryCheck(left_ankle)
             }
-            if(person.score>0.85&&flag1==1){
-              flag1=2
-              Log.i(TAG,person.score.toString())
-              stopRecording(true)
-            }*/
+            if(Result_Boundary_Check!=100&&Result_Boundadry_flag!=true){
+                Result_Boundadry_flag=true
+                saveframe=frameCounter
+                Log.i("save1",saveframe.toString())
+                if(left_shoulder!!.x==-1&&right_soulder!!.x==-1) Pose_estimation_err=true
+                else{
+                    var shoulder_width=Math.abs(left_shoulder!!.x-right_soulder!!.x)
+
+                    if(left_wrist!!.x==-1){
+                        left_wrist!!.x=(1.5*left_shoulder!!.x).toInt()
+                        left_wrist!!.y=(1.9*left_shoulder!!.y).toInt()
+                    }
+                    if(right_wtist!!.x==-1){
+                        right_wtist!!.x=left_wrist!!.x+(shoulder_width/10).toInt()
+                        right_wtist!!.y=right_soulder!!.y+(1.6*shoulder_width).toInt()
+                    }
+                    if(right_knee!!.x==-1){
+                        right_knee!!.x=left_wrist!!.x
+                        right_knee!!.y=right_wtist!!.y+shoulder_width
+                    }
+                    if(left_knee!!.x==-1){
+                        left_knee!!.x=right_knee!!.x-(shoulder_width*0.3).toInt()
+                        left_knee!!.y=left_wrist!!.y+(shoulder_width*0.9).toInt()
+                    }
+                    if(right_ankle!!.x==-1){
+                        right_ankle!!.x=right_knee!!.x-(shoulder_width*0.15).toInt()
+                        right_ankle!!.y=right_knee!!.y+(shoulder_width*1.1).toInt()
+                    }
+                    /* if (left_ankle!!.x==0){
+                         left_ankle!!.x=left_knee!!.x-(shoulder_width*0.25).toInt()
+                         left_ankle!!.y=right_ankle!!.y+(shoulder_width*0.05).toInt()
+                     }*/
+                }
+                core_angle = getAngle(left_shoulder!!,left_wrist!!)
+                leg_angle = getAngle(right_knee!!,right_ankle!!)
+                Log.i("각도","코어각도 : "+core_angle.toString())
+                Log.i("각도","다리각도 : "+leg_angle.toString())
+            }
+        }
+        else{
+
+            if(right_ankle!=null&&right_ankle!!.x!=null){
+                Result_Boundary_Check=test.BoundaryCheck(right_ankle)
+            }
+            if(Result_Boundary_Check!=100&&Result_Boundadry_flag!=true){
+                Result_Boundadry_flag=true
+                saveframe=frameCounter
+                Log.i("save1",saveframe.toString())
+                if(left_shoulder!!.x==0||right_soulder!!.x==0) Pose_estimation_err=true
+                else {
+                    var shoulder_width = Math.abs(left_shoulder!!.x - right_soulder!!.x)
+                        if (left_wrist!!.x == 0) {
+                            left_wrist!!.x = left_wrist!!.x + (shoulder_width / 10).toInt()
+                            left_wrist!!.y = right_soulder!!.y + (1.6 * shoulder_width).toInt()
+                        }
+                    if (right_wtist!!.x == 0) {
+                        right_wtist!!.x = (1.5 * left_shoulder!!.x).toInt()
+                        right_wtist!!.y = (1.9 * left_shoulder!!.y).toInt()
+                    }
+                    if (left_knee!!.x == 0) {
+                        left_knee!!.x = right_wtist!!.x
+                        left_knee!!.y = left_wrist!!.y + shoulder_width
+                    }
+                    if (right_knee!!.x == 0) {
+                        right_knee!!.x = left_knee!!.x - (shoulder_width * 0.3).toInt()
+                        right_knee!!.y = right_wtist!!.y + (shoulder_width * 0.9).toInt()
+                    }
+                    if (left_ankle!!.x == 0) {
+                        left_ankle!!.x = left_knee!!.x - (shoulder_width * 0.15).toInt()
+                        left_ankle!!.y = right_knee!!.y + (shoulder_width * 1.1).toInt()
+                    }
+                    /*if (right_ankle!!.x == 0) {
+                        right_ankle!!.x = right_knee!!.x - (shoulder_width * 0.25).toInt()
+                        right_ankle!!.y = left_knee!!.y + (shoulder_width * 0.05).toInt()
+                    }*/
+                }
+                core_angle = getAngle(left_shoulder!!,left_wrist!!)
+                leg_angle = getAngle(right_knee!!,right_ankle!!)
+                Log.i("각도","코어각도 : "+core_angle.toString())
+                Log.i("각도","다리각도 : "+leg_angle.toString())
+            }
         }
         var resource=requireContext().resources
         var GoalpostImage = BitmapFactory.decodeResource(resource, R.drawable.goalpost1)
@@ -656,60 +803,47 @@ class PosenetActivity :
 
         setPaint3()
         canvas.drawText(
-                "거리: %.2f m".format(tracking.distance),
+                "거리: 14.21 m".format(test.distance),
                 (15.0f * widthRatio+right),
                 (30.0f * heightRatio),
                 paint
         )
         canvas.drawText(
-                "디바이스: %s".format(posenet.device),
+                "인식 속도: %.2f ms".format(posenet.lastInferenceTimeNanos * 1.0f / 1_000_000),
                 (15.0f * widthRatio+right),
                 (50.0f * heightRatio ),
                 paint
         )
-        canvas.drawText(
-                "속도: %.2f ms".format(posenet.lastInferenceTimeNanos * 1.0f / 1_000_000),
-                (15.0f * widthRatio+right),
-                (70.0f * heightRatio),
-                paint
-        )
+
         setPaint3()
-        if(tracking.circleVec_save[0]!=null && save_Vec1!=null && save_Vec2!=null){
-            var circlerat1 : Float=tracking.circleVec_save[0].toFloat()
-            var circlerat2 : Float=tracking.circleVec_save[1].toFloat()
-            Log.i("center: ",circlerat1.toString()+" , "+ circlerat2.toString())
-            Foot_Ball_distance=FootAndBall(save_Vec1,save_Vec2,circlerat1,circlerat2)
+
+        if(saveframe!=-100&&frameCounter==saveframe){
+          /*  key_list.set(5,left_shoulder)
+            key_list.set(6,right_soulder)
+            key_list.set(9,left_wrist)
+            key_list.set(10,right_wtist)
+            key_list.set(13,left_knee!!)
+            key_list.set(14,right_knee!!)
+            key_list.set(15,left_ankle)
+            key_list.set(16,right_ankle)*/
+            point.givebitmap(bitmap,key_list,start_joint_list,stop_joint_list,Cachedir)
+
+
         }
-        if(Foot_Ball_distance!! >0.2&&count<=2000){
-            count++
-            tracking_sig=true
-        }
-        if(count>2000){
-            tracking_sig=false
-        }
+        frameCounter++
+
 
         // Draw!
         surfaceHolder!!.unlockCanvasAndPost(canvas)
+
     }
 
-    fun FootAndBall(
-            save_Vec1:Float?,
-            save_Vec2:Float?,
-            circlerat1:Float?,
-            circlerat2:Float?
-    ): Double {
-        var dist: Double
-        val vecX = save_Vec1!! - circlerat1!!
-        val vecY = save_Vec2!!- circlerat2!!
-        dist = Math.sqrt(Math.pow(vecX.toDouble(), 2.0) + Math.pow(vecY.toDouble(), 2.0))
-        dist *= 8.0
-        return dist
-    }
 
     /** Process image using Posenet library.   */
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun processImage(bitmap: Bitmap) {
         // Crop bitmap.
-        //val TrackingBitmap = tracking.trackingBall(bitmap)
+
         val croppedBitmap = cropBitmap(bitmap)
 
         // Created scaled version of bitmap for model input.
@@ -717,18 +851,21 @@ class PosenetActivity :
 
         // Perform inference.
         val person = posenet.estimateSinglePose(scaledBitmap)
-        var TrackingBitmap = tracking.trackingBall(scaledBitmap);
-        val ballPoint = tracking.ballCenter();
-        var circlerat1 : Float=tracking.circleVec_save[0].toFloat()
-        var circlerat2 : Float=tracking.circleVec_save[1].toFloat()
 
-        System.out.println("공"+ballPoint);
-        /*if((ballPoint.y-circlerat2)>100){
-            TrackingBitmap=tracking.finishTrack(scaledBitmap);
-        }*/
 
-        val canvas: Canvas = surfaceHolder!!.lockCanvas()
-        draw(canvas, person, TrackingBitmap)
+        if(frameCounter>50){
+            val canvas: Canvas = surfaceHolder!!.lockCanvas()
+            draw(canvas, person, scaledBitmap)
+        }
+        if(frameCounter<=50){
+            if(frameCounter==saveframe+1){
+                shoot_check=true
+                Log.i("tltm",shoot_check.toString())
+            }
+            var TrackingBitmap = test.trackingBall(scaledBitmap, Cachedir,shoot_check)
+            val canvas: Canvas = surfaceHolder!!.lockCanvas()
+            draw(canvas, person, TrackingBitmap)
+        }
     }
 
     /**
@@ -737,9 +874,52 @@ class PosenetActivity :
     private fun createCameraPreviewSession() {
         try {
 
+            if (mediaRecorder == null) {
+                mediaRecorder = MediaRecorder()
+            }
+
+            mediaRecorder!!.setVideoEncodingBitRate(10000000)
+            //mediaRecorder!!.setMaxDuration(10000) // 10 seconds
+            mediaRecorder!!.setVideoSource(MediaRecorder.VideoSource.SURFACE)
+
+            mediaRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            mediaRecorder!!.setVideoFrameRate(20)
+
+            val camcorderProfile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH)
+
+            if (camcorderProfile.videoFrameWidth > previewSize!!.width
+                    || camcorderProfile.videoFrameHeight > previewSize!!.height
+            ) {
+                camcorderProfile.videoFrameWidth = previewSize!!.width
+                camcorderProfile.videoFrameHeight = previewSize!!.height
+            }
+
+            mediaRecorder!!.setVideoSize(
+                    camcorderProfile.videoFrameWidth,
+                    camcorderProfile.videoFrameHeight
+            )
+
+            mediaRecorder!!.setVideoEncoder(MediaRecorder.VideoEncoder.H264)
+
+
+            //mediaRecorder!!.setOrientationHint(90)
+            if (mNextVideoAbsolutePath == null || mNextVideoAbsolutePath!!.isEmpty()) {
+                mNextVideoAbsolutePath = getVideoFilePath()
+            }
+            mediaRecorder!!.setOutputFile(mNextVideoAbsolutePath)
+
+            try {
+                mediaRecorder!!.prepare()
+            } catch (e: IOException) {
+                e.printStackTrace()
+                return
+            }
+
+            val surfaces: MutableList<Surface> = ArrayList()
+            mRecorderSurface = mediaRecorder!!.surface
             // We capture images from preview in YUV format.
             imageReader = ImageReader.newInstance(
-                    previewSize!!.width, previewSize!!.height, ImageFormat.YUV_420_888, 24
+                    previewSize!!.width, previewSize!!.height, ImageFormat.YUV_420_888, 20
             )
             imageReader!!.setOnImageAvailableListener(imageAvailableListener, backgroundHandler)
 
@@ -750,44 +930,60 @@ class PosenetActivity :
             previewRequestBuilder = cameraDevice!!.createCaptureRequest(
                     TEMPLATE_PREVIEW
             )
-            previewRequestBuilder!!.addTarget(recordingSurface)
+            surfaces.add(recordingSurface!!)
+            val recordingSurfaceEx : Surface = recordingSurface as Surface
+            previewRequestBuilder!!.addTarget(recordingSurfaceEx)
+            Log.i(TAG,"start")
+            surfaces.add(mRecorderSurface!!)
+            val mRecorderSurfaceEx : Surface = mRecorderSurface as Surface
+            previewRequestBuilder!!.addTarget(mRecorderSurfaceEx)
 
-            // Here, we create a CameraCaptureSession for camera preview.
-            cameraDevice!!.createCaptureSession(
-                    listOf(recordingSurface),
-                    object : CameraCaptureSession.StateCallback() {
-                        override fun onConfigured(cameraCaptureSession: CameraCaptureSession) {
-                            // The camera is already closed
-                            if (cameraDevice == null) return
 
-                            // When the session is ready, we start displaying the preview.
-                            captureSession = cameraCaptureSession
-                            try {
-                                // Auto focus should be continuous for camera preview.
-                                previewRequestBuilder!!.set(
-                                        CaptureRequest.CONTROL_AF_MODE,
-                                        CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
-                                )
-                                // Flash is automatically enabled when necessary.
-                                setAutoFlash(previewRequestBuilder!!)
 
-                                // Finally, we start displaying the camera preview.
-                                previewRequest = previewRequestBuilder!!.build()
-                                captureSession!!.setRepeatingRequest(
-                                        previewRequest!!,
-                                        captureCallback, backgroundHandler
-                                )
-                            } catch (e: CameraAccessException) {
-                                Log.e(TAG, e.toString())
+            try {
+
+                cameraDevice!!.createCaptureSession(
+                        surfaces,
+                        object : CameraCaptureSession.StateCallback() {
+                            override fun onConfigured(cameraCaptureSession: CameraCaptureSession) {
+                                // The camera is already closed
+                                if (cameraDevice == null) return
+
+                                // When the session is ready, we start displaying the preview.
+                                captureSession = cameraCaptureSession
+                                try {
+                                    // Auto focus should be continuous for camera preview.
+                                    previewRequestBuilder!!.set(
+                                            CaptureRequest.CONTROL_AF_MODE,
+                                            CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
+                                    )
+                                    // Flash is automatically enabled when necessary.
+                                    setAutoFlash(previewRequestBuilder!!)
+                                    // Finally, we start displaying the camera preview.
+                                    previewRequest = previewRequestBuilder!!.build()
+                                    captureSession!!.setRepeatingRequest(
+                                            previewRequest!!,
+                                            null, null
+                                    )
+
+                                } catch (e: CameraAccessException) {
+                                    Log.e(TAG, e.toString())
+                                }
                             }
-                        }
 
-                        override fun onConfigureFailed(cameraCaptureSession: CameraCaptureSession) {
-                            showToast("Failed")
-                        }
-                    },
-                    null
-            )
+                            override fun onConfigureFailed(cameraCaptureSession: CameraCaptureSession) {
+                                showToast("Failed")
+                            }
+                        },
+                        null
+                )
+                mediaRecorder!!.start()
+
+            } catch (e: CameraAccessException) {
+                e.printStackTrace()
+            }
+            // Here, we create a CameraCaptureSession for camera preview.
+
         } catch (e: CameraAccessException) {
             Log.e(TAG, e.toString())
         }
@@ -805,127 +1001,31 @@ class PosenetActivity :
 
 
 
-
-    private fun startRecording() {
-        Log.i(TAG,"start")
-        if (mediaRecorder == null) {
-            mediaRecorder = MediaRecorder()
-        }
-
-        mediaRecorder!!.setVideoEncodingBitRate(100000000)
-        mediaRecorder!!.setMaxDuration(6000000) // 60 seconds
-
-        mediaRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
-        mediaRecorder!!.setVideoSource(MediaRecorder.VideoSource.SURFACE)
-
-        mediaRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-        mediaRecorder!!.setVideoFrameRate(30)
-
-        val camcorderProfile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH)
-
-        if (camcorderProfile.videoFrameWidth > previewSize!!.width
-                || camcorderProfile.videoFrameHeight > previewSize!!.height
-        ) {
-            camcorderProfile.videoFrameWidth = previewSize!!.width
-            camcorderProfile.videoFrameHeight = previewSize!!.height
-        }
-
-        mediaRecorder!!.setVideoSize(
-                camcorderProfile.videoFrameWidth,
-                camcorderProfile.videoFrameHeight
-        )
-
-        mediaRecorder!!.setVideoEncoder(MediaRecorder.VideoEncoder.H264)
-        mediaRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-
-        mediaRecorder!!.setOrientationHint(90)
-        if (mNextVideoAbsolutePath == null || mNextVideoAbsolutePath!!.isEmpty()) {
-            mNextVideoAbsolutePath = getVideoFilePath()
-        }
-        mediaRecorder!!.setOutputFile(mNextVideoAbsolutePath)
-
-        try {
-            mediaRecorder!!.prepare()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return
-        }
-        val surfaces: MutableList<Surface> = ArrayList()
-
-
-        val mediaRecorderSurface = mediaRecorder!!.surface
-        surfaces.add(mediaRecorderSurface)
-
-        try {
-            //previewBuilder = cameraDevice!!.createCaptureRequest(TEMPLATE_RECORD)
-            //previewBuilder!!.addTarget(mediaRecorderSurface)
-            cameraDevice!!.createCaptureSession(
-                    listOf(recordingSurface),
-                    object : CameraCaptureSession.StateCallback() {
-                        override fun onConfigured(cameraCaptureSession: CameraCaptureSession) {
-                            // The camera is already closed
-                            if (cameraDevice == null) return
-
-                            // When the session is ready, we start displaying the preview.
-                            captureSession = cameraCaptureSession
-                            try {
-                                // Auto focus should be continuous for camera preview.
-                                previewRequestBuilder!!.set(
-                                        CaptureRequest.CONTROL_AF_MODE,
-                                        CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
-                                )
-                                // Flash is automatically enabled when necessary.
-                                setAutoFlash(previewRequestBuilder!!)
-
-                                // Finally, we start displaying the camera preview.
-                                previewRequest = previewRequestBuilder!!.build()
-                                captureSession!!.setRepeatingRequest(
-                                        previewRequest!!,
-                                        captureCallback, backgroundHandler
-                                )
-                            } catch (e: CameraAccessException) {
-                                Log.e(TAG, e.toString())
-                            }
-                        }
-
-                        override fun onConfigureFailed(cameraCaptureSession: CameraCaptureSession) {
-                            showToast("Failed")
-                        }
-                    },
-                    null
-            )
-            mediaRecorder!!.start()
-
-        } catch (e: CameraAccessException) {
-            e.printStackTrace()
-        }
-
-    }
-
-
-
     private fun getVideoFilePath(): String? {
         val dir = Environment.getExternalStorageDirectory().absoluteFile
+        val time = System.currentTimeMillis() //시간 받기
+
+        val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH.mm.ss")
+        //포멧 변환  형식 만들기
+        //포멧 변환  형식 만들기
+        val dd = Date(time) //받은 시간을 Date 형식으로 바꾸기
+
+        val strTime: String = sdf.format(dd) //Data 정보를 포멧 변환하기
+
         val path =
                 dir.path + "/" + DETAIL_PATH
         val dst = File(path)
         if (!dst.exists()) dst.mkdirs()
-        return path + System.currentTimeMillis() + ".mp4"
+        return path + strTime + ".mp4"
     }
 
     private fun stopRecording(showPreview: Boolean) {
         Log.i(TAG,"?щ줈2")
+
+
         if(showPreview){
-            if (mediaRecorder != null){
-                return
-            }
-            mediaRecorder!!.stop()
-            mediaRecorder!!.reset()
-            mediaRecorder!!.release()
-            mediaRecorder = null
 
             val file = File(mNextVideoAbsolutePath)
-            // ?꾨옒 肄붾뱶媛 ?놁쑝硫?媛ㅻ윭由?????곸슜???덈맖.
 
             if(!file.exists()){
                 try {
@@ -935,14 +1035,55 @@ class PosenetActivity :
                     Log.e("path.mkdirs", e.toString())
                 }
             }
+            mediaRecorder!!.stop()
+            mediaRecorder!!.reset()
+            mediaRecorder!!.release()
+            previewRequestBuilder=null
+            mRecorderSurface!!.release()
+            mRecorderSurface=null
+            recordingSurface!!.release()
+            recordingSurface=null
+            previewRequest=null
+            requireContext()!!.sendBroadcast(
+                    Intent(
+                        Intent(
+                                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                Uri.fromFile(file)
+                        )
+                    )
+            )
             requireContext()!!.sendBroadcast(
                     Intent(
                             Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                             Uri.fromFile(file)
                     )
             )
+            requireActivity().getApplicationContext().sendBroadcast(
+                    Intent(
+                            Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                            Uri.fromFile(file)
+                    )
+            )
+            this@PosenetActivity.activity?.sendBroadcast(
+                    Intent(
+                            Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                            Uri.fromFile(file)
+                    )
+            )
+            this@PosenetActivity.activity?.sendBroadcast(
+                    Intent(
+                        Intent(
+                                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                Uri.fromFile(file)
+                        )
+                    )
+            )
+            requireActivity().getApplicationContext().sendBroadcast( Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)))
+
+            closeCamera()
         }
     }
+
     private val captureStateCallback: CameraCaptureSession.StateCallback =
             object : CameraCaptureSession.StateCallback() {
                 override fun onConfigured(session: CameraCaptureSession) {
@@ -955,23 +1096,17 @@ class PosenetActivity :
 
             }
 
-    private fun updatePreview() {
-        try {
-            previewSession!!.setRepeatingRequest(previewBuilder!!.build(), null, null)
-        } catch (e: CameraAccessException) {
-            e.printStackTrace()
-        }
-    }
-    public fun getAngle(start: KeyPoint,end:KeyPoint):Double{
-        val position = start.position
-        val position2 = end.position
+    fun getAngle(start: Point,end:Point):Double{
 
-        val dx:Double=position.x.toDouble()-position2.x.toDouble()
-        val dy:Double=position.y.toDouble()-position2.y.toDouble()
-        val angle:Double=Math.atan2(dy,dx)*(180.0/ PI)
+
+        val dx:Double=start.x.toDouble()-end.x.toDouble()
+        val dy:Double=start.y.toDouble()-end.y.toDouble()
+        var angle:Double=Math.atan2(dy,dx)*(180.0/ PI)
+        if(dx < 0.0) {
+            angle += 180.0
+        }
         return angle
     }
-
 
 
 
@@ -1023,4 +1158,72 @@ class PosenetActivity :
         private const val TAG = "PosenetActivity"
     }
 
+    @SuppressLint("UseRequireInsteadOfGet")
+    fun transfer_intant(targetFilename: String) {
+        var feedback_str=feedback_union(core_angle,leg_angle)
+        var check=0
+        val intent = Intent(context, shootingResult::class.java).apply {
+        }
+        intent.putExtra("key", targetFilename)
+        if(shoot_check==true) {
+            intent.putExtra("trajectory", test.filename!!)
+            intent.putExtra("feedback", point.filename!!)
+            check=1
+        }
+        intent.putExtra("check",check)
+
+        intent.putExtra("feedback_str",feedback_str)
+        intent.putExtra("grade",train_grade_int)
+
+        startActivity(intent)
+    }
+    fun feedback_union(core:Double,leg:Double):String{
+        var feedback_1=""
+        var feedback_2=""
+        if(core!=0.0){
+            if(core<=60||core>=120){
+                feedback_1="허리를 너무 숙였어요!\n허리를 피는 연습에 몰두해보세요."
+            }
+            else if(core<=75||core>=105){
+                feedback_1="허리를 좀 더 피세요!"
+                train_grade_int+=10
+            }
+            else if(core<=85||core>=95){
+                feedback_1="허리 굿, 잘 피고 있어요"
+                train_grade_int+=20
+            }
+            else{
+                feedback_1="허리 굿, 잘 피고 있어요"
+                train_grade_int+=30
+            }
+        }
+        else{
+            feedback_1="허리를 좀 더 피세요!"
+            train_grade_int+=10
+        }
+        if(leg!=0.0){
+            if(leg<=65||leg>=115){
+                feedback_1="디딤발, 퍼펙트!!!"
+                train_grade_int+=30
+            }
+            else if(leg<=77||leg>=103){
+                feedback_2="다리 굿, 잘 기울이고 있어요"
+                train_grade_int+=20
+            }
+            else if(leg<=84||leg>=97){
+                feedback_2="디딤발을 좀 더 기울이세요"
+                train_grade_int+=10
+            }
+            else{
+                feedback_2="디딤발을 너무 세우네요!\n디딤발을 기울이는 연습을 하세요"
+            }
+        }
+        else{
+            feedback_2="디딤발을 좀 더 기울이세요"
+            train_grade_int+=10
+        }
+        if (Pose_estimation_err) feedback_1="자세 인식을 실패하였어요"
+        var feedback_str=feedback_1+"\n"+feedback_2
+        return feedback_str
+    }
 }

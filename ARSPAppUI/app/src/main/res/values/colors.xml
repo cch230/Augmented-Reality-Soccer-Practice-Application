@@ -9,4 +9,5 @@
     <color name="tfe_color_accent">#425066</color>
     <color name="Black">#000000</color>
     <color name="tfe_semi_transparent">#66000000</color>
+    <color name="my_black">#313133</color>
 </resources>

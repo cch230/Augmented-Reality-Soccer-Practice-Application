@@ -1,2 +1,0 @@
-include ':app', ':opencv'
-rootProject.name='ball_ex'

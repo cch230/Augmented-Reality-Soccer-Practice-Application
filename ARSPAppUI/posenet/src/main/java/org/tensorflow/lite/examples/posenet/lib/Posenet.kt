@@ -64,11 +64,6 @@ class Person {
   var score: Float = 0.0f
 }
 
-class Ball{
-  var ballPoint = listOf<KeyPoint>()
-  var score:Float = 0.0f
-}
-
 enum class Device {
   CPU,
   NNAPI,

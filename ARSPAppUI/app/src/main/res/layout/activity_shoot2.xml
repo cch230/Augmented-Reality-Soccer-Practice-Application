@@ -14,33 +14,47 @@
         android:textColor="#000000"
         android:textSize="28sp" />
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="48dp"
-        android:layout_marginTop="108dp"
-        android:text="슈팅 횟수 지정"
+        android:layout_marginTop="147dp"
+        android:text="훈련 종류 지정"
+
         android:textSize="22sp" />
 
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="110dp"
-        android:layout_height="40dp"
-        android:spinnerMode="dropdown"
-        android:visibility="visible"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="100dp"
-        android:textSize="26sp"
-        />
-
-    <TextView
+    <RadioGroup
+        android:id="@+id/shrd_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회"
-        android:textSize="24sp"
-        android:layout_marginLeft="310dp"
-        android:layout_marginTop="105dp"
-        />
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginLeft="218dp"
+        android:layout_marginTop="150dp"
+        >
+
+        <RadioButton
+            android:id="@+id/radio_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="왼발"
+            android:textSize="16sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/radio_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오른발"
+            android:textSize="16sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            />
+
+    </RadioGroup>
+
+
     <TextView
         android:id="@+id/spinner11"
         android:layout_width="wrap_content"
@@ -80,6 +94,9 @@
         android:textColor="#FF0000"
         android:layout_marginLeft="149dp"
         android:layout_marginTop="305dp"/>
+
+
+
 
 
 

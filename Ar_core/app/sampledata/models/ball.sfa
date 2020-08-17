@@ -1,0 +1,81 @@
+{
+  materials: [
+    {
+      name: 'black',
+      parameters: [
+        {
+          baseColor: 'black',
+        },
+        {
+          baseColorTint: [
+            0.16152,
+            0.16152,
+            0.16152,
+            1,
+          ],
+        },
+        {
+          metallic: 1,
+        },
+        {
+          roughness: 0.14280000000000001,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'white',
+      parameters: [
+        {
+          baseColor: 'white',
+        },
+        {
+          baseColorTint: [
+            0.64000000000000001,
+            0.64000000000000001,
+            0.64000000000000001,
+            1,
+          ],
+        },
+        {
+          metallic: 1,
+        },
+        {
+          roughness: 0.14280000000000001,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/models/ball.obj',
+    name: 'ball',
+    recenter: 'root',
+    scale: 0.68237899999999996,
+  },
+  samplers: [
+    {
+      file: 'sampledata/models\\black.jpg',
+      name: 'black',
+      pipeline_name: 'black.jpg',
+    },
+    {
+      file: 'sampledata/models\\white.jpg',
+      name: 'white',
+      pipeline_name: 'white.jpg',
+    },
+  ],
+  version: '0.54:2',
+}

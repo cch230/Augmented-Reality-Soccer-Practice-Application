@@ -1,10 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.google.ar.sceneform.plugin'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 29
+    buildToolsVersion '29.0.0'
 
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
@@ -21,7 +22,7 @@ android {
     defaultConfig {
         applicationId "com.example.arspapp_ui"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -43,8 +44,8 @@ android {
         abortOnError false
     }
     compileOptions {
-        sourceCompatibility = 1.7
-        targetCompatibility = 1.7
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
 }
 
@@ -55,8 +56,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'org.tensorflow:tensorflow-lite:+'
-    implementation 'org.tensorflow:tensorflow-android:+'
+    implementation 'org.tensorflow:tensorflow-lite:2.0.0'
     //implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
     implementation 'org.tensorflow:tensorflow-lite-gpu:0.0.0-experimental'
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -94,4 +94,21 @@ dependencies {
     implementation project(path: ':posenet')
     implementation project(path: ':opencv')
     implementation 'androidx.fragment:fragment-ktx:1.2.4'
+    implementation 'com.google.ar:core:1.15.0'
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.15.0'
+    implementation 'com.google.ar.sceneform:core:1.15.0'
 }
+
+sceneform.asset('sampledata/hurdle.obj',
+        'default',
+        'sampledata/models/hurdle.sfa',
+        'src/main/res/raw/hurdle',
+        ['sampledata/models/hurdle.fbx'])
+/*
+sceneform.asset('sampledata/models/andy_dance.fbx',
+        'default',
+        'sampledata/models/andy_dance.sfa',
+        'src/main/assets/andy_dance',
+        ['sampledata/models/andy_dance.fbx'])
+
+ */
