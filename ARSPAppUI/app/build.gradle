@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.arspapp_ui"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -44,8 +44,8 @@ android {
         abortOnError false
     }
     compileOptions {
-        sourceCompatibility = 1.7
-        targetCompatibility = 1.7
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
 }
 
@@ -94,13 +94,25 @@ dependencies {
     implementation project(path: ':posenet')
     implementation project(path: ':opencv')
     implementation 'androidx.fragment:fragment-ktx:1.2.4'
+
+
+
+
+
+    // Provides ARCore Session and related resources.
+    implementation 'com.google.ar:core:1.15.0'
+
+    // Provides ArFragment, and other UX resources.
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.15.0'
+
+    // Alternatively, use ArSceneView without the UX dependency.
+    implementation 'com.google.ar.sceneform:core:1.15.0'
 }
 
-/*
-sceneform.asset('sampledata/models/andy_dance.fbx',
-        'default',
-        'sampledata/models/andy_dance.sfa',
-        'src/main/assets/andy_dance',
-        ['sampledata/models/andy_dance.fbx'])
 
- */
+sceneform.asset('sampledata/model/hurdle.obj',
+        'default',
+        'sampledata/model/hurdle.sfa',
+        'src/main/res/raw/hurdle',
+       )
+

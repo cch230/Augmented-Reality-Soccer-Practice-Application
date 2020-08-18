@@ -10,6 +10,9 @@ import android.os.Environment
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class shootingResult : AppCompatActivity() {
@@ -19,6 +22,7 @@ class shootingResult : AppCompatActivity() {
     private var imageView2: ImageView? = null
     private var imageView3: ImageView? = null
     private var textView:TextView?=null
+    private val editor:SharedPreferences.Editor?=null
     private val DETAIL_PATH = "DCIM/test1/"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +36,7 @@ class shootingResult : AppCompatActivity() {
         imageView3=findViewById(R.id.grade)
         textView=findViewById(R.id.text)
         var sete=applicationContext.getSharedPreferences("pref",0)
-        val editor =sete.edit()
+        var editor =sete.edit()
         editor.clear()
         editor.commit()
         var str = intent.getStringExtra("key") //인텐트의 key값을 통해 해당 String을 받는다.
@@ -76,15 +80,46 @@ class shootingResult : AppCompatActivity() {
             imageView1!!.setImageBitmap(trajectory)
             imageView2!!.setImageBitmap(feedback)
         }
+        val time = System.currentTimeMillis() //시간 받기
+        val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        //포멧 변환  형식 만들기
+        val dd = Date(time) //받은 시간을 Date 형식으로 바꾸기
+        val strTime: String = sdf.format(dd) //Data 정보를 포멧 변환하기
+        var result_data=""
+        val sharedPreferences = getSharedPreferences("shooting", 0)
+        editor = sharedPreferences.edit()
 
         textView!!.setText(feedback_str)
-        if(train_grade==60) imageView3!!.setImageResource(R.drawable.a)
-        else if(train_grade==50) imageView3!!.setImageResource(R.drawable.b)
-        else if(train_grade==40) imageView3!!.setImageResource(R.drawable.c)
-        else if(train_grade==30) imageView3!!.setImageResource(R.drawable.d)
-        else if(train_grade==20) imageView3!!.setImageResource(R.drawable.e)
-        else if(train_grade==10) imageView3!!.setImageResource(R.drawable.f)
-        else if(train_grade==10) imageView3!!.setImageResource(R.drawable.x)
+        if(train_grade==60) {
+            imageView3!!.setImageResource(R.drawable.a)
+            result_data="A"
+        }
+        else if(train_grade==50) {
+            imageView3!!.setImageResource(R.drawable.b)
+            result_data="B"
+        }
+        else if(train_grade==40) {
+            imageView3!!.setImageResource(R.drawable.c)
+            result_data="C"
+        }
+        else if(train_grade==30) {
+            imageView3!!.setImageResource(R.drawable.d)
+            result_data="D"
+        }
+        else if(train_grade==20) {
+            imageView3!!.setImageResource(R.drawable.e)
+            result_data="E"
+        }
+        else if(train_grade==10) {
+            imageView3!!.setImageResource(R.drawable.f)
+            result_data="F"
+        }
+        else if(train_grade==10) {
+            imageView3!!.setImageResource(R.drawable.x)
+            result_data="X"
+        }
+        editor.putString(strTime, result_data)
+        editor.commit()
     }
 
     override fun onPostResume() {

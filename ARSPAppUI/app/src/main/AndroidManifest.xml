@@ -27,6 +27,9 @@
     <uses-feature
         android:name="android.hardware.camera.front.autofocus"
         android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.ar"
+        android:required="true" />
 
     <supports-screens
         android:anyDensity="true"
@@ -42,7 +45,10 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".trappingResult"></activity>
+        <activity android:name=".test_posenet"
+            android:screenOrientation="landscape" />
+        <activity android:name=".test35" />
+        <activity android:name=".trappingResult" />
         <activity android:name=".posenet_trapping" />
         <activity
             android:name=".Trapping_camera"
@@ -59,10 +65,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity
-            android:name=".trapping"
-            android:screenOrientation="landscape"
-            tools:ignore="LockedOrientationActivity" />
         <activity android:name=".upload" />
         <activity android:name=".mainmenu" />
         <activity android:name=".bottombar" />
@@ -116,6 +118,10 @@
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
+
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="required" />
     </application>
 
 </manifest>

@@ -13,6 +13,7 @@ import android.widget.Spinner;
 public class physical2 extends AppCompatActivity {
     Spinner spinner3;
     ImageButton physical2_btn;
+    private String text;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +31,10 @@ public class physical2 extends AppCompatActivity {
         public void onClick(View v){
             Intent intent;
 
+            text = spinner3.getSelectedItem().toString();
             if (v==physical2_btn) {
-                intent = new Intent(physical2.this, mainmenu.class);
+                intent = new Intent(physical2.this, test35.class);
+                intent.putExtra("key", text);
                 startActivity(intent);
             }
         }
