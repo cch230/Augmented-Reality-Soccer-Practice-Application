@@ -74,7 +74,7 @@ public class signup extends AppCompatActivity {
         progressDialog.setTitle("회원가입");
         progressDialog.show();
 
-        String uRl = "http://13.124.25.195//loginregister/register.php";
+        String uRl = "http://13.124.25.195//phpFiles/register.php";
         StringRequest request = new StringRequest(Request.Method.POST, uRl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response)
@@ -82,7 +82,6 @@ public class signup extends AppCompatActivity {
                 if (response.equals("회원가입이 완료되었습니다")) {
                     progressDialog.dismiss();
                     Toast.makeText(signup.this, response, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(signup.this, MainActivity.class));
                     finish();
                 } else {
                     progressDialog.dismiss();

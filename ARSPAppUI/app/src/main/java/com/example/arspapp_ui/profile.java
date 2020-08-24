@@ -81,7 +81,7 @@ public class profile extends Fragment {
         get_frame2_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), statistic.class);
+                Intent intent = new Intent(getActivity(), viewpager.class);
                 startActivity(intent);
             }
         });

@@ -63,9 +63,14 @@ public class login extends AppCompatActivity {
             public void onClick(View v)
             {
                 String txtInput_id = input_id.getText().toString();
+
+                SharedPreferences.Editor editor=sharedPreferences.edit();
+                editor.putString("ID", txtInput_id); // key 값, data 값
+                editor.commit();
+
                 String txtInput_pw = input_pw.getText().toString();
                 if (TextUtils.isEmpty(txtInput_id) || TextUtils.isEmpty(txtInput_pw)) {
-                    Toast.makeText(login.this, "All fields required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(login.this, "아이디와 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
                 } else {
                     login(txtInput_id, txtInput_pw);
                 }
@@ -80,7 +85,7 @@ public class login extends AppCompatActivity {
         progressDialog.setTitle("Registering New Account");
         progressDialog.show();
 
-        String uRl = "http://13.124.25.195//loginregister/login.php";
+        String uRl = "http://13.124.25.195//phpFiles/login.php";
         StringRequest request = new StringRequest(Request.Method.POST, uRl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response)
@@ -89,8 +94,10 @@ public class login extends AppCompatActivity {
                     progressDialog.dismiss();
                     Toast.makeText(login.this, response, Toast.LENGTH_SHORT).show();
                     SharedPreferences.Editor editor = sharedPreferences.edit();
+
                     editor.apply();
                     startActivity(new Intent(login.this, bottombar.class));
+                    finish();
                 }
 
                 else {
@@ -120,8 +127,5 @@ public class login extends AppCompatActivity {
         request.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         MySingleton.getmInstance(login.this).addToRequestQueue(request);
-
     }
-
-
 }

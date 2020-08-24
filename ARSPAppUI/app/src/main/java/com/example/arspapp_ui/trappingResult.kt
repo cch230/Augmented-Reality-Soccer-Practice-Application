@@ -3,7 +3,6 @@ package com.example.arspapp_ui
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -24,7 +23,7 @@ class trappingResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trapping_result)
-        var aty: Activity? = Trapping_camera.CameraActivity
+        var aty: Activity? = trapping_camera.CameraActivity
         aty!!.finish()
 
         videoView=findViewById(R.id.playTextureView)
@@ -106,6 +105,7 @@ class trappingResult : AppCompatActivity() {
             result_data="X"
         }
         editor.putString(strTime, result_data)
+        Log.i("ㅏ시발",strTime)
         editor.commit()
     }
 

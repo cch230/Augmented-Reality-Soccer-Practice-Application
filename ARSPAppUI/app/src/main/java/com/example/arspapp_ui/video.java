@@ -32,8 +32,8 @@ public class video extends Fragment {
     private VideoView video_1,video_2;
     private String DETAIL_PATH = "DCIM/test1/";
     Context context;
-    @Nullable
 
+    @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_video,container,false);
         bookmark_1 = view.findViewById(R.id.bookmark_1);
@@ -112,13 +112,13 @@ public class video extends Fragment {
     private String getVideoFilePath1() {
         File dir = Environment.getExternalStorageDirectory().getAbsoluteFile();
 
-        String path = dir.getPath() + "/" + DETAIL_PATH + "L_infront (31).mp4";
+        String path = dir.getPath() + "/" + DETAIL_PATH + "test1.mp4";
         return  path;
     }
     private String getVideoFilePath2() {
         File dir = Environment.getExternalStorageDirectory().getAbsoluteFile();
 
-        String path = dir.getPath() + "/" + DETAIL_PATH + "L_infront (20).mp4";
+        String path = dir.getPath() + "/" + DETAIL_PATH + "test2.mp4";
         return  path;
     }
 }
