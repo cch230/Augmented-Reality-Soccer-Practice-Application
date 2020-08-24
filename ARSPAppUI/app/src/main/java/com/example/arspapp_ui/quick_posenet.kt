@@ -25,7 +25,6 @@ import android.util.Log
 import android.util.Size
 import android.util.SparseIntArray
 import android.view.*
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -45,7 +44,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.math.abs
 
-class trapping_posenet :
+class quick_posenet :
         Fragment(),
         ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -159,7 +158,7 @@ class trapping_posenet :
     var Result_Boundary_Check= 0
 
     // var tracking = com.example.arspapp_ui.tracking()
-    var test = com.example.arspapp_ui.trapping_tracking()
+
     var setting_time:Int?=null
     var key_list=java.util.ArrayList<Point>()
     var start_joint_list=java.util.ArrayList<Point>()
@@ -169,26 +168,26 @@ class trapping_posenet :
     var angle_sig= 0
     var shoot_check=false
     var min=0
-    var imageview:ImageView?=null
-    var trapping_check=false
+    var grade=0
+    var left_check=false
     /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
     private val stateCallback = object : StateCallback() {
 
         override fun onOpened(cameraDevice: CameraDevice) {
             cameraOpenCloseLock.release()
-            this@trapping_posenet.cameraDevice = cameraDevice
+            this@quick_posenet.cameraDevice = cameraDevice
             createCameraPreviewSession()
         }
 
         override fun onDisconnected(cameraDevice: CameraDevice) {
             cameraOpenCloseLock.release()
             cameraDevice.close()
-            this@trapping_posenet.cameraDevice = null
+            this@quick_posenet.cameraDevice = null
         }
 
         override fun onError(cameraDevice: CameraDevice, error: Int) {
             onDisconnected(cameraDevice)
-            this@trapping_posenet.activity?.finish()
+            this@quick_posenet.activity?.finish()
         }
     }
 
@@ -241,6 +240,7 @@ class trapping_posenet :
         initSensor()
         deviceOrientation = DeviceOrientation()
         surfaceHolder = surfaceView!!.holder
+
         Cachedir=requireContext()!!.cacheDir
         var settings:SharedPreferences = requireContext().getSharedPreferences("pref",0)
         setting_time =settings.getInt("secends",0)
@@ -330,7 +330,7 @@ class trapping_posenet :
                 // We don't use a front facing camera in this sample.
                 val cameraDirection = characteristics.get(CameraCharacteristics.LENS_FACING)
                 if (cameraDirection != null &&
-                        cameraDirection == CameraCharacteristics.LENS_FACING_BACK
+                        cameraDirection == CameraCharacteristics.LENS_FACING_FRONT
                 ) {
                     continue
                 }
@@ -562,7 +562,17 @@ class trapping_posenet :
         paint.textSize = 80.0f
         paint.strokeWidth = 15.0f
     }
+    private fun setPainttxt() {
+        paint.color = Color.RED
+        paint.textSize = 120.0f
+        paint.strokeWidth = 8.0f
+    }
 
+    private fun setPaint2txt() {
+        paint.color = Color.BLUE
+        paint.textSize = 120.0f
+        paint.strokeWidth = 8.0f
+    }
     /** Draw bitmap on Canvas.   */
     @RequiresApi(Build.VERSION_CODES.N)
     private fun draw(canvas: Canvas, person: Person, bitmap: Bitmap) {
@@ -615,25 +625,15 @@ class trapping_posenet :
 
             if (keyPoint.score > minConfidence) {
                 val position = keyPoint.position
-                if(footkey==0) {
-                    nose=Point(position.x+40,position.y)
-                    Log.i("관절", "ajfl :"+nose.toString())
-                }
-                if(footkey==13) {
-                    left_knee=Point(position.x,position.y)
-                    if(position.x!=0) Log.i("관절", "왼쪽무릎 :"+left_knee.toString())
-                }
-                if(footkey==14) {
-                    right_knee=Point(position.x,position.y)
-                    if(position.x!=0) Log.i("관절", "오른쪽무릎 :"+right_knee.toString())
-                }
+
+
                 if(footkey==15) {
                     left_ankle=Point(position.x,position.y)
-                    if(position.x!=0) Log.i("관절", "왼쪽발목 :"+left_ankle.toString())
+                    //if(position.x!=0) Log.i("관절", "왼쪽발목 :"+left_ankle.toString())
                 }
                 if(footkey==16) {
                     right_ankle=Point(position.x,position.y)
-                    if(position.x!=0) Log.i("관절", "오른쪽발목 :"+right_ankle.toString())
+                    // if(position.x!=0) Log.i("관절", "오른쪽발목 :"+right_ankle.toString())
                 }
 
 
@@ -651,38 +651,12 @@ class trapping_posenet :
             footkey++
         }
 
-        var bodykey=0
         for (line in bodyJoints) {
 
             if (
                     (person.keyPoints[line.first.ordinal].score > minConfidence) and
                     (person.keyPoints[line.second.ordinal].score > minConfidence)
             ) {
-                if(frameCounter==saveframe+1&&angle_sig==1){
-                    angle_sig=2
-                    var startX=person.keyPoints[line.first.ordinal].position.x
-                    var startY=person.keyPoints[line.first.ordinal].position.y
-                    var stopX=person.keyPoints[line.second.ordinal].position.x
-                    var stopY=person.keyPoints[line.second.ordinal].position.y
-                    startPoint=Point(startX,startY)
-                    stopPoint=Point(stopX,stopY)
-                    start_joint_list!!.add(bodykey,startPoint!!)
-                    stop_joint_list!!.add(bodykey,stopPoint!!)
-                    bodykey++
-                }else{
-                    if(frameCounter==saveframe+1)
-                    {
-                        var startX=person.keyPoints[line.first.ordinal].position.x
-                        var startY=person.keyPoints[line.first.ordinal].position.y
-                        var stopX=person.keyPoints[line.second.ordinal].position.x
-                        var stopY=person.keyPoints[line.second.ordinal].position.y
-                        startPoint=Point(startX,startY)
-                        stopPoint=Point(stopX,stopY)
-                        start_joint_list!!.add(bodykey,startPoint!!)
-                        stop_joint_list!!.add(bodykey,stopPoint!!)
-                        bodykey++
-                    }
-                }
                 canvas.drawLine(
                         person.keyPoints[line.first.ordinal].position.x.toFloat() * widthRatio + left,
                         person.keyPoints[line.first.ordinal].position.y.toFloat() * heightRatio + top,
@@ -692,65 +666,102 @@ class trapping_posenet :
                 )
             }
         }
-        trapping_check=false
-        if(nose!=null&&nose!!.x!=null&&trapping_check==false) {
-            var check = 0
-            check = test.BoundaryCheck(nose)
-            if (check != 0) {
-                trapping_check = true
-                Result_Boundary_Check += check
-            }
-        }
-        if(left_knee!=null&&left_knee!!.x!=null&&trapping_check==false) {
-            var check = 0
-            check = test.BoundaryCheck(left_knee)
-            if (check != 0) {
-                trapping_check = true
-                Result_Boundary_Check += check
-            }
-        }
-        if(right_knee!=null&&right_knee!!.x!=null&&trapping_check==false) {
-            var check = 0
-            check = test.BoundaryCheck(right_knee)
-            if (check != 0) {
-                trapping_check = true
-                Result_Boundary_Check += check
-            }
-        }
-        if(left_ankle!=null&&left_ankle!!.x!=null&&trapping_check==false) {
-            var check = 0
-            check = test.BoundaryCheck(left_ankle)
-            if (check != 0) {
-                trapping_check = true
-                Result_Boundary_Check += check
-            }
-        }
-        if(right_ankle!=null&&right_ankle!!.x!=null&&trapping_check==false) {
-            var check = 0
-            check = test.BoundaryCheck(right_ankle)
-            if (check != 0) {
-                trapping_check = true
-                Result_Boundary_Check += check
-            }
-        }
         var resource=requireContext().resources
-        var GoalpostImage = BitmapFactory.decodeResource(resource, R.drawable.goalpost1)
-        canvas.drawBitmap(GoalpostImage,15.0f,120.0f,paint)
-        setPaint4()
-        canvas.drawLine(15.0f,180.0f,375.0f,180.0f,paint) //가로
-        canvas.drawLine(15.0f,240.0f,375.0f,240.0f,paint)
-        canvas.drawLine(135.0f,120.0f,135.0f,300.0f,paint)  //세로
-        canvas.drawLine(255.0f,120.0f,255.0f,300.0f,paint)
+        var blood = BitmapFactory.decodeResource(resource, R.drawable.blood)
+        var check=0
+
+        if(left_ankle!=null&&left_ankle!!.x!=null) {
+            check = BoundaryCheck(left_ankle,left_check)
+            if (check ==1) {
+                setPaint2txt()
+                canvas.drawText(
+                        "+5",
+                        (200.0f),
+                        (200.0f),
+                        paint
+                )
+                canvas.drawText(
+                        "굿!!",
+                        (150.0f),
+                        (380.0f),
+                        paint
+                )
+            }
+            else if (check ==3) {
+                canvas.drawBitmap(blood,620.0f,5.0f,paint)
+                setPainttxt()
+                canvas.drawText(
+                        "-3",
+                        (200.0f),
+                        (200.0f),
+                        paint
+                )
+                canvas.drawText(
+                        "가시 조심!!",
+                        (100.0f),
+                        (380.0f),
+                        paint
+                )
+            }
+        }
+        check = 0
+        if(right_ankle!=null&&right_ankle!!.x!=null) {
+            check = BoundaryCheck(right_ankle,left_check)
+            if (check ==1) {
+                setPaint2txt()
+                canvas.drawText(
+                        "+5",
+                        (200.0f),
+                        (200.0f),
+                        paint
+                )
+                canvas.drawText(
+                        "굿!!",
+                        (150.0f),
+                        (380.0f),
+                        paint
+                )
+            }
+            else if (check ==3) {
+                canvas.drawBitmap(blood,620.0f,50.0f,paint)
+                setPainttxt()
+                canvas.drawText(
+                        "-3",
+                        (200.0f),
+                        (200.0f),
+                        paint
+                )
+                canvas.drawText(
+                        "가시 조심!!",
+                        (100.0f),
+                        (380.0f),
+                        paint
+                )
+            }
+        }
+        check = 0
+        var ball = BitmapFactory.decodeResource(resource, R.drawable.ball)
+        canvas.drawBitmap(ball,750.0f,800.0f,paint)
+        canvas.drawBitmap(ball,14500.0f,800.0f,paint)
+
+        /* setPaint4()
+         canvas.drawLine(900.0f,750.0f,550.0f,750.0f,paint) //가로
+         canvas.drawLine(900.0f,750.0f,900.0f,1000.0f,paint)
+         canvas.drawLine(1250.0f,750.0f,1600.0f,750.0f,paint)  //세로
+         canvas.drawLine(1250.0f,750.0f,1250.0f,1000.0f,paint)
+         setPaint()
+         canvas.drawLine(900.0f,750.0f,1250.0f,750.0f,paint)
+         setPaint2()*/
 
         setPaint3()
         canvas.drawText(
-                "거리: 14.21 m".format(test.distance),
+                "점수: %d".format(grade),
                 (15.0f * widthRatio+right),
                 (30.0f * heightRatio),
                 paint
         )
         canvas.drawText(
-                "인식 속도: %.2f ms".format(posenet.lastInferenceTimeNanos * 1.0f / 1_000_000),
+                "사람 인식 속도: %.2f ms".format(posenet.lastInferenceTimeNanos * 1.0f / 1_000_000),
                 (15.0f * widthRatio+right),
                 (50.0f * heightRatio ),
                 paint
@@ -780,9 +791,8 @@ class trapping_posenet :
 
         // Perform inference.
         val person = posenet.estimateSinglePose(scaledBitmap)
-        var TrackingBitmap = test.trackingBall(scaledBitmap, Cachedir,shoot_check)
         val canvas: Canvas = surfaceHolder!!.lockCanvas()
-        draw(canvas, person, TrackingBitmap)
+        draw(canvas, person, scaledBitmap)
 
     }
 
@@ -982,13 +992,13 @@ class trapping_posenet :
                             Uri.fromFile(file)
                     )
             )
-            this@trapping_posenet.activity?.sendBroadcast(
+            this@quick_posenet.activity?.sendBroadcast(
                     Intent(
                             Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                             Uri.fromFile(file)
                     )
             )
-            this@trapping_posenet.activity?.sendBroadcast(
+            this@quick_posenet.activity?.sendBroadcast(
                     Intent(
                             Intent(
                                     Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
@@ -1066,12 +1076,37 @@ class trapping_posenet :
 
     @SuppressLint("UseRequireInsteadOfGet")
     fun transfer_intant(targetFilename: String) {
-        val intent = Intent(context, trappingResult::class.java).apply {
+        val intent = Intent(context, physicalResult::class.java).apply {
         }
         intent.putExtra("key", targetFilename)
 
-        intent.putExtra("grade",Result_Boundary_Check)
+        intent.putExtra("grade",grade)
 
         startActivity(intent)
+    }
+
+    fun BoundaryCheck(point:Point,check:Boolean):Int{
+        Log.i("발",point.toString())
+        if(point.y>210){
+            if(point.x>150||point.x<100){
+                if(check==true){
+                    left_check=false
+                    if(point.x>200){
+                        grade+= 5
+                    }
+                }else{
+                    left_check=true
+                    if(point.x<100){
+                        grade+= 5
+                    }
+                }
+                return 1
+            }
+            else{
+                grade-=3
+                return 3
+            }
+        }
+        return 2
     }
 }

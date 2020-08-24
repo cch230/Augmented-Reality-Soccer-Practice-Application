@@ -1,5 +1,6 @@
 package com.example.arspapp_ui
 
+
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
@@ -13,7 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class trappingResult : AppCompatActivity() {
+class physicalResult : AppCompatActivity() {
 
     private var videoView: VideoView? = null
     private var imageView3: ImageView? = null
@@ -22,13 +23,13 @@ class trappingResult : AppCompatActivity() {
     private var editor:SharedPreferences.Editor?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_trapping_result)
-        var aty: Activity? = trapping_camera.CameraActivity
+        setContentView(R.layout.activity_physical_result)
+        var aty: Activity? = physical_camera.CameraActivity
         aty!!.finish()
 
-        videoView=findViewById(R.id.playTextureView)
-        imageView3=findViewById(R.id.grade)
-        textView=findViewById(R.id.gradePoint)
+        videoView=findViewById(R.id.playTextureView2)
+        imageView3=findViewById(R.id.grade2)
+        textView=findViewById(R.id.gradePoint2)
         var settings=applicationContext.getSharedPreferences("pref",0)
         var setting_time =settings.getInt("secends",0)
         var editor =settings.edit()
@@ -73,7 +74,7 @@ class trappingResult : AppCompatActivity() {
         val dd = Date(time) //받은 시간을 Date 형식으로 바꾸기
         val strTime: String = sdf.format(dd) //Data 정보를 포멧 변환하기
         var result_data=""
-        val sharedPreferences = getSharedPreferences("trapping", 0)
+        val sharedPreferences = getSharedPreferences("physical", 0)
         editor = sharedPreferences.edit()
 
         if(grade>=60) {
@@ -105,7 +106,6 @@ class trappingResult : AppCompatActivity() {
             result_data="X"
         }
         editor.putString(strTime, result_data)
-        Log.i("ㅏ시발",strTime)
         editor.commit()
     }
 

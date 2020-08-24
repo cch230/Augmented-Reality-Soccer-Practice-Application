@@ -41,7 +41,7 @@ public class physical_camera extends AppCompatActivity {
         editor.commit();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new trapping_posenet())
+                    .replace(R.id.container, new physical_posenet())
                     .commit();
         }
     }

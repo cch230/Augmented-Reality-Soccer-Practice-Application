@@ -1234,7 +1234,10 @@ class PosenetActivity :
             feedback_2="디딤발을 좀 더 기울이세요"
             train_grade_int+=10
         }
-        if (Pose_estimation_err) feedback_1="자세 인식을 실패하였어요"
+        if (Pose_estimation_err) {
+            feedback_1="자세 인식을 실패하였어요"
+            train_grade_int=20
+        }
         var feedback_str=feedback_1+"\n"+feedback_2
         return feedback_str
     }

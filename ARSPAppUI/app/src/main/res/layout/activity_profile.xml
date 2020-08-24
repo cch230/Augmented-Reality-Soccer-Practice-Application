@@ -19,14 +19,14 @@
             android:textSize="40sp" />
 
 
-        <ImageButton
+     <!--   <ImageButton
             android:id="@+id/setting_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="308dp"
             android:layout_marginTop="11dp"
             android:background="@drawable/setting_btn"
-            android:onClick="ClickSetting" />
+            android:onClick="ClickSetting" />-->
 
         <ImageView
             android:id="@+id/empty_picture"
@@ -71,10 +71,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3주차"
+            android:text="LEVEL 1"
             android:textSize="20sp"
             android:layout_marginTop="388dp"
-            android:layout_marginLeft="54dp"
+            android:layout_marginLeft="46dp"
             />
 
         <TextView
@@ -96,10 +96,11 @@
 
         <TextView
             android:id="@+id/point_phy"
-            android:layout_width="30dp"
-            android:layout_height="23dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="290dp"
             android:layout_marginTop="321dp"
+            android:textSize="20sp"
 
             />
 
@@ -108,16 +109,17 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="143dp"
             android:layout_marginTop="349dp"
-            android:text="슈팅 정확도 : "
+            android:text="슈팅 숙련도 : "
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/point_shoot"
-            android:layout_width="30dp"
-            android:layout_height="23dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="269dp"
             android:layout_marginTop="349dp"
+            android:textSize="20sp"
 
             />
 
@@ -126,16 +128,17 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="143dp"
             android:layout_marginTop="379dp"
-            android:text="트래핑 신속도 : "
+            android:text="트래핑 숙련도 : "
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/point_trp"
-            android:layout_width="30dp"
-            android:layout_height="23dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="290dp"
             android:layout_marginTop="379dp"
+            android:textSize="20sp"
 
             />
 
@@ -148,13 +151,13 @@
             android:background="@drawable/bar_2" />
 
         <ImageButton
-            android:id="@+id/frame1_btn"
+            android:id="@+id/setting_icon"
             android:layout_width="120dp"
             android:layout_height="173dp"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="36dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="597dp"
-            android:background="@drawable/frame_1"
+            android:background="@drawable/setting"
             android:onClick="ClickSetting" />
 
         <ImageButton
@@ -168,17 +171,17 @@
             android:onClick="ClickSetting" />
 
         <TextView
-            android:layout_width="119dp"
-            android:layout_height="49dp"
-            android:layout_marginLeft="39dp"
-            android:layout_marginTop="790dp"
-            android:text="자신의 부족한 부분의 영상"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="796dp"
+            android:text="설정"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="100dp"
-            android:layout_height="48dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="207dp"
             android:layout_marginTop="785dp"
             android:text="나의 훈련도 그래프 보기"

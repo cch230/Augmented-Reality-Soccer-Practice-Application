@@ -1,15 +1,11 @@
 package com.example.arspapp_ui;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -24,15 +20,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
-import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 public class profile extends Fragment {
@@ -41,7 +42,6 @@ public class profile extends Fragment {
     private static final int REQUEST_CODE = 0;
     ImageView empty_picture;
     ImageButton setting_icon_btn,  get_frame2_btn;
-    public ImageButton get_frame1_btn;
     View view;
 
     private String mTmpDownloadImageUri; //Shared에서 받아올떄 String형이라 임시로 받아오는데 사용
@@ -50,13 +50,21 @@ public class profile extends Fragment {
     final static int CAPTURE_IMAGE = 2;  //카메라로찍은 사진선택
     private String mCurrentPhotoPath; //카메라로 찍은 사진 저장할 루트경로
 
+    private TextView point_phy, point_shoot,point_trp;
+
+
+
+
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_profile, container, false);
         setting_icon_btn = (ImageButton) view.findViewById(R.id.setting_icon);
-        get_frame1_btn = (ImageButton) view.findViewById(R.id.frame1_btn);
         get_frame2_btn = (ImageButton) view.findViewById(R.id.frame2_btn);
         empty_picture = view.findViewById(R.id.empty_picture);
+        point_phy = view.findViewById(R.id.point_phy);
+        point_shoot = view.findViewById(R.id.point_shoot);
+        point_trp = view.findViewById(R.id.point_trp);
+
 
         setting_icon_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,14 +77,7 @@ public class profile extends Fragment {
             }
         });
 
-        get_frame1_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), bottombar.class);
-                startActivity(intent);
 
-            }
-        });
 
         get_frame2_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,9 +93,48 @@ public class profile extends Fragment {
               photoDialogRadio();
             }
         });
+
+       get_rank(requireContext(),"shooting");
+        get_rank(requireContext(),"physical");
+        get_rank(requireContext(),"quick");
+        get_rank(requireContext(),"trapping");
+
+        SharedPreferences ph = requireContext().getSharedPreferences("physical_size",0);
+        SharedPreferences qu = requireContext().getSharedPreferences("quick_size",0);
+        SharedPreferences sh = requireContext().getSharedPreferences("shooting_size",0);
+        SharedPreferences tr = requireContext().getSharedPreferences("trapping_size",0);
+
+        int ph_foot = ph.getInt("physical_key",0);
+        int qu_foot = qu.getInt("quick_key",0);
+        int sh_foot = sh.getInt("shooting_key",0);
+        int tr_foot = tr.getInt("trapping_key",0);
+
+        int phqu_foot = qu_foot + ph_foot;
+        if (phqu_foot != 0) phqu_foot/=2;
+
+
+
+
+
+
+        String ph_foot_s = String.valueOf(phqu_foot);
+        String sh_foot_s = String.valueOf(sh_foot);
+        String tr_foot_s = String.valueOf(tr_foot);
+
+
+        point_phy.setText(ph_foot_s + " %");
+        point_shoot.setText(sh_foot_s + "%");
+        point_trp.setText(tr_foot_s + "%");
+
+
+
+
+
+
         return view;
 
     }
+
 
     private void photoDialogRadio() {
         final CharSequence[] PhotoModels = {"앨범에서 사진선택", "카메라로 촬영 후 가져오기", "기본사진으로 하기"};
@@ -224,6 +264,81 @@ public class profile extends Fragment {
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
                 matrix, true);
     }
+
+
+
+
+
+
+
+
+    void get_rank(Context context, String train_sort) {
+        int i=0;
+
+
+
+        if(train_sort.equals("shooting")){
+            SharedPreferences prefs = context.getSharedPreferences("shooting", 0);
+            SharedPreferences prefs_size = context.getSharedPreferences("shooting_size", 0);
+
+            SharedPreferences.Editor prefs_edit = prefs_size.edit();
+            prefs_edit.putInt("shooting_key", prefs.getAll().size());
+
+            prefs_edit.commit();
+
+        }
+        else if(train_sort.equals("trapping")){
+            SharedPreferences prefs = context.getSharedPreferences("trapping", 0);
+            SharedPreferences prefs_size = context.getSharedPreferences("trapping_size", 0);
+
+            SharedPreferences.Editor prefs_edit = prefs_size.edit();
+            prefs_edit.putInt("trapping_key", prefs.getAll().size());
+
+            prefs_edit.commit();
+
+
+        }
+        else if(train_sort.equals("quick")){
+            SharedPreferences prefs = context.getSharedPreferences("quick", 0);
+            SharedPreferences prefs_size = context.getSharedPreferences("quick_size", 0);
+
+            SharedPreferences.Editor prefs_edit = prefs_size.edit();
+            prefs_edit.putInt("quick_key", prefs.getAll().size());
+
+            prefs_edit.commit();
+
+
+            }
+
+        else{
+            SharedPreferences prefs = context.getSharedPreferences("physical", 0);
+
+            SharedPreferences prefs_size = context.getSharedPreferences("physical_size", 0);
+
+            SharedPreferences.Editor prefs_edit = prefs_size.edit();
+            prefs_edit.putInt("physical_key", prefs.getAll().size());
+
+            prefs_edit.commit();
+
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

@@ -81,7 +81,7 @@ class shootingResult : AppCompatActivity() {
             imageView2!!.setImageBitmap(feedback)
         }
         val time = System.currentTimeMillis() //시간 받기
-        val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         //포멧 변환  형식 만들기
         val dd = Date(time) //받은 시간을 Date 형식으로 바꾸기
         val strTime: String = sdf.format(dd) //Data 정보를 포멧 변환하기

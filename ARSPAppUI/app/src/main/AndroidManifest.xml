@@ -48,10 +48,15 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".physical_camera"
+        <activity android:name=".quickResult"></activity>
+        <activity android:name=".quick_camera" />
+        <activity android:name=".quick_posenet" />
+        <activity android:name=".physicalResult" />
+        <activity
+            android:name=".physical_camera"
             android:screenOrientation="landscape" />
-
-        <activity android:name=".physical_posenet"
+        <activity
+            android:name=".physical_posenet"
             android:screenOrientation="landscape" />
         <activity android:name=".test35" />
         <activity android:name=".trappingResult" />
@@ -60,17 +65,6 @@
             android:name=".trapping_camera"
             android:screenOrientation="landscape" />
         <activity android:name=".shootingResult" />
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-
         <activity android:name=".upload" />
         <activity android:name=".mainmenu" />
         <activity android:name=".bottombar" />
@@ -100,9 +94,21 @@
         <activity android:name=".post" />
         <activity android:name=".privacy" />
         <activity android:name=".profile" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.arspapp_ui.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity android:name=".rate" />
         <activity android:name=".setting" />
-        <activity android:name=".viewpager"
+        <activity
+            android:name=".viewpager"
             android:screenOrientation="landscape" />
         <activity
             android:name=".shoot2"
