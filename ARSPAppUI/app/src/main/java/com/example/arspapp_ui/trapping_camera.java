@@ -11,7 +11,7 @@ package com.example.arspapp_ui;
         import org.opencv.android.OpenCVLoader;
 
 
-public class Trapping_camera extends AppCompatActivity {
+public class trapping_camera extends AppCompatActivity {
     public static final String TAG = "src";
     public static Activity CameraActivity;
     public String data;
@@ -26,7 +26,7 @@ public class Trapping_camera extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CameraActivity=Trapping_camera.this;
+        CameraActivity=trapping_camera.this;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
         Log.i("idontknow","What");
         Log.i("data1",String.valueOf(data));
@@ -41,7 +41,7 @@ public class Trapping_camera extends AppCompatActivity {
         editor.commit();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new posenet_trapping())
+                    .replace(R.id.container, new trapping_posenet())
                     .commit();
         }
     }

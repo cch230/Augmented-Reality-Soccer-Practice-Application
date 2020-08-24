@@ -1,18 +1,3 @@
-/*
- * Copyright 2017 Google Inc. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *//*
-
 package com.example.arspapp_ui.common.rendering;
 
 import android.content.Context;
@@ -35,26 +20,24 @@ import java.nio.ShortBuffer;
 import java.util.Map;
 import java.util.TreeMap;
 
-*/
-/** Renders an object loaded from an OBJ file in OpenGL. *//*
+/** Renders an object loaded from an OBJ file in OpenGL. */
 
 public class ObjectRenderer {
   private static final String TAG = ObjectRenderer.class.getSimpleName();
 
-  */
 /**
    * Blend mode.
    *
    * @see #setBlendMode(BlendMode)
-   *//*
+
+*/
 
   public enum BlendMode {
-    */
-/** Multiplies the destination color by the source alpha, without z-buffer writing. *//*
+/** Multiplies the destination color by the source alpha, without z-buffer writing.
+*/
 
     Shadow,
-    */
-/** Normal alpha blending with z-buffer writing. *//*
+/** Normal alpha blending with z-buffer writing. */
 
     AlphaBlending
   }
@@ -134,14 +117,13 @@ public class ObjectRenderer {
   private float[] uvTransform = null;
   private int depthTextureId;
 
-  */
 /**
    * Creates and initializes OpenGL resources needed for rendering the model.
    *
    * @param context Context for loading the shader and below-named model and texture assets.
    * @param objAssetName Name of the OBJ file containing the model geometry.
    * @param diffuseTextureAssetName Name of the PNG file containing the diffuse texture map.
-   *//*
+   */
 
   public void createOnGlThread(Context context, String objAssetName, String diffuseTextureAssetName)
       throws IOException {
@@ -231,18 +213,16 @@ public class ObjectRenderer {
     Matrix.setIdentityM(modelMatrix, 0);
   }
 
-  */
 /**
    * Selects the blending mode for rendering.
    *
    * @param blendMode The blending mode. Null indicates no blending (opaque rendering).
-   *//*
+   */
 
   public void setBlendMode(BlendMode blendMode) {
     this.blendMode = blendMode;
   }
 
-  */
 /**
    * Specifies whether to use the depth texture to perform depth-based occlusion of virtual objects
    * from real-world geometry.
@@ -255,7 +235,7 @@ public class ObjectRenderer {
    * @param context Context for loading the shader.
    * @param useDepthForOcclusion Specifies whether to use the depth texture to perform occlusion
    *     during rendering of virtual objects.
-   *//*
+   */
 
   public void setUseDepthForOcclusion(Context context, boolean useDepthForOcclusion)
       throws IOException {
@@ -312,14 +292,13 @@ public class ObjectRenderer {
     ShaderUtil.checkGLError(TAG, "Program parameters");
   }
 
-  */
 /**
    * Updates the object model matrix and applies scaling.
    *
    * @param modelMatrix A 4x4 model-to-world transformation matrix, stored in column-major order.
    * @param scaleFactor A separate scaling factor to apply before the {@code modelMatrix}.
    * @see android.opengl.Matrix
-   *//*
+  */
 
   public void updateModelMatrix(float[] modelMatrix, float scaleFactor) {
     float[] scaleMatrix = new float[16];
@@ -330,7 +309,6 @@ public class ObjectRenderer {
     Matrix.multiplyMM(this.modelMatrix, 0, modelMatrix, 0, scaleMatrix, 0);
   }
 
-  */
 /**
    * Sets the surface characteristics of the rendered model.
    *
@@ -338,8 +316,8 @@ public class ObjectRenderer {
    * @param diffuse Diffuse (matte) surface reflectivity.
    * @param specular Specular (shiny) surface reflectivity.
    * @param specularPower Surface shininess. Larger values result in a smaller, sharper specular
-   *     highlight.
-   *//*
+   *     highlight.*/
+
 
   public void setMaterialProperties(
       float ambient, float diffuse, float specular, float specularPower) {
@@ -349,7 +327,6 @@ public class ObjectRenderer {
     this.specularPower = specularPower;
   }
 
-  */
 /**
    * Draws the model.
    *
@@ -361,7 +338,8 @@ public class ObjectRenderer {
    * @see #updateModelMatrix(float[], float)
    * @see #setMaterialProperties(float, float, float, float)
    * @see android.opengl.Matrix
-   *//*
+
+*/
 
   public void draw(float[] cameraView, float[] cameraPerspective, float[] colorCorrectionRgba) {
     draw(cameraView, cameraPerspective, colorCorrectionRgba, DEFAULT_COLOR);
@@ -491,4 +469,3 @@ public class ObjectRenderer {
     depthAspectRatio = (float) width / (float) height;
   }
 }
-*/

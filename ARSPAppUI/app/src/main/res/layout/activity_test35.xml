@@ -10,7 +10,22 @@
         android:layout_height="match_parent"
         android:id="@+id/arFragment"
         android:name="com.example.arspapp_ui.CustomArFragment" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@color/colorAccent"
+        app:elevation="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
 
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/round_videocam"
+        tools:ignore="MissingClass" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

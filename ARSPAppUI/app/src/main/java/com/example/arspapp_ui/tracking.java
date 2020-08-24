@@ -93,8 +93,8 @@ public class tracking{
                 center = new Point((int) circleVec[0], (int) circleVec[1]);
                 if(center.x!=0&&center.y!=0&&InputCenter!=true){
                     InputCenter=true;
-                    Boundary_LH = new Point(center.x-25,center.y-25);
-                        Boundary_RL = new Point(center.x+25,center.y+25);
+                    Boundary_LH = new Point(center.x-30,center.y-30);
+                        Boundary_RL = new Point(center.x+30,center.y+30);
                 }
                 circleVec_save[0] = circleVec[0];
                 circleVec_save[1] = circleVec[1];

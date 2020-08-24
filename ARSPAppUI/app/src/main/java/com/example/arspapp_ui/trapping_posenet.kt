@@ -25,13 +25,13 @@ import android.util.Log
 import android.util.Size
 import android.util.SparseIntArray
 import android.view.*
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import org.tensorflow.lite.examples.posenet.lib.BodyPart
 import org.tensorflow.lite.examples.posenet.lib.Person
@@ -43,10 +43,9 @@ import java.util.*
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
-import kotlin.math.PI
 import kotlin.math.abs
 
-class posenet_trapping :
+class trapping_posenet :
         Fragment(),
         ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -170,25 +169,26 @@ class posenet_trapping :
     var angle_sig= 0
     var shoot_check=false
     var min=0
+    var imageview:ImageView?=null
     var trapping_check=false
     /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
     private val stateCallback = object : StateCallback() {
 
         override fun onOpened(cameraDevice: CameraDevice) {
             cameraOpenCloseLock.release()
-            this@posenet_trapping.cameraDevice = cameraDevice
+            this@trapping_posenet.cameraDevice = cameraDevice
             createCameraPreviewSession()
         }
 
         override fun onDisconnected(cameraDevice: CameraDevice) {
             cameraOpenCloseLock.release()
             cameraDevice.close()
-            this@posenet_trapping.cameraDevice = null
+            this@trapping_posenet.cameraDevice = null
         }
 
         override fun onError(cameraDevice: CameraDevice, error: Int) {
             onDisconnected(cameraDevice)
-            this@posenet_trapping.activity?.finish()
+            this@trapping_posenet.activity?.finish()
         }
     }
 
@@ -241,7 +241,6 @@ class posenet_trapping :
         initSensor()
         deviceOrientation = DeviceOrientation()
         surfaceHolder = surfaceView!!.holder
-
         Cachedir=requireContext()!!.cacheDir
         var settings:SharedPreferences = requireContext().getSharedPreferences("pref",0)
         setting_time =settings.getInt("secends",0)
@@ -983,13 +982,13 @@ class posenet_trapping :
                             Uri.fromFile(file)
                     )
             )
-            this@posenet_trapping.activity?.sendBroadcast(
+            this@trapping_posenet.activity?.sendBroadcast(
                     Intent(
                             Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                             Uri.fromFile(file)
                     )
             )
-            this@posenet_trapping.activity?.sendBroadcast(
+            this@trapping_posenet.activity?.sendBroadcast(
                     Intent(
                             Intent(
                                     Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
