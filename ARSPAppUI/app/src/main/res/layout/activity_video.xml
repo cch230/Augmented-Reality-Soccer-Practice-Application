@@ -8,7 +8,7 @@
 <RelativeLayout
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="130mm"
+    android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
@@ -28,8 +28,8 @@
 
     <VideoView
         android:id="@+id/video_1"
-        android:layout_width="318dp"
-        android:layout_height="193dp"
+        android:layout_width="218dp"
+        android:layout_height="198dp"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="151dp"
@@ -82,45 +82,45 @@
 
 
 
-    <VideoView
-        android:id="@+id/video_2"
-        android:layout_width="318dp"
-        android:layout_height="193dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="420dp"
+<!--    <VideoView-->
+<!--        android:id="@+id/video_2"-->
+<!--        android:layout_width="218dp"-->
+<!--        android:layout_height="198dp"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:layout_marginTop="420dp"-->
 
-        />
+<!--        />-->
 
-    <CheckBox
-        android:id="@+id/after_heart_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:button="@drawable/chk_like"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="620dp"
-        />
+<!--    <CheckBox-->
+<!--        android:id="@+id/after_heart_2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:button="@drawable/chk_like"-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginTop="620dp"-->
+<!--        />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="43dp"
-        android:layout_marginTop="620dp"
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="43dp"-->
+<!--        android:layout_marginTop="620dp"-->
 
-        />
+<!--        />-->
 
-    <ImageButton
-        android:id="@+id/bookmark_2"
-        android:layout_width="28dp"
-        android:layout_height="25dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="312dp"
-        android:layout_marginTop="615dp"
-        android:background="@drawable/bookmark"
-        android:onClick="OnClick" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/bookmark_2"-->
+<!--        android:layout_width="28dp"-->
+<!--        android:layout_height="25dp"-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginLeft="312dp"-->
+<!--        android:layout_marginTop="615dp"-->
+<!--        android:background="@drawable/bookmark"-->
+<!--        android:onClick="OnClick" />-->
 
 
 </RelativeLayout>

@@ -49,7 +49,7 @@ public class profile extends Fragment {
     final static int PICK_IMAGE = 1; //갤러리에서 사진선택
     final static int CAPTURE_IMAGE = 2;  //카메라로찍은 사진선택
     private String mCurrentPhotoPath; //카메라로 찍은 사진 저장할 루트경로
-
+    private TextView textViewname;
     private TextView point_phy, point_shoot,point_trp;
 
 
@@ -64,7 +64,7 @@ public class profile extends Fragment {
         point_phy = view.findViewById(R.id.point_phy);
         point_shoot = view.findViewById(R.id.point_shoot);
         point_trp = view.findViewById(R.id.point_trp);
-
+        textViewname=view.findViewById(R.id.name);
 
         setting_icon_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,15 +103,15 @@ public class profile extends Fragment {
         SharedPreferences qu = requireContext().getSharedPreferences("quick_size",0);
         SharedPreferences sh = requireContext().getSharedPreferences("shooting_size",0);
         SharedPreferences tr = requireContext().getSharedPreferences("trapping_size",0);
-
+        SharedPreferences name = requireContext().getSharedPreferences("UserInfo",0);
         int ph_foot = ph.getInt("physical_key",0);
         int qu_foot = qu.getInt("quick_key",0);
         int sh_foot = sh.getInt("shooting_key",0);
         int tr_foot = tr.getInt("trapping_key",0);
-
+        String name1 = name.getString("ID","");
         int phqu_foot = qu_foot + ph_foot;
         if (phqu_foot != 0) phqu_foot/=2;
-
+        textViewname.setText(name1);
 
 
 

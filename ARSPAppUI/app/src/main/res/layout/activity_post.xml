@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="800dp"
-    android:orientation="vertical"
-    >
+    android:layout_height="wrap_content"
+    xmlns:anroid="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
     <RelativeLayout
         tools:context=".post"
         android:layout_width="fill_parent"
-        android:layout_height="170mm"
+        android:layout_height="wrap_content"
         >
 
         <TextView
+            android:id="@+id/Post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="20dp"
@@ -24,94 +25,72 @@
             android:textColor="#000000"
             android:textSize="36sp" />
 
+
         <TextView
+            android:id="@+id/configvideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/Post"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="23dp"
-            android:layout_marginTop="151dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="85dp"
             android:text="자신의 영상을 확인해 보세요"
             android:textSize="17sp" />
 
-        <Button
-            android:id="@+id/upload_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="270dp"
-            android:layout_marginTop="20dp"
-            android:text="업로드"
-            android:textSize="10sp"/>
-
-        <HorizontalScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <VideoView
-                    android:id="@+id/self_video1"
-                    android:layout_width="198dp"
-                    android:layout_height="218dp"
-                    android:layout_marginLeft="21dp"
-                    android:layout_marginTop="190dp" />
-
-                <!--  <ImageButton
-                    android:layout_width="25dp"
-                    android:layout_height="34dp"
-                    android:layout_marginLeft="146dp"
-                    android:layout_marginTop="395dp"
-                    android:background="@drawable/download_btn" />
-                <ImageButton
-                    android:layout_width="24dp"
-                    android:layout_height="33dp"
-                    android:layout_marginLeft="171dp"
-                    android:layout_marginTop="416dp"
-                    android:background="@drawable/delete_btn" />
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="33dp"
-                    android:layout_marginLeft="198dp"
-                    android:layout_marginTop="416dp"
-                    android:background="@drawable/bookmark" />
-    -->
-
-                <VideoView
-                    android:id="@+id/self_video2"
-                    android:layout_width="198dp"
-                    android:layout_height="218dp"
-                    android:layout_marginLeft="21dp"
-                    android:layout_marginTop="190dp" />
-
-                <VideoView
-                    android:id="@+id/self_video3"
-                    android:layout_width="198dp"
-                    android:layout_height="218dp"
-                    android:layout_marginLeft="21dp"
-                    android:layout_marginTop="190dp" />
-
-            </LinearLayout>
-        </HorizontalScrollView>
-
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="21dp"
-            android:layout_marginTop="498dp"
-            android:text="나와 비슷한 자세의 선수를 확인해 보세요"
-            android:textSize="17sp" />
-
         <VideoView
-            android:id="@+id/pro_video1"
-            android:layout_width="198dp"
-            android:layout_height="218dp"
-            android:layout_marginLeft="21dp"
-            android:layout_marginTop="555dp" />
+            android:id="@+id/self_video1"
+            android:layout_width="218dp"
+            android:layout_height="198dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="121dp"
+            android:layout_marginLeft="21dp"/>
+
+<!--        <VideoView-->
+<!--            android:id="@+id/self_video2"-->
+<!--            android:layout_width="218dp"-->
+<!--            android:layout_height="198dp"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_below="@id/self_video1"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            android:layout_marginLeft="21dp" />-->
+
+<!--        <VideoView-->
+<!--            android:id="@+id/self_video3"-->
+<!--            android:layout_width="218dp"-->
+<!--            android:layout_height="198dp"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_below="@id/self_video2"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            android:layout_marginLeft="21dp" />-->
+
+<!--        <VideoView-->
+<!--            android:id="@+id/self_video4"-->
+<!--            android:layout_width="218dp"-->
+<!--            android:layout_height="198dp"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_below="@id/self_video3"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            android:layout_marginLeft="21dp" />-->
+
+<!--        <VideoView-->
+<!--            android:id="@+id/self_video5"-->
+<!--            android:layout_width="218dp"-->
+<!--            android:layout_height="198dp"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_below="@id/self_video4"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            android:layout_marginLeft="21dp" />-->
+
+<!--        <VideoView-->
+<!--            android:id="@+id/self_video6"-->
+<!--            android:layout_width="218dp"-->
+<!--            android:layout_height="198dp"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_below="@id/self_video5"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            android:layout_marginLeft="21dp" />-->
 
     </RelativeLayout>
 </ScrollView>

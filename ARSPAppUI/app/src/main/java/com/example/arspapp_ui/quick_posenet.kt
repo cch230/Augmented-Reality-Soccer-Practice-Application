@@ -43,6 +43,8 @@ import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.math.abs
+import com.bumptech.glide.Glide
+
 
 class quick_posenet :
         Fragment(),
@@ -330,7 +332,7 @@ class quick_posenet :
                 // We don't use a front facing camera in this sample.
                 val cameraDirection = characteristics.get(CameraCharacteristics.LENS_FACING)
                 if (cameraDirection != null &&
-                        cameraDirection == CameraCharacteristics.LENS_FACING_FRONT
+                        cameraDirection == CameraCharacteristics.LENS_FACING_BACK
                 ) {
                     continue
                 }
@@ -667,7 +669,7 @@ class quick_posenet :
             }
         }
         var resource=requireContext().resources
-        var blood = BitmapFactory.decodeResource(resource, R.drawable.blood)
+
         var check=0
 
         if(left_ankle!=null&&left_ankle!!.x!=null) {
@@ -675,7 +677,7 @@ class quick_posenet :
             if (check ==1) {
                 setPaint2txt()
                 canvas.drawText(
-                        "+5",
+                        "+3",
                         (200.0f),
                         (200.0f),
                         paint
@@ -687,22 +689,7 @@ class quick_posenet :
                         paint
                 )
             }
-            else if (check ==3) {
-                canvas.drawBitmap(blood,620.0f,5.0f,paint)
-                setPainttxt()
-                canvas.drawText(
-                        "-3",
-                        (200.0f),
-                        (200.0f),
-                        paint
-                )
-                canvas.drawText(
-                        "가시 조심!!",
-                        (100.0f),
-                        (380.0f),
-                        paint
-                )
-            }
+            check = 0
         }
         check = 0
         if(right_ankle!=null&&right_ankle!!.x!=null) {
@@ -710,7 +697,7 @@ class quick_posenet :
             if (check ==1) {
                 setPaint2txt()
                 canvas.drawText(
-                        "+5",
+                        "+3",
                         (200.0f),
                         (200.0f),
                         paint
@@ -722,27 +709,12 @@ class quick_posenet :
                         paint
                 )
             }
-            else if (check ==3) {
-                canvas.drawBitmap(blood,620.0f,50.0f,paint)
-                setPainttxt()
-                canvas.drawText(
-                        "-3",
-                        (200.0f),
-                        (200.0f),
-                        paint
-                )
-                canvas.drawText(
-                        "가시 조심!!",
-                        (100.0f),
-                        (380.0f),
-                        paint
-                )
-            }
         }
         check = 0
         var ball = BitmapFactory.decodeResource(resource, R.drawable.ball)
-        canvas.drawBitmap(ball,750.0f,800.0f,paint)
-        canvas.drawBitmap(ball,14500.0f,800.0f,paint)
+       // Glide.with(requireContext()).load(R.drawable.ball).into(ball)
+        canvas.drawBitmap(ball,650.0f,800.0f,paint)
+        canvas.drawBitmap(ball,1300.0f,800.0f,paint)
 
         /* setPaint4()
          canvas.drawLine(900.0f,750.0f,550.0f,750.0f,paint) //가로
@@ -1076,7 +1048,7 @@ class quick_posenet :
 
     @SuppressLint("UseRequireInsteadOfGet")
     fun transfer_intant(targetFilename: String) {
-        val intent = Intent(context, physicalResult::class.java).apply {
+        val intent = Intent(context, quickResult::class.java).apply {
         }
         intent.putExtra("key", targetFilename)
 
@@ -1088,24 +1060,11 @@ class quick_posenet :
     fun BoundaryCheck(point:Point,check:Boolean):Int{
         Log.i("발",point.toString())
         if(point.y>210){
-            if(point.x>150||point.x<100){
-                if(check==true){
-                    left_check=false
-                    if(point.x>200){
-                        grade+= 5
-                    }
-                }else{
-                    left_check=true
-                    if(point.x<100){
-                        grade+= 5
-                    }
-                }
-                return 1
+            if(point.x>190||point.x<60){
+                grade+= 3
+
             }
-            else{
-                grade-=3
-                return 3
-            }
+            return 1
         }
         return 2
     }

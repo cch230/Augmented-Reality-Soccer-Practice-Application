@@ -4,20 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -28,7 +20,6 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -38,19 +29,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class post extends Fragment {
     private View view;
-    private VideoView video_1,video_2;
+    private VideoView self_video_1;
 
     private TransferUtility transferUtility;
 
@@ -65,13 +49,11 @@ public class post extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.activity_post, container, false);
 
-        video_1 = view.findViewById(R.id.self_video1);
-//        video_2 = view.findViewById(R.id.self_video2);
+        self_video_1 = view.findViewById(R.id.self_video1);
 
         createTransferUtility();
 
-
-        pullvideo();
+        pullmyvideo();
 
         return view;
     }
@@ -86,8 +68,9 @@ public class post extends Fragment {
         transferUtility = new TransferUtility(s3Client, requireContext());
     }
 
-    private void pullvideo() {
-
+    private void pullmyvideo() {
+        SharedPreferences settings = requireContext().getSharedPreferences("UserInfo",0);
+        final String user_id = settings.getString("ID","");
         final com.android.volley.Response.Listener<String> response = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -95,19 +78,26 @@ public class post extends Fragment {
 
                     download(response);
 
-                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                 }
             }
         };
-        String uRl = "http://13.124.25.195//phpFiles/pullvideo.php";
+        String uRl = "http://13.124.25.195//phpFiles/pullmyvideo.php";
         StringRequest request = new StringRequest(Request.Method.POST, uRl, response, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), error.toString(), Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError
+            {
+                HashMap<String, String> param = new HashMap<>();
+                param.put("user_id", user_id);
 
+                return param;
+            }
+        };
 
         request.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -130,11 +120,9 @@ public class post extends Fragment {
                     String videopath = fileDownload.toString();
                     MediaController mc = new MediaController(getContext());
 
-                    video_1.setMediaController(mc);
-                    video_1.setVideoURI(Uri.parse(videopath));
-                    video_1.requestFocus();
+                    self_video_1.setMediaController(mc);
+                    self_video_1.setVideoURI(Uri.parse(videopath));
 
-                    Toast.makeText(getContext(), "Video downloaded", Toast.LENGTH_SHORT).show();
                 }
             }
 

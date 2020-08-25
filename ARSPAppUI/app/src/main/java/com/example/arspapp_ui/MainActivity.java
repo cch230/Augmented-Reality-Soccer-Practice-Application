@@ -24,7 +24,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     public static final String PREFS_NAME = "MyPrefs";
-    private Button button01,signup_g,signup_f;
+    private Button button01;
 
     //private int checked;
 
@@ -44,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         button01 = findViewById(R.id.login);
-        signup_f = findViewById(R.id.signup_f);
-        signup_g = findViewById(R.id.signup_g);
+
 
         /*if (mAuth.getCurrentUser() != null) {
             Intent intent = new Intent(getApplication(), bottombar.class);
@@ -118,17 +117,8 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent( MainActivity.this, login.class);
             startActivity(intent);
         }
-        else if (v==signup_f){
-            intent = new Intent( MainActivity.this, bottombar.class);
-        startActivity(intent);
-        }
 
-        else if(v==signup_g){
-            intent = new Intent( MainActivity.this, bottombar.class);
-            startActivity(intent);
-        }
     }
-
 
     static final int PERMISSIONS_REQUEST_CODE = 1000;
     String[] PERMISSIONS  = {

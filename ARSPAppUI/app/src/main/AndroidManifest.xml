@@ -49,8 +49,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".quickResult"></activity>
-        <activity android:name=".quick_camera" />
-        <activity android:name=".quick_posenet" />
+        <activity android:name=".quick_camera"
+            android:screenOrientation="landscape" />
+        <activity android:name=".quick_posenet"
+            android:screenOrientation="landscape" />
         <activity android:name=".physicalResult" />
         <activity
             android:name=".physical_camera"

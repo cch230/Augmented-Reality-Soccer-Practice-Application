@@ -92,6 +92,7 @@ dependencies {
     implementation 'com.google.ar:core:1.18.0'
     implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.15.0'
     implementation 'com.google.ar.sceneform:core:1.15.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'de.javagl:obj:0.2.1'
 }
 

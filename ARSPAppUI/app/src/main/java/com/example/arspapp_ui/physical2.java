@@ -44,7 +44,7 @@ public class physical2 extends AppCompatActivity {
             if (v==physical2_btn) {
                 switch (shrd_group.getCheckedRadioButtonId()) {
                     case R.id.radio_left2:
-                        intent = new Intent(physical2.this, physical_camera.class);
+                        intent = new Intent(physical2.this, quick_camera.class);
                         intent.putExtra("key", text);
                         startActivity(intent);
                         break;
