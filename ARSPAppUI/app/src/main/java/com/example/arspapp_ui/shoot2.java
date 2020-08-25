@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+
 
 
 public class shoot2 extends AppCompatActivity {
@@ -16,7 +20,7 @@ public class shoot2 extends AppCompatActivity {
     RadioButton radio_left;
     RadioButton radio_right;
     RadioGroup shrd_group;
-    public int radio_count=-1 ;
+    public int  radio_count=-1 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -165,10 +165,11 @@ class PosenetActivity :
     var Result_Boundadry_flag=false
     var Pose_estimation_err=false
     var pose:FragmentActivity?=null
-
+    private var mUploadPath: String? = null             // 업로드 파일 이름
     // var tracking = com.example.arspapp_ui.tracking()
     var test = com.example.arspapp_ui.tracking()
     var point = com.example.arspapp_ui.point()
+    var upload = com.example.arspapp_ui.upload()
     var setting_foot:Int?=null
     var key_list=java.util.ArrayList<Point>()
     var start_joint_list=java.util.ArrayList<Point>()
@@ -235,6 +236,10 @@ class PosenetActivity :
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.activity_posenet, container, false)
+
+
+
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -568,7 +573,7 @@ class PosenetActivity :
     /** Draw bitmap on Canvas.   */
     @RequiresApi(Build.VERSION_CODES.N)
     private fun draw(canvas: Canvas, person: Person, bitmap: Bitmap) {
-        if(frameCounter==60){
+        if(frameCounter==70){
 
             stopRecording(true)
 
@@ -651,11 +656,11 @@ class PosenetActivity :
 
                 val adjustedX: Float = position.x.toFloat() * widthRatio + left
                 val adjustedY: Float = position.y.toFloat() * heightRatio + top
-                if(frameCounter==saveframe+1&&angle_sig==0){
-                    angle_sig=1
+                if(frameCounter==saveframe+1){
                     key_list!!.add(footflag, Point(position.x,position.y))
                     //Log.i("원",key_list.get(footkey).toString())
                     footflag++
+                    Log.i("더워","1 :"+frameCounter.toString())
                 }
 
                 canvas.drawCircle(adjustedX, adjustedY, circleRadius, paint)
@@ -670,8 +675,7 @@ class PosenetActivity :
                     (person.keyPoints[line.first.ordinal].score > minConfidence) and
                     (person.keyPoints[line.second.ordinal].score > minConfidence)
             ) {
-                if(frameCounter==saveframe+1&&angle_sig==1){
-                    angle_sig=2
+                if(frameCounter==saveframe+1){
                     var startX=person.keyPoints[line.first.ordinal].position.x
                     var startY=person.keyPoints[line.first.ordinal].position.y
                     var stopX=person.keyPoints[line.second.ordinal].position.x
@@ -681,6 +685,9 @@ class PosenetActivity :
                     start_joint_list!!.add(bodykey,startPoint!!)
                     stop_joint_list!!.add(bodykey,stopPoint!!)
                     bodykey++
+                    start_joint_list
+                    Log.i("더워","3 :"+frameCounter.toString())
+
                 }else{
                     if(frameCounter==saveframe+1)
                     {
@@ -817,7 +824,7 @@ class PosenetActivity :
 
         setPaint3()
 
-        if(saveframe!=-100&&frameCounter==saveframe){
+        if(saveframe!=-100&&frameCounter==saveframe+1){
           /*  key_list.set(5,left_shoulder)
             key_list.set(6,right_soulder)
             key_list.set(9,left_wrist)
@@ -827,7 +834,7 @@ class PosenetActivity :
             key_list.set(15,left_ankle)
             key_list.set(16,right_ankle)*/
             point.givebitmap(bitmap,key_list,start_joint_list,stop_joint_list,Cachedir)
-
+            Log.i("더워","2 :"+frameCounter.toString())
 
         }
         frameCounter++
@@ -852,16 +859,16 @@ class PosenetActivity :
         // Perform inference.
         val person = posenet.estimateSinglePose(scaledBitmap)
 
-
+        if(frameCounter==saveframe+1){
+            shoot_check=true
+            Log.i("tltm",shoot_check.toString())
+        }
         if(frameCounter>50){
             val canvas: Canvas = surfaceHolder!!.lockCanvas()
             draw(canvas, person, scaledBitmap)
         }
         if(frameCounter<=50){
-            if(frameCounter==saveframe+1){
-                shoot_check=true
-                Log.i("tltm",shoot_check.toString())
-            }
+
             var TrackingBitmap = test.trackingBall(scaledBitmap, Cachedir,shoot_check)
             val canvas: Canvas = surfaceHolder!!.lockCanvas()
             draw(canvas, person, TrackingBitmap)
@@ -931,12 +938,12 @@ class PosenetActivity :
                     TEMPLATE_PREVIEW
             )
             surfaces.add(recordingSurface!!)
-            val recordingSurfaceEx : Surface = recordingSurface as Surface
-            previewRequestBuilder!!.addTarget(recordingSurfaceEx)
+
+            previewRequestBuilder!!.addTarget(recordingSurface)
             Log.i(TAG,"start")
             surfaces.add(mRecorderSurface!!)
-            val mRecorderSurfaceEx : Surface = mRecorderSurface as Surface
-            previewRequestBuilder!!.addTarget(mRecorderSurfaceEx)
+
+            previewRequestBuilder!!.addTarget(mRecorderSurface)
 
 
 
@@ -1016,6 +1023,7 @@ class PosenetActivity :
                 dir.path + "/" + DETAIL_PATH
         val dst = File(path)
         if (!dst.exists()) dst.mkdirs()
+        mUploadPath = strTime + ".mp4"
         return path + strTime + ".mp4"
     }
 
@@ -1040,6 +1048,10 @@ class PosenetActivity :
             mediaRecorder!!.release()
             previewRequestBuilder=null
             mRecorderSurface!!.release()
+
+         /*   upload.createTransferUtility(requireContext())
+            upload.uploadNewVideo(requireContext(), mUploadPath)
+            upload.upload(requireContext(), file, mUploadPath)*/
             mRecorderSurface=null
             recordingSurface!!.release()
             recordingSurface=null
@@ -1222,7 +1234,10 @@ class PosenetActivity :
             feedback_2="디딤발을 좀 더 기울이세요"
             train_grade_int+=10
         }
-        if (Pose_estimation_err) feedback_1="자세 인식을 실패하였어요"
+        if (Pose_estimation_err) {
+            feedback_1="자세 인식을 실패하였어요"
+            train_grade_int=20
+        }
         var feedback_str=feedback_1+"\n"+feedback_2
         return feedback_str
     }

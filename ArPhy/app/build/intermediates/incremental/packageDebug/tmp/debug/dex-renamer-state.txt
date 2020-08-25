@@ -1,0 +1,16 @@
+#Tue Aug 25 10:09:02 KST 2020
+path.3=classes.dex
+path.2=classes.dex
+path.1=classes.dex
+renamed.4=classes5.dex
+path.0=classes.dex
+renamed.3=classes4.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
+base.4=D\:\\git\\Augmented-Reality-Soccer-Practice-Application\\ArPhy\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\4
+renamed.0=classes.dex
+base.3=D\:\\git\\Augmented-Reality-Soccer-Practice-Application\\ArPhy\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\3
+base.2=D\:\\git\\Augmented-Reality-Soccer-Practice-Application\\ArPhy\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\2
+base.1=D\:\\git\\Augmented-Reality-Soccer-Practice-Application\\ArPhy\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1
+base.0=D\:\\git\\Augmented-Reality-Soccer-Practice-Application\\ArPhy\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.4=classes.dex

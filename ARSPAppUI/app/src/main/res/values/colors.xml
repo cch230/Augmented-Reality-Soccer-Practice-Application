@@ -10,4 +10,5 @@
     <color name="Black">#000000</color>
     <color name="tfe_semi_transparent">#66000000</color>
     <color name="my_black">#313133</color>
+    <color name="red">#FF0000</color>
 </resources>

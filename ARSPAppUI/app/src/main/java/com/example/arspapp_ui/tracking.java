@@ -7,6 +7,9 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.arspapp_ui.common.helpers.Bezier;
+import com.example.arspapp_ui.common.helpers.PathPoint;
+
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -34,8 +37,8 @@ import java.util.List;
 
 public class tracking{
     public Boolean CanNotFind=false;
-    private Scalar yellowLower = new Scalar(-10,100,100);
-    private Scalar yellowUpper = new Scalar(10,255,255);
+    private Scalar yellowLower = new Scalar(-10,100,120);
+    private Scalar yellowUpper = new Scalar(50,255,255);
     private ArrayList <Point> line_list = new ArrayList<>();
     private ArrayList <Point> line_save = new ArrayList<>();
     public Double[] circleVec_save=new Double[2];
@@ -56,6 +59,12 @@ public class tracking{
     private Point Boundary_RL=new Point(0,0);
     private KalmanFilter kalmanX;
     private KalmanFilter kalmanY;
+    private Bezier bezier;
+    private int numPoint=0;
+    private PathPoint[] arrP3 = new PathPoint[3];
+    private PathPoint[] arrP4 = new PathPoint[4];
+    private PathPoint[] arrP5 = new PathPoint[5];
+    private static final int DRAW_LINE_COUNT = 26;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Bitmap trackingBall(Bitmap bitmap,File filedir,Boolean signal){
@@ -93,8 +102,8 @@ public class tracking{
                 center = new Point((int) circleVec[0], (int) circleVec[1]);
                 if(center.x!=0&&center.y!=0&&InputCenter!=true){
                     InputCenter=true;
-                    Boundary_LH = new Point(center.x-25,center.y-25);
-                        Boundary_RL = new Point(center.x+25,center.y+25);
+                    Boundary_LH = new Point(center.x-30,center.y-30);
+                        Boundary_RL = new Point(center.x+30,center.y+30);
                 }
                 circleVec_save[0] = circleVec[0];
                 circleVec_save[1] = circleVec[1];
@@ -172,10 +181,73 @@ public class tracking{
         }
         if(signal==true){
             Log.i("진실",String.valueOf(signal));
-            for (int j = 1; j < line_save.size(); j++) {
-                int thickness = (int) Math.sqrt(40 / ((float) (j + 1)) * 5);
-                Imgproc.line(matSave, line_save.get(j - 1), line_save.get(j), new Scalar(0, 0, 0), thickness);
+
+                bezier = new Bezier();
+                double muGap = 1.0/DRAW_LINE_COUNT;
+                PathPoint startP = new PathPoint();
+                PathPoint endP = new PathPoint();
+            if (line_save.size() >= 3) {
+                switch (line_save.size()) {
+                    case 3:
+                        for (int index = 0; index < (line_save.size() - 1); index++) {
+                            PathPoint p = new PathPoint();
+                            p.x = line_save.get(index).x;
+                            p.y = line_save.get(index).y;
+                            arrP3[index] = p;
+                        }
+                        bezier.setBezier3(arrP3[0], arrP3[1], arrP3[2]);
+                        break;
+                    case 4:
+                        for (int index = 0; index < (line_save.size() - 1); index++) {
+                            PathPoint p = new PathPoint();
+                            p.x = line_save.get(index).x;
+                            p.y = line_save.get(index).y;
+                            arrP3[index] = p;
+                        }
+                        bezier.setBezier4(arrP4[0], arrP4[1], arrP4[2], arrP4[3]);
+                        break;
+                    default:
+                        PathPoint[] arrPn = new PathPoint[numPoint];
+                        for (int index = 0; index < (line_save.size() - 1); index++) {
+                            PathPoint p = new PathPoint();
+                            p.x = line_save.get(index).x;
+                            p.y = line_save.get(index).y;
+                            arrPn[index] = p;
+                        }
+                        bezier.setBezierN(arrPn);
+                        break;
+                }
+                for(double mu = 0; mu <= 1 ; mu += muGap ) {
+                    startP.x = bezier.getResult().x;
+                    startP.y = bezier.getResult().y;
+                    bezier.setMu(mu);
+                    switch (line_save.size()) {
+                        case 3:
+                            bezier.nextBezier3();
+                            break;
+                        case 4:
+                            bezier.nextBezier4();
+                            break;
+                        default:
+                            bezier.nextBezierN();
+                            break;
+                        }
+                        endP.x = bezier.getResult().x;
+                        endP.y = bezier.getResult().y;
+
+                        int thickness = (int) Math.sqrt(40 / ((float) (line_save.size() + 1)) * 5);
+                        Imgproc.line(matSave,new Point(startP.x, startP.y),new Point(endP.x, endP.y),new Scalar(0, 0, 0), thickness);
+
+                    }
+
             }
+            else{
+                for (int j = 1; j < line_save.size(); j++) {
+                    int thickness = (int) Math.sqrt(40 / ((float) (j + 1)) * 5);
+                    Imgproc.line(matSave,line_save.get(j-1),line_save.get(j),new Scalar(0, 0, 0), thickness);
+                }
+
+               }
             Long time = System.currentTimeMillis(); //시간 받기
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
             //포멧 변환  형식 만들기
@@ -252,5 +324,6 @@ public class tracking{
         }
         else return 100;
     }
+
 
 }

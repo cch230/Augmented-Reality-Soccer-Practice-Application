@@ -3,7 +3,6 @@ package com.example.arspapp_ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Camera;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -38,8 +37,8 @@ public class trapping2 extends AppCompatActivity {
         Intent intent;
         text = spinner2.getSelectedItem().toString();
         if (v==trapping2_btn) {
-            intent = new Intent(trapping2.this, trapping.class);
-            intent.putExtra("text", text);
+            intent = new Intent(trapping2.this, trapping_camera.class);
+            intent.putExtra("key", text);
             startActivity(intent);
         }
     }

@@ -12,7 +12,10 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-feature android:name="android.hardware.camera.ar" android:required="true"/>
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
     <uses-feature android:name="android.hardware.camera2.full" />
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-feature
@@ -27,6 +30,9 @@
     <uses-feature
         android:name="android.hardware.camera.front.autofocus"
         android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.ar"
+        android:required="true" />
 
     <supports-screens
         android:anyDensity="true"
@@ -42,23 +48,23 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".shootingResult" />
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-
+        <activity android:name=".quickResult"></activity>
+        <activity android:name=".quick_camera" />
+        <activity android:name=".quick_posenet" />
+        <activity android:name=".physicalResult" />
         <activity
-            android:name=".trapping"
-            android:screenOrientation="landscape"
-            tools:ignore="LockedOrientationActivity" />
+            android:name=".physical_camera"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".physical_posenet"
+            android:screenOrientation="landscape" />
+        <activity android:name=".test35" />
+        <activity android:name=".trappingResult" />
+        <activity android:name=".trapping_posenet" />
+        <activity
+            android:name=".trapping_camera"
+            android:screenOrientation="landscape" />
+        <activity android:name=".shootingResult" />
         <activity android:name=".upload" />
         <activity android:name=".mainmenu" />
         <activity android:name=".bottombar" />
@@ -88,14 +94,27 @@
         <activity android:name=".post" />
         <activity android:name=".privacy" />
         <activity android:name=".profile" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.arspapp_ui.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity android:name=".rate" />
         <activity android:name=".setting" />
+        <activity
+            android:name=".viewpager"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".shoot2"
             android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity" />
         <activity android:name=".signup" />
-        <activity android:name=".statistic" />
         <activity android:name=".train" />
         <activity android:name=".video" />
         <activity
@@ -112,7 +131,10 @@
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
-        <meta-data android:name="com.google.ar.core" android:value="required"/>
+
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="required" />
     </application>
 
 </manifest>

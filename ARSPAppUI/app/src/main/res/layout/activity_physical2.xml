@@ -31,7 +31,7 @@
         android:textSize="22sp" />
 
     <RadioGroup
-        android:id="@+id/phy_group"
+        android:id="@+id/radio_group2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -41,16 +41,16 @@
         >
 
         <RadioButton
-            android:id="@+id/phy_sp"
+            android:id="@+id/radio_left2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="순발력"
             android:textSize="16sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:checked="true"/>
+            android:checked="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <RadioButton
-            android:id="@+id/phy_st"
+            android:id="@+id/radio_right2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="체력"
@@ -63,7 +63,6 @@
 
     <Spinner
         android:id="@+id/spinner3"
-        android:entries="@array/physical_array"
         android:layout_width="110dp"
         android:layout_height="40dp"
         android:spinnerMode="dropdown"
@@ -73,11 +72,10 @@
         android:textSize="26sp"
         />
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="분"
+        android:text="초"
         android:textSize="24sp"
         android:layout_marginLeft="310dp"
         android:layout_marginTop="105dp"
