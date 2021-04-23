@@ -1,8 +1,9 @@
 # 증강현실 축구 연습 어플리케이션
 ## Augmented-Reality-Soccer-Practice-Application
-사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다.
+사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다.  
+It is a soccer-practice-application that helps the user to do various training personally without the help of a coach.  
 
-It is a soccer-practice-application that helps the user to do various training personally without the help of a coach.
+<img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/cch230/Augmented-Reality-Soccer-Practice-Application" style="display: block; object-fit: cover; border-radius: 1px; width: 100%; pointer-events: auto;">
 
 ### 이찬솔 이기열 이교범 최철환
 ## Representative email : cch01024857239@gmail.com
