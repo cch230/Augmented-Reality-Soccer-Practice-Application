@@ -10,7 +10,7 @@ It is a soccer-practice-application that helps the user to do various training p
 
 ### 이 문서와 프로젝트는 한국산업기술대학교 컴퓨터공학부의 “종합설계”교과목에서 프로젝트 "스마트 축구 연습 어플리케이션" 을 수행하는  팀원(팀번호: S5-2)들이 작성한 것으로 사용하기 위해서는 팀원들의 허락이 필요합니다.
 ### These document and project are written by team members (Team No . S5-2) who perform the project “Augmented-Reality-Soccer-Practice-Application” in the “Graduation Thesis” course of the Korea Polytechnic University.
-## Copyright 2021. "Graduation Thesis Team No .S5-2 of the Korea Polytechnic University" All document and project Cannot Be Copied Wihour Permission.
+## Copyright 2022. "Graduation Thesis Team No .S5-2 of the Korea Polytechnic University" All document and project Cannot Be Copied Wihour Permission.
 
 # 개발환경 (Development environment)
 환경|버전
