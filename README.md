@@ -8,6 +8,22 @@ It is a soccer-practice-application that helps the user to do various training p
 ### 이찬솔 이기열 이교범 최철환
 ## Representative email : cch01024857239@gmail.com
 
+## 🙏 후원 안내 (Support & Sponsor)
+
+이 프로젝트가 도움이 되었다면, 개발 지속과 유지보수를 위해 후원을 부탁드립니다!  
+여러분의 작은 응원이 오픈소스 발전에 큰 힘이 됩니다.
+
+- [GitHub Sponsors로 후원하기](https://github.com/sponsors/여러분의_아이디)
+- 또는 커피 한 잔을 보내주세요! ☕
+
+If you find this project useful, please consider supporting it!  
+Your sponsorship helps keep this project alive and motivates further development.
+
+- [Sponsor via GitHub Sponsors](https://github.com/sponsors/your_id)
+- Or just buy me a coffee! ☕
+
+감사합니다! Thank you!
+
 ### 이 문서와 프로젝트는 2020년 한국공학대학교 컴퓨터공학부의 “종합설계”교과목에서 프로젝트 "스마트 축구 연습 어플리케이션" 을 수행하는  팀원(팀번호: S5-2)들이 작성한 것으로 사용하기 위해서는 팀원들의 허락이 필요합니다.
 ### These document and project are written by team members (Team No . S5-2) who perform the project “Augmented-Reality-Soccer-Practice-Application” in the “Graduation Thesis” course of the Korea Tech University.
 ## Copyright 2023. "Graduation Thesis Team No .S5-2 of the Korea Tech University" All document and project Cannot Be Copied Wihour Permission.
