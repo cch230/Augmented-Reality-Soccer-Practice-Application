@@ -11,13 +11,13 @@ It is a soccer-practice-application that helps the user to do various training p
 이 프로젝트가 도움이 되었다면, 개발 지속과 유지보수를 위해 후원을 부탁드립니다!  
 여러분의 작은 응원이 오픈소스 발전에 큰 힘이 됩니다.
 
-- [GitHub Sponsors로 후원하기](https://github.com/sponsors/여러분의_아이디)
+- [GitHub Sponsors로 후원하기](https://github.com/sponsors/cch230)
 - 또는 커피 한 잔을 보내주세요! ☕
 
 If you find this project useful, please consider supporting it!  
 Your sponsorship helps keep this project alive and motivates further development.
 
-- [Sponsor via GitHub Sponsors](https://github.com/sponsors/your_id)
+- [Sponsor via GitHub Sponsors](https://github.com/sponsors/cch230)
 - Or just buy me a coffee! ☕
 
 감사합니다! Thank you!
